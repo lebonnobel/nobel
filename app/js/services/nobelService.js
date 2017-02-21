@@ -1,4 +1,4 @@
-nobelApp.factory('nobelService', ['$window', '$http', '$q', function ($window, $http, $q) {
+/*nobelApp.factory('nobelService', ['$window', '$http', '$q', function ($window, $http, $q) {
 
 // 	this.getData = function (data) {
 // 		var postData = 'myData='+JSON.stringify(data);
@@ -21,4 +21,4 @@ nobelApp.factory('nobelService', ['$window', '$http', '$q', function ($window, $
 		var promise = $http.get(url + apiKey);
         return promise;
 	};
-}]);
+}]);*/

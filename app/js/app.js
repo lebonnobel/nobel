@@ -1,1 +1,1 @@
-var nobelApp = angular.module('nobelApp', ['ngRoute', 'ngResource']);
+var nobelApp = angular.module('nobelApp', []);
