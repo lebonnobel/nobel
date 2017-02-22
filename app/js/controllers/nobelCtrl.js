@@ -1,15 +1,17 @@
 nobelApp.controller('nobelCtrl', function($scope, $http, $rootScope, $timeout) {
  
 	// This is our dataManager. It loads and formats all the data for us to use
-	$scope.dataManager = DataManager();
+	$scope.dataManager = DataManager();	
+	$scope.searchCountryName = "Sweden";
+	$scope.searchYear = 2016;
+
 	
 	
-  // Gets called from .html, calls nobelService to fetch data
-  // Gets looped in .html to display results
+	// Testing, called from button onClick
 	$scope.getNobelPrizeData = function (){
 		//$scope.data = nobelService.getData();
 		//$scope.nobelData = $scope.data.$$state;		
-		$scope.nobelData = $scope.dataManager.getData("prizes");
+		$scope.nobelData = $scope.dataManager.getNobelDataForCountry($scope.searchCountryName, $scope.searchYear);
 
 		console.log($scope.nobelData);
 	}

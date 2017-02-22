@@ -63,6 +63,15 @@ function DataManager(){
         return retData;        
     }
 
+    // This function returns nobel data for the given country, by the given year
+    this.getNobelDataForCountry = function (countryName, year) {
+        var formattedData = [];
+        //var formattingArray = [["physics", "chemistry", "medicine", "litterature", "peace", "economics"], ["laureates"]];
+        formattedData = dataFormatter.formatNobelDataForSunburst(prizesData, laureatesData, countriesData, countryName, year);
+        // Return the data
+        return formattedData;
+    }
+
     //////////////////// TIMEOUT ////////////////////
 
     // This function checks if jQuery has been loaded, otherwise we wait a little
