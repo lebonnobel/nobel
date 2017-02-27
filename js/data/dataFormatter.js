@@ -1,3 +1,9 @@
+//
+//////////////////// CURRENTLY NOT IN USE
+//
+
+
+
 // Filters data from controller in order to send to D3 in a proper format
 function DataFormatter(){
     // The different formatting options for all the different D3 charts
