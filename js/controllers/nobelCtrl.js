@@ -3,10 +3,10 @@ nobelApp.controller('nobelCtrl',
  	// Controller that controls the view
  	// Put $scope. in front of a variable name in order for the view to be able to use this variable
 	
+	//////////////////////// NOBEL DATA ////////////////////////////////
+
 	$scope.searchCountryName = "Sweden";
 	$scope.searchYear = 2016;
-
-	
 	
 	// Testing, called from button onClick
 	$scope.getNobelPrizeData = function (){
