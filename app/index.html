@@ -22,9 +22,11 @@
 <header>
 
 </header>
-<body ng-app="nobelApp" ng-controller="nobelCtrl">Country:
-	<input type="text" name="countryName" ng-model="searchCountryName"> Up to what year:
-	<input type="text" name="year" ng-model="searchYear">
+<!-- Container for our app, using the nobelController -->
+<body ng-app="nobelApp" ng-controller="nobelCtrl">
+
+	Country: <input type="text" name="countryName" ng-model="searchCountryName"> 
+	Up to what year: <input type="text" name="year" ng-model="searchYear">
 
 	<button ng-click="getNobelPrizeData()">Click to get data</button>
 	<div ng-repeat="x in nobelData">

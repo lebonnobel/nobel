@@ -1,6 +1,7 @@
 nobelApp.controller('nobelCtrl', 
 	function(worldBankService, nobelService, $scope, $http, $rootScope, $timeout) {
- 
+ 	// Controller that controls the view
+ 	// Put $scope. in front of a variable name in order for the view to be able to use this variable
 	
 	$scope.searchCountryName = "Sweden";
 	$scope.searchYear = 2016;
