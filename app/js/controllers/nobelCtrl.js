@@ -1,7 +1,7 @@
-nobelApp.controller('nobelCtrl', function($scope, $http, $rootScope, $timeout) {
+nobelApp.controller('nobelCtrl', 
+	function(worldBankService, nobelService, $scope, $http, $rootScope, $timeout) {
  
-	// This is our dataManager. It loads and formats all the data for us to use
-	$scope.dataManager = DataManager();	
+	
 	$scope.searchCountryName = "Sweden";
 	$scope.searchYear = 2016;
 
@@ -11,7 +11,7 @@ nobelApp.controller('nobelCtrl', function($scope, $http, $rootScope, $timeout) {
 	$scope.getNobelPrizeData = function (){
 		//$scope.data = nobelService.getData();
 		//$scope.nobelData = $scope.data.$$state;		
-		$scope.nobelData = $scope.dataManager.getNobelDataForCountry($scope.searchCountryName, $scope.searchYear);
+		$scope.nobelData = nobelService.getNobelDataForCountry($scope.searchCountryName, $scope.searchYear);
 
 		console.log($scope.nobelData);
 	}
@@ -28,7 +28,7 @@ nobelApp.controller('nobelCtrl', function($scope, $http, $rootScope, $timeout) {
 	// This is our start function, here we can load up all initial values and tell the dataManager to start loading data
 	$scope.onStart = function(){
 		// Start loading the data
-		$scope.dataManager.loadData();
+		nobelService.loadData();
 	}
 
   
