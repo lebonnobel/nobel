@@ -31,7 +31,30 @@ nobelApp.controller('nobelCtrl',
 		// Start loading the data
 		nobelService.loadData();
 	}
-
   
-  $scope.onStart();
+	$scope.onStart();
+
+	//////////////////////////// WORLD BANK DATA /////////////////////////////
+
+	// Shows which datasets you can choose from, specified in worldBankService
+	$scope.worldBankData = worldBankService.dataSets;
+
+	// This function is called when a wb (World bank) dataset is chosen from the dropdown list
+	$scope.onWbDataChange = function(wbDataChoice) {
+		console.log("You chose this data",wbDataChoice);
+		// only get the data if the wbDataChoice is valid
+		if (wbDataChoice !== undefined) {
+			// This function gets the data from worldbankService
+			// It uses a callback, (the 'function(d)' part), instead of waiting for the returning result
+			// the callback waits until the getData function is calling for it
+			worldBankService.getData(wbDataChoice.filename, function(d){
+				console.log("Here's your data", d);
+				$scope.wbData = d;
+			});
+				
+		} else {
+			$scope.wbData = ''
+		}
+	}
+
 });

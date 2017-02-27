@@ -32,12 +32,23 @@
 	<div ng-repeat="x in nobelData">
 		{{x}}
 	</div>
+	<p></p>
+	<div>
+		<p>Select data from World Bank:</p>
+		<select required ng-model="wbDataChoice" ng-options="wbd.title for wbd in worldBankData" ng-change="onWbDataChange(wbDataChoice)">
+	        <option value="">--Select--</option>
+	    </select>
+	    <div ng-repeat="x in wbData">
+			{{x}}
+		</div>
+	</div>
 
+	<!-- Abgular Scripts -->
 	<script src="js/lib/angular/angular.js"></script>
 	<script src="js/app.js"></script>
 	<script src="js/controllers/nobelCtrl.js"></script> 	
- 	<script src="js/data/dataManager.js"></script>
- 	<script src="js/data/dataFormatter.js"></script>
+ 	<!--<script src="js/data/dataManager.js"></script>
+ 	<script src="js/data/dataFormatter.js"></script>-->
 	<script src="js/services/worldBankService.js"></script>
 	<script src="js/services/nobelService.js"></script>
 </body>
