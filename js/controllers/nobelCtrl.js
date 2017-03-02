@@ -3,6 +3,28 @@ nobelApp.controller('nobelCtrl',
  	// Controller that controls the view
  	// Put $scope. in front of a variable name in order for the view to be able to use this variable
 	
+ 	///////////////////////// PAGES ////////////////////////////////
+	$scope.hideSunburst = false;
+	$scope.hideChord = true;
+	$scope.hideProject = true;
+
+	console.log("hej");
+
+	$scope.pageButton = function(id) {
+		if (id === "sunburst") {
+			$scope.hideSunburst = false;
+			$scope.hideChord = true;
+			$scope.hideProject = true;
+		} else if (id === "chord") {
+			$scope.hideSunburst = true;
+			$scope.hideChord = false;
+			$scope.hideProject = true;
+		} else if (id === "project") {
+			$scope.hideSunburst = true;
+			$scope.hideChord = true;
+			$scope.hideProject = false;
+		}
+	}
 	//////////////////////// NOBEL DATA ////////////////////////////////
 
 	$scope.searchCountryName = "Sweden";
