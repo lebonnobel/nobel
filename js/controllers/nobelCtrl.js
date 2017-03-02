@@ -8,8 +8,8 @@ nobelApp.controller('nobelCtrl',
 	$scope.hideChord = true;
 	$scope.hideProject = true;
 
-	console.log("hej");
 
+	//hide/show of different views (sunburst/chord/project)
 	$scope.pageButton = function(id) {
 		if (id === "sunburst") {
 			$scope.hideSunburst = false;

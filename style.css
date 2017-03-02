@@ -19,6 +19,7 @@ body {
 	height: 100%;
 }
 
+/* ****** TOP MENU BAR OF CHOICES ****** */
 #menubar {
 	margin-bottom: 0;
 	margin-top: 0;
@@ -28,7 +29,7 @@ body {
 }
 
 #choice1, #choice2, #choice3 {
-	background: #607D8B; /*#8D6E63; /*#FFCC80; /*#FF9800;*/
+	background: #607D8B; 
 	float: left;
 	padding: 10px;
 	margin: 0px;
@@ -36,10 +37,12 @@ body {
 }
 
 #choice1:hover, #choice2:hover, #choice3:hover {
-	background: #455A64; /*#6D4C41; /*#F57C00;*/
+	background: #455A64; 
 }
 
 .active {
-	background-color: #263238  !important; /*#424242 #616161*/
+	background-color: #263238  !important; 
 	color: white !important;
 }
+
+/* ****** OTHER ****** */
