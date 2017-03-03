@@ -13,17 +13,35 @@ This is our awesome project for the course DH2321 Information Visualization 2017
 
 ## Workflow
 
+### Coding guidelines
+Keep the code nice and clean so it's easier for the other people in the group to change if necessary.
+* Comment what you do!
+* Remove things you don't use!
+* Use clear variable names!
+
 ### Branches
 We will try to work in git [branches](https://www.atlassian.com/git/tutorials/using-branches). 
 > "This makes sure that unstable code is never committed to the main code base, and it gives you the chance to clean up your feature’s history before merging it into the main branch."
 
 When you are about to make changes, create a new branch and work in the branch until you are finished. When you are finished, you can go to github.com and create a pull request and you will see if it's possible to merge your branch with master branch.
 
-### Coding guidelines
-Keep the code nice and clean so it's easier for the other people in the group to change if necessary.
-* Comment what you do!
-* Remove things you don't use!
-* Use clear variable names!
+* Create a new branch and name it after your feature
+  * [Create branch in terminal](https://github.com/Kunena/Kunena-Forum/wiki/Create-a-new-branch-with-git-and-manage-branches)
+  * In SourceTree you click on the "Branch +" button and follow the instructions
+* Do your awesome work in your branch (commit as much as you want)
+* At any time you can push your branch 
+  * [Push branch in terminal](http://stackoverflow.com/questions/2765421/how-to-push-a-new-local-branch-to-a-remote-git-repository-and-track-it-too)
+  * In SourceTree
+    * Click Push
+    * Check your branch and name the remote branch the same as your branch
+    * Click OK
+* When you are done with your awesome feature, it's time to merge into the master branch. Do this by creating a pull request
+  * First you should have pushed your branch
+  * Go to our repository at github.com
+  * Go to "Pull requests" and create a new one
+  * Chose master as base and your branch to compare with
+  * Name your pull request and describe what you have done
+  * DONE!
 
 ### Model-view-controller
 Since we are using [Angular](https://docs.angularjs.org/api), we are working with the [MVC pattern](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller). Our model is called service. 
