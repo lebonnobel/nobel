@@ -62,6 +62,20 @@ nobelApp.factory('nobelService', ['$window', '$http', '$q', function ($window, $
         return retData;        
     }
 
+    this.getNobelDataByCountry = function() {
+      var data = {"name": "flare", "children": []};
+      var contName;
+
+      for (var i=0; i<this.continents.length; i++) {
+        var contObj = { "children": []};
+        contName = this.continents[i];
+        contObj["continent"] = contName; 
+        data.children.push(contObj);
+      }
+
+      console.log(data);
+    }
+
     // This function returns nobel data for the given country, by the given year
     this.getNobelDataForCountry = function (countryName, year) {
         var formattedData = [];
@@ -88,6 +102,8 @@ nobelApp.factory('nobelService', ['$window', '$http', '$q', function ($window, $
     this.formattingOptions = { map:["data1", "data2", "data3"], sunburst:["data1", "data"]};
     // This is a dictionary to know what category is at what index in the sunburstFormattedData
     var nobelCategoryDictionary = {"physics":0, "chemistry":1, "medicine":2, "literature":3, "peace":4, "economics":5};
+
+    this.continents = ["North America", "South America", "Europe", "Asia", "Oceania", "Africa"];
  
     // This function takes all data and transform it to the right format for the given formattingOption
     this.formatData = function(data, formatingOption){
@@ -152,5 +168,5 @@ nobelApp.factory('nobelService', ['$window', '$http', '$q', function ($window, $
     }
 
     // Return this instance to the controller. We need to do this to be able to access it later
-	return this;
+  return this;
 }]);
