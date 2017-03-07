@@ -51,9 +51,11 @@ nobelApp.controller('nobelCtrl',
 	// This is our start function, here we can load up all initial values and tell the dataManager to start loading data
 	$scope.onStart = function(){
 		// Start loading the data
-		//nobelService.loadData();
 		nobelService.getData("prizes", function(data){
-			console.log(data);
+
+			$scope.nobelData = nobelService.getNobelDataForSunburst();
+			console.log($scope.nobelData);
+			$scope.$apply();
 		})		
 	}
   
