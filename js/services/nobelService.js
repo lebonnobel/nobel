@@ -7,13 +7,12 @@ nobelApp.factory('nobelService', ['$window', '$http', '$q', function ($window, $
     var gapminderDataUrl = "data/gapminder/";
     
     // The data storing variables
-    this.prizesData = [];    
-    this.laureatesData = [];    
-    this.countriesData = [];
-
+    var prizesData = [];    
+    var laureatesData = [];    
+    var countriesData = [];
     
     //////////////////// DATA LOADING ////////////////////
-        
+       
     // Called from teh controller. We check jQuery before loading
     this.loadData = function(){
         // We start a check interval to wait until jQuery has loaded before we start reading the data
@@ -21,19 +20,28 @@ nobelApp.factory('nobelService', ['$window', '$http', '$q', function ($window, $
     }
 
     // Load all JSON files
-    function jQueryLoadJSON(){
+    function jQueryLoadJSON(callback){
         // First we load all the nobel data
         // Load the prizeData
         $.getJSON(nobelDataUrl + "prize.json", function(json){
             prizesData = json.prizes;
+            if (!isUndefinedOrEmpty(prizesData) && !isUndefinedOrEmpty(laureatesData) && !isUndefinedOrEmpty(countriesData)){ 
+                callback(); 
+            }
         });
         // Load the laureateData
         $.getJSON(nobelDataUrl + "laureate.json", function(json){
             laureatesData = json.laureates;
+            if (!isUndefinedOrEmpty(prizesData) && !isUndefinedOrEmpty(laureatesData) && !isUndefinedOrEmpty(countriesData)){ 
+                callback(); 
+            }
         });
         // Load the countriesData
         $.getJSON(nobelDataUrl + "country.json", function(json){
             countriesData = json.countries;
+            if (!isUndefinedOrEmpty(prizesData) && !isUndefinedOrEmpty(laureatesData) && !isUndefinedOrEmpty(countriesData)){ 
+                callback(); 
+            }
         });
         // Then we load all the gapminder data
     }
@@ -41,48 +49,58 @@ nobelApp.factory('nobelService', ['$window', '$http', '$q', function ($window, $
     //////////////////// DATA GETTER ////////////////////
 
     // This function returns the data requested. Might be redundant due to the data variables being public, but use this to avoid changing the original data.
-    this.getData = function(dataName){
+    this.getData = function(dataName, callback){
+        if (isUndefinedOrEmpty(prizesData) || isUndefinedOrEmpty(laureatesData) || isUndefinedOrEmpty(countriesData)){ 
+            jQueryLoadJSON(function(){
+                callback(deferedGetData(dataName));
+            });
+        } else {
+            callback(deferedGetData(dataName));
+        }
+    }
+
+    // This function returns nobel data for the given country, by the given year
+    this.getNobelDataForCountry = function (countryName, year, callback) {
+        if (isUndefinedOrEmpty(prizesData) || isUndefinedOrEmpty(laureatesData) || isUndefinedOrEmpty(countriesData)){ 
+            jQueryLoadJSON(function(){
+                callback(deferedGetNobelDataForCountry(countryName, year));
+            });
+        } else {
+            callback(deferedGetNobelDataForCountry(countryName, year));
+        }
+    }
+
+    function deferedGetData(dataName){
         // Temporary return array
         var retData = [];
         // We find and get the correct data requested
         switch (dataName){
         case "prizes":
-            retData = this.prizesData;
+            retData = prizesData;
             break;
         case "laureates":
-            retData = this.laureatesData;
+            retData = laureatesData;
             break;
         case "countries":
-            retData = this.countriesData;
+            retData = countriesData;
             break;
         default:
             break;
         }
         // After we have found our data, we return it
-        return retData;        
+        return retData;   
     }
-
-    this.getNobelDataByCountry = function() {
-      var data = {"name": "flare", "children": []};
-      var contName;
-
-      for (var i=0; i<this.continents.length; i++) {
-        var contObj = { "children": []};
-        contName = this.continents[i];
-        contObj["continent"] = contName; 
-        data.children.push(contObj);
-      }
-
-      console.log(data);
-    }
-
-    // This function returns nobel data for the given country, by the given year
-    this.getNobelDataForCountry = function (countryName, year) {
+    
+    function deferedGetNobelDataForCountry(countryName, year){
         var formattedData = [];
         //var formattingArray = [["physics", "chemistry", "medicine", "litterature", "peace", "economics"], ["laureates"]];
-        formattedData = this.formatNobelDataForSunburst(prizesData, laureatesData, countriesData, countryName, year);
+        formattedData = formatNobelDataForSunburst(prizesData, laureatesData, countriesData, countryName, year);
         // Return the data
         return formattedData;
+    }
+
+    function isUndefinedOrEmpty(array){
+        return (array == undefined || array.length == 0);
     }
 
     //////////////////// TIMEOUT ////////////////////
@@ -90,10 +108,12 @@ nobelApp.factory('nobelService', ['$window', '$http', '$q', function ($window, $
     // This function checks if jQuery has been loaded, otherwise we wait a little
     // jQuery is needed to load all our data, so no data operations can be done before it has been loaded
     function defer(method) {
-        if (window.jQuery)
-          method();
-        else
-          setTimeout(function() { defer(method) }, 50);
+        if (window.jQuery){
+            method();
+        }
+        else{
+            setTimeout(function() {defer(method);}, 50);
+        }
     }
 
     //////////////////// FORMATTING //////////////////////
@@ -116,7 +136,7 @@ nobelApp.factory('nobelService', ['$window', '$http', '$q', function ($window, $
     }
 
     // This function formats our data to the requested type
-    this.formatNobelDataForSunburst = function(prizesData, laureatesData, countriesData, countryName, year){
+    function formatNobelDataForSunburst (prizesData, laureatesData, countriesData, countryName, year){
       var sunburstFormattedData = {"categories":[{"category":"physics", "laureates":[]}, {"category":"chemistry", "laureates":[]}, {"category":"medicine", "laureates":[]}, 
       {"category":"litterature", "laureates":[]}, {"category":"peace", "laureates":[]}, {"category":"economics", "laureates":[]}]};
       // First get the country code
