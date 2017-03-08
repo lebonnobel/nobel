@@ -56,9 +56,19 @@ nobelApp.controller('nobelCtrl',
 
 			$scope.nobelData = nobelService.getNobelDataForSunburst();
 			$scope.$apply();	// $scope.$apply tells angular that we have loaded in the data so it updates the view
+		})
 
-			console.log($scope.nobelData);
-		})		
+		nobelService.getNobelDataForChordDiagram("age", function(data){
+			console.log(data);
+		})
+
+		nobelService.getNobelDataForChordDiagram("gender", function(data){
+			console.log(data);
+		})
+
+		
+		//console.log($scope.nobelData);
+
 	}
   
 	$scope.onStart();
