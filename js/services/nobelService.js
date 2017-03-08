@@ -71,7 +71,10 @@ nobelApp.factory('nobelService', ['$window', '$http', '$q', function ($window, $
     }
 
     // This function returns all data for the sunburst
-    this.getNobelDataForSunburst = function() {
+    this.getNobelDataForSunburst = function(year) {
+      if (year == undefined) {
+        year = 3500;
+      }
       var root = {"name": "flare", "children": []};
       var contName;
       var prizesData;
@@ -110,14 +113,17 @@ nobelApp.factory('nobelService', ['$window', '$http', '$q', function ($window, $
 
               // If the laureate is born in this country, grab info about them
               if ( laureatesData[n].bornCountryCode == countriesData[l].code) { 
-                var laureateObj = {};
-                laureateObj["laureate"] = laureatesData[n].firstname + " " + laureatesData[n].surname;
-                laureateObj["laureateId"] = laureatesData[n].id;
-                laureateObj["gender"] = laureatesData[n].gender;
-                laureateObj["category"] = laureatesData[n].prizes[laureatesData[n].prizes.length-1].category;
-                laureateObj["year"] = laureatesData[n].prizes[laureatesData[n].prizes.length-1].year;
-              
-                countryObj.children.push(laureateObj);
+                // If search for all prizes that have been awarded before the given year
+                if (laureatesData[n].prizes[laureatesData[n].prizes.length-1].year <= year) {
+                  var laureateObj = {};
+                  laureateObj["laureate"] = laureatesData[n].firstname + " " + laureatesData[n].surname;
+                  laureateObj["laureateId"] = laureatesData[n].id;
+                  laureateObj["gender"] = laureatesData[n].gender;
+                  laureateObj["category"] = laureatesData[n].prizes[laureatesData[n].prizes.length-1].category;
+                  laureateObj["year"] = laureatesData[n].prizes[laureatesData[n].prizes.length-1].year;
+                
+                  countryObj.children.push(laureateObj);
+                }
               }
               
             }
