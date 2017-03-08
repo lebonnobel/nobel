@@ -71,12 +71,17 @@ nobelApp.factory('nobelService', ['$window', '$http', '$q', function ($window, $
     }
 
     // This function returns all data for the sunburst
-    this.getNobelDataForSunburst = function() {
+    this.getNobelDataForSunburst = function(year) {
+      if (year == undefined) {
+        year = 3500;
+      }
       var root = {"name": "flare", "children": []};
       var contName;
       var prizesData;
       var laureatesData;
       var countriesData;
+      
+      var categoryDictionary = {'chemistry': 0, 'literature': 1, 'peace': 2, 'physics': 3, 'medicine': 4, 'economics': 5}
 
       this.getData("prizes", function(d) {
           prizesData = d;
@@ -105,22 +110,41 @@ nobelApp.factory('nobelService', ['$window', '$http', '$q', function ($window, $
             var countryObj = { "children": []};
             countryObj["country"] = countriesData[l].code;
 
+            // this is an array with six empty arrays. Each empty array symbolizes a prize category, using categoryDictionary
+            // later all the arrays will be joined to one array 
+            var categoryArray = [ 
+              [], [], [], [], [], []
+            ];
+
             // Loops through our laureates to look for laureates from this country
             for (var n=0; n<laureatesData.length; n++){
 
               // If the laureate is born in this country, grab info about them
               if ( laureatesData[n].bornCountryCode == countriesData[l].code) { 
-                var laureateObj = {};
-                laureateObj["laureate"] = laureatesData[n].firstname + " " + laureatesData[n].surname;
-                laureateObj["laureateId"] = laureatesData[n].id;
-                laureateObj["gender"] = laureatesData[n].gender;
-                laureateObj["category"] = laureatesData[n].prizes[laureatesData[n].prizes.length-1].category;
-                laureateObj["year"] = laureatesData[n].prizes[laureatesData[n].prizes.length-1].year;
-              
-                countryObj.children.push(laureateObj);
+
+                // If search for all prizes that have been awarded before the given year
+                if (laureatesData[n].prizes[laureatesData[n].prizes.length-1].year <= year) {
+                  // Grabs info about the laureate and adds it to the laureateObj
+                  var laureateObj = {};
+                  var cat = laureatesData[n].prizes[laureatesData[n].prizes.length-1].category;
+                  var laureateName = laureatesData[n].firstname + " " + laureatesData[n].surname;
+                  var wonYear = laureatesData[n].prizes[laureatesData[n].prizes.length-1].year;
+
+                  laureateObj["laureate"] = laureateName;
+                  laureateObj["laureateId"] = laureatesData[n].id;
+                  laureateObj["gender"] = laureatesData[n].gender;
+                  laureateObj["category"] = cat;
+                  laureateObj["year"] = wonYear;
+                
+                  // Puts the laureate in the correct array according to prize category
+                  categoryArray[categoryDictionary[cat]].push(laureateObj);
+                }
               }
               
             }
+            // Joins all the category arrays to one array
+            countryObj.children = categoryArray[0].concat(categoryArray[1],categoryArray[2],categoryArray[3],categoryArray[4],categoryArray[5]);
+ 
             contObj.children.push(countryObj);
           }
         }
