@@ -31,8 +31,8 @@
 <body ng-app="nobelApp" ng-controller="nobelCtrl">
 	<div id="container-fluid wrapper">
 		<!-- top menu bar for choice of visualization -->
-		<div id="menubar">
-			<div class="col-md-4 active" id="choice1" ng-click="pageButton('sunburst')">
+		<div id="menubar" class="col-md-12">
+			<div class="col-md-4 active" id="choice1" ng-click="pageButton('globeSunburstPage')">
 				Sunburst
 			</div>
 			<div class="col-md-4" id="choice2" ng-click="pageButton('chord')">
@@ -43,9 +43,14 @@
 				Our Project
 			</div>
 		</div>
-		<!-- Here are the divs containing the separate visualizations -->
-		<div id="sunburst" ng-hide="hideSunburst" >
-			sunburst goes here
+		<!-- Here are the divs containing the separate visualization pages-->
+		<div id="globeSunburstPage" class="col-md-6" ng-hide="hideSunburst">
+			
+			<div id="globe">
+			</div>
+			<div id="sunburst">
+			</div>
+			
 		</div>
 		<div id="chord" ng-hide="hideChord" >
 			chord diagram goes here
@@ -53,8 +58,8 @@
 		<div id="project" ng-hide="hideProject" >
 			Our project goes here ish
 		</div>
-
-		<!-- We need this but to work in the background.
+		<!--
+		We need this but to work in the background.
 		Country: <input type="text" name="countryName" ng-model="searchCountryName"> 
 		Up to what year: <input type="text" name="year" ng-model="searchYear">
 
@@ -66,7 +71,7 @@
 		<div>
 			<p>Select data from World Bank:</p>
 			<select required ng-model="wbDataChoice" ng-options="wbd.title for wbd in worldBankData" ng-change="onWbDataChange(wbDataChoice)">
-		        <option value="">--Select--</option>
+		        <option value=""> --Select-- </option>
 		    </select>
 		    <div ng-repeat="x in wbData">
 				{{x}}
@@ -78,11 +83,16 @@
 	<script src="js/lib/angular/angular.js"></script>
 	<script src="js/app.js"></script>
 	<script src="js/controllers/nobelCtrl.js"></script> 
+	<script src="http://d3js.org/topojson.v1.min.js"></script>
+	<script src="http://d3js.org/queue.v1.min.js"></script>
  	<!--<script src="js/data/dataManager.js"></script>
  	<script src="js/data/dataFormatter.js"></script>-->
 	<script src="js/services/worldBankService.js"></script>
 	<script src="js/services/nobelService.js"></script>
-	<script src="js/d3.v3.js"></script>
+	<script src="js/lib/d3.v3.js"></script>
+	<script src="js/sunburst.js"></script>
+	<script src="js/globe.js"></script>
+	<script src="js/chord.js"></script>
 
 	<script>
 		// update the clicked choice (ie. sunburst or chord chart/project) so div gets active = changes color to indicate clicked

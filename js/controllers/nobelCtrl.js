@@ -11,7 +11,7 @@ nobelApp.controller('nobelCtrl',
 
 	//hide/show of different views (sunburst/chord/project)
 	$scope.pageButton = function(id) {
-		if (id === "sunburst") {
+		if (id === "globeSunburstPage") {
 			$scope.hideSunburst = false;
 			$scope.hideChord = true;
 			$scope.hideProject = true;

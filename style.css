@@ -21,8 +21,8 @@ body {
 
 /* ****** TOP MENU BAR OF CHOICES ****** */
 #menubar {
-	margin-bottom: 0;
-	margin-top: 0;
+	margin: 0;
+	padding: 0;
 	text-align: center;
 	font-size: 18px;
 	color: white;
@@ -41,8 +41,89 @@ body {
 }
 
 .active {
-	background-color: #263238  !important; 
+	background-color: #37474F  !important; 
 	color: white !important;
 }
+
+/* ****** SUNBURST ****** */
+#globeSunburstPage {
+	width: 960px;
+	position: relative;
+	height: 750px;
+}
+
+#sunburst {
+	margin-top: -375px;
+	margin-left: -480px;
+	position: absolute;
+	z-index: 2;
+	left: 50%;
+	top: 50%;
+}
+
+/* ****** GLOBE POSITIONING ****** */
+#globe {
+	margin-left: -189px;
+	margin-top: -189.5px;
+	position: absolute;
+	z-index: 3;
+	left: 50%;
+	top: 50%;
+}
+
+/* ****** TOOLTIP SUNBURST ****** */
+.tooltip {
+	position: absolute;
+	z-index: 4;
+	background-color: white;
+	padding: 8px;
+	border: 1px solid #E0E0E0;
+	text-align: center;
+	font-size: 16px;
+	border-radius: 4px;	
+}
+
+
+/* ****** GLOBE ****** */
+.water {
+	fill: #01579B; /*#5853FF;*/
+}
+
+.land {
+	fill: #A5D6A7; /*#83E863;*/
+	stroke: #FFF;
+	stroke-width: 0.7px;
+}
+
+.land:hover {
+	fill: #FFB74D; /*#32BD8D;*/
+	stroke-width: 1px;
+}
+
+.focused {
+	fill: #F57C00; /*#32BD8D;*/
+}
+
+select {
+	position: absolute;
+	top: 20px;
+	left: 580px;
+	border: solid #ccc 1px;
+	border-radius: 4px;
+	padding: 3px;
+
+}
+
+.countryTooltip {
+	position: absolute;
+	z-index: 4;
+	background: white;
+	padding: 8px;
+	text-align: center;
+	border: 1px solid #E0E0E0;
+	font-size: 14px;
+	border-radius: 4px;
+}
+
 
 /* ****** OTHER ****** */
