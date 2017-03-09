@@ -102,13 +102,16 @@ nobelApp.factory('nobelService', ['$window', '$http', '$q', function ($window, $
         // Goes through each country and matches it to a continent
         for (var l=0; l<countriesData.length; l++) {
           
+          // Finds which continent this country is located on
           continentName = this.countryContinentDictionary[countriesData[l].name];
 
           // If this country is supposed to be with this continent
           // Look for laureates from this country
           if (continentName == contName) {
             var countryObj = { "children": []};
-            countryObj["country"] = countriesData[l].code;
+            countryObj["country"] = countriesData[l].name;
+            countryObj["countryId"] = countriesData[l].code;
+
 
             // this is an array with six empty arrays. Each empty array symbolizes a prize category, using categoryDictionary
             // later all the arrays will be joined to one array 
@@ -120,8 +123,7 @@ nobelApp.factory('nobelService', ['$window', '$http', '$q', function ($window, $
             for (var n=0; n<laureatesData.length; n++){
 
               // If the laureate is born in this country, grab info about them
-              if ( laureatesData[n].bornCountryCode == countriesData[l].code) { 
-
+              if ( laureatesData[n].bornCountryCode == countriesData[l].code && laureatesData[n].bornCountry == countriesData[l].name) { 
                 // If search for all prizes that have been awarded before the given year
                 if (laureatesData[n].prizes[laureatesData[n].prizes.length-1].year <= year) {
                   // Grabs info about the laureate and adds it to the laureateObj
