@@ -89,16 +89,12 @@
             "code": "FR"
         },
         {
-            "name": "Germany",
-            "code": "DE"
-        },
-        {
             "name": "Ghana",
             "code": "GH"
         },
         {
             "name": "United Kingdom",
-            "code": "UK"
+            "code": "GB"
         },
         {
             "name": "Greece",
@@ -227,10 +223,6 @@
         {
             "name": "Luxembourg",
             "code": "LU"
-        },
-        {
-            "name": "Scotland",
-            "code": "GB"
         },
         {
             "name": "Trinidad",
@@ -369,7 +361,7 @@
             "code": "RU"
         },
         {
-            "name": "West Germany",
+            "name": "West Germany (now Germany)",
             "code": "DE"
         },
         {
