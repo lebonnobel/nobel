@@ -5,14 +5,6 @@
             "code": "DE"
         },
         {
-            "name": "Alsace",
-            "code": "DE"
-        },
-        {
-            "name": "Germany",
-            "code": "DE"
-        },
-        {
             "name": "Argentina",
             "code": "AR"
         },
@@ -77,10 +69,6 @@
             "code": "EG"
         },
         {
-            "name": "Federal Republic of Germany",
-            "code": "DE"
-        },
-        {
             "name": "Finland",
             "code": "FI"
         },
@@ -98,7 +86,7 @@
         },
         {
             "name": "United Kingdom",
-            "code": "UK"
+            "code": "GB"
         },
         {
             "name": "Greece",
@@ -185,10 +173,6 @@
             "code": "ES"
         },
         {
-            "name": "Austria-Hungary",
-            "code": "HU"
-        },
-        {
             "name": "Sweden",
             "code": "SE"
         },
@@ -227,10 +211,6 @@
         {
             "name": "Luxembourg",
             "code": "LU"
-        },
-        {
-            "name": "Scotland",
-            "code": "GB"
         },
         {
             "name": "Trinidad",
@@ -369,7 +349,7 @@
             "code": "RU"
         },
         {
-            "name": "West Germany",
+            "name": "West Germany (now Germany)",
             "code": "DE"
         },
         {
@@ -381,7 +361,7 @@
             "code": "DE"
         },
         {
-            "name": "East Germany",
+            "name": "East Germany (now Germany",
             "code": "DE"
         },
         {

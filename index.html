@@ -28,7 +28,7 @@
 
 </header>
 <!-- Container for our app, using the nobelController -->
-<body ng-app="nobelApp" ng-controller="nobelCtrl">
+<body ng-app="nobelApp" ng-controller="nobelCtrl" >
 	<div id="container-fluid wrapper">
 		<!-- top menu bar for choice of visualization -->
 		<div id="menubar" class="col-md-12">
@@ -48,11 +48,11 @@
 			
 			<div id="globe">
 			</div>
-			<div id="sunburst">
+			<div id="sunburst" ng-controller="sunburst">
 			</div>
 			
 		</div>
-		<div id="chord" ng-hide="hideChord" >
+		<div id="chord" ng-hide="hideChord">
 			chord diagram goes here
 		</div>
 		<div id="project" ng-hide="hideProject" >
@@ -76,10 +76,10 @@
 		    <div ng-repeat="x in wbData">
 				{{x}}
 			</div>
-		</div> -->
+		</div> 
 		<div ng-repeat="x in nobelData">
 			{{x}}
-		</div>
+		</div>-->
 	</div>
 
 	<!-- Angular Scripts -->
@@ -94,7 +94,7 @@
 	<script src="js/services/nobelService.js"></script>
 	<script src="js/lib/d3.v3.js"></script>
 	<script src="js/sunburst.js"></script>
-	<script src="js/globe.js"></script>
+
 	<script src="js/chord.js"></script>
 
 	<script>

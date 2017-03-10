@@ -36,7 +36,7 @@ nobelApp.controller('nobelCtrl',
 		//$scope.nobelData = $scope.data.$$state;		
 		$scope.nobelData = nobelService.getNobelDataForCountry($scope.searchCountryName, $scope.searchYear);
 
-		console.log($scope.nobelData);
+		//console.log($scope.nobelData);
 	}
 
 
@@ -57,7 +57,7 @@ nobelApp.controller('nobelCtrl',
 			$scope.nobelData = nobelService.getNobelDataForSunburst(1930);
 			$scope.$apply();	// $scope.$apply tells angular that we have loaded in the data so it updates the view
 
-			console.log($scope.nobelData);
+			//console.log("scope", $scope.nobelData);
 		})		
 	}
   

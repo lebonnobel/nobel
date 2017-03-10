@@ -102,6 +102,8 @@ function ready(error, world, countryData) {
     .on("click", function(d) {
     //up3(d.id);
       up2(d);
+
+      console.log(countryById[d.id]);
       //alert(globalCountries[0][0]);
       //alert(globalCountries[d.id]);
       //alert(d.id);

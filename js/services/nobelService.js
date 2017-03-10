@@ -50,12 +50,22 @@ nobelApp.factory('nobelService', ['$window', '$http', '$q', function ($window, $
 
     // This function returns the data requested. Might be redundant due to the data variables being public, but use this to avoid changing the original data.
     this.getData = function(dataName, callback){
+        var alreadyCalled = false;
         if (isUndefinedOrEmpty(prizesData) || isUndefinedOrEmpty(laureatesData) || isUndefinedOrEmpty(countriesData)){ 
             jQueryLoadJSON(function(){
-                callback(deferedGetData(dataName));
+
+                //To prevent several calls, we need to check if we already have called
+                if(!alreadyCalled) {
+                    callback(deferedGetData(dataName));
+                    alreadyCalled = true;
+                }
             });
         } else {
-            callback(deferedGetData(dataName));
+            if(!alreadyCalled) {
+                callback(deferedGetData(dataName));
+                alreadyCalled = true;
+            }
+            
         }
     }
 
@@ -108,7 +118,9 @@ nobelApp.factory('nobelService', ['$window', '$http', '$q', function ($window, $
           // Look for laureates from this country
           if (continentName == contName) {
             var countryObj = { "children": []};
-            countryObj["country"] = countriesData[l].code;
+            //countryObj["country"] = countriesData[l].code;
+            countryObj["country"] = countriesData[l].name;
+            countryObj["countryId"] = countriesData[l].code;
 
             // this is an array with six empty arrays. Each empty array symbolizes a prize category, using categoryDictionary
             // later all the arrays will be joined to one array 
@@ -120,8 +132,9 @@ nobelApp.factory('nobelService', ['$window', '$http', '$q', function ($window, $
             for (var n=0; n<laureatesData.length; n++){
 
               // If the laureate is born in this country, grab info about them
-              if ( laureatesData[n].bornCountryCode == countriesData[l].code) { 
-
+              //if ( laureatesData[n].bornCountryCode == countriesData[l].code) { 
+                //if ( laureatesData[n].bornCountryCode == countriesData[l].code && laureatesData[n].bornCountry == countriesData[l].name) {
+                if ( laureatesData[n].bornCountryCode == countriesData[l].code && laureatesData[n].bornCountry == countriesData[l].name) {
                 // If search for all prizes that have been awarded before the given year
                 if (laureatesData[n].prizes[laureatesData[n].prizes.length-1].year <= year) {
                   // Grabs info about the laureate and adds it to the laureateObj
