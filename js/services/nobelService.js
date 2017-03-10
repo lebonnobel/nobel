@@ -71,8 +71,8 @@ nobelApp.factory('nobelService', ['$window', '$http', '$q', function ($window, $
     }
 
     // This function returns all data for the sunburst
-    this.getNobelDataForSunburst = function(year) {
-      if (year == undefined) {
+    this.getNobelDataForSunburst = function(year, showAllCountries) {
+      if (year == undefined || year == "*" || year == "all" || year == 0) {
         year = 3500;
       }
       var root = {"name": "flare", "children": []};
@@ -147,7 +147,14 @@ nobelApp.factory('nobelService', ['$window', '$http', '$q', function ($window, $
             // Joins all the category arrays to one array
             countryObj.children = categoryArray[0].concat(categoryArray[1],categoryArray[2],categoryArray[3],categoryArray[4],categoryArray[5]);
  
-            contObj.children.push(countryObj);
+            if (showAllCountries == true) {
+                contObj.children.push(countryObj);
+            } else {
+                if (countryObj.children.length>0) {
+                   contObj.children.push(countryObj); 
+                }
+            }
+            
           }
         }
 
