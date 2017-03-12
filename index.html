@@ -48,7 +48,21 @@
 			sunburst goes here
 		</div>
 		<div id="chord" ng-hide="hideChord" >
-			chord diagram goes here
+			<h1 id ="text">Now showing: Prizes by Category and Gender</h1>
+  			<table>
+  				<tr>
+    				<td>
+      					<form action="">
+        					<input type="radio" name="gender" value="gender" checked="checked" onclick="genderData()"> Gender<br></input>
+        					<input type="radio" name="gender" value="age" onclick="ageData()"> Age<br></input>
+      					</form>
+    				</td>
+    				<td>
+      					<div id="flow"></div>
+    				</td>
+  				</tr>
+			</table>
+  			<p><a href="https://bitbucket.org/artstr/d3elements.git">Code for original Chord Diagram</a></p>
 		</div>
 		<div id="project" ng-hide="hideProject" >
 			Our project goes here ish
@@ -86,6 +100,7 @@
 	<script src="js/services/worldBankService.js"></script>
 	<script src="js/services/nobelService.js"></script>
 	<script src="js/d3.v3.js"></script>
+	<script src="js/chord.js"></script>
 
 	<script>
 		// update the clicked choice (ie. sunburst or chord chart/project) so div gets active = changes color to indicate clicked
