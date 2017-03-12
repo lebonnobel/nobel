@@ -39,9 +39,6 @@ nobelApp.controller('nobelCtrl',
 		//console.log($scope.nobelData);
 	}
 
-
-
-
 	//////////////////// ON LOAD ////////////////////
 	// This is a local on load function. All the variables created here will not be accessable from outside
 	//(function () {
@@ -54,21 +51,42 @@ nobelApp.controller('nobelCtrl',
 		// Inside this function you can reach our data
 		nobelService.getData("prizes", function(data){
 
+
 			// nobelService.getNobelDataForSunburst ***********************************
 			// Input: (year, showAllCountries) 
 			// year: Int. Up until that year you want to show. Use 0 or '*' to show all years
 			// showAllCountries: bool/Empty. Send in true if you want to show all countries, if you only want to show winners, leave blank or false
 			// EX: nobelService.getNobelDataForSunburst(1930, true); <---- Shows all countries, and winners up to 1930
 			// EX: nobelService.getNobelDataForSunburst(0); <---- Shows only countries with winners for all years
-			$scope.nobelData = nobelService.getNobelDataForSunburst(0); 
-			$scope.$apply();	// $scope.$apply tells angular that we have loaded in the data so it updates the view
+		// 	$scope.nobelData = nobelService.getNobelDataForSunburst(0); 
+		// 	$scope.$apply();	// $scope.$apply tells angular that we have loaded in the data so it updates the view
 
-			//console.log("scope", $scope.nobelData);
-		})		
+		// 	//console.log("scope", $scope.nobelData);
+		// })		
+
+      
+		});
+		
+    // nobelService.getNobelDataForSunburst ***********************************
+		// Input: (year, showAllCountries, callback) 
+		// year: Int. Up until that year you want to show. Use 0 or '*' to show all years
+		// showAllCountries: bool/Empty. Send in true if you want to show all countries, if you only want to show winners, leave blank or false
+		// callback: The function that will run when the data has arrived
+		// EX: nobelService.getNobelDataForSunburst(1930, true); <---- Shows all countries, and winners up to 1930
+		// EX: nobelService.getNobelDataForSunburst(0); <---- Shows only countries with winners for all years
+		// EX: nobelService.getNobelDataForSunburst(0, undefined, function(data){ <---- Returns only countries with winners for all years and prints the result
+		//		console.log(data);		
+		// }); 
+		nobelService.getNobelDataForSunburst(0, undefined, function(data){
+			//$scope.nobelData = data;
+			//$scope.$apply();	// $scope.$apply tells angular that we have loaded in the data so it updates the view
+			console.log($scope.nobelData);
+		});
 	}
-  
-	$scope.onStart();
 
+	// To make our onStart function run on start
+	$scope.onStart();
+	
 	//////////////////////////// WORLD BANK DATA /////////////////////////////
 
 	// Shows which datasets you can choose from, specified in worldBankService
@@ -86,10 +104,25 @@ nobelApp.controller('nobelCtrl',
 				console.log("Here's your data", d);
 				$scope.wbData = d;
 			});
-				
 		} else {
-			$scope.wbData = ''
+			$scope.wbData = '';
 		}
 	}
+	
+	// This function requests data from the worldBankService, as a controller to the view
+	$scope.getDataForGlobe = function(dataType, year, callback){
+		// worldBankService.getDataForGlobe
+		// Input: (dataType, year, callback)
+		// dataType: The type of data requested, look in worldBankService to know what data is avaliable
+		// year: what year to look for data
+		// callback: The function that runs when the data has returned
+		worldBankService.getDataForGlobe(dataType, year, function(data){
+			callback(data);
+		});
+	}
 
+	// JUST A TEST FUNCTION, JUST REMOVE IF YOU WANT
+	$scope.getDataForGlobe('mean-years-in-school', 2009, function(data){
+  		console.log(data);
+  	});
 });

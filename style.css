@@ -19,6 +19,10 @@ body {
 	height: 100%;
 }
 
+h1 {
+	margin-top:0px;
+}
+
 /* ****** TOP MENU BAR OF CHOICES ****** */
 #menubar {
 	margin: 0;
@@ -168,6 +172,27 @@ a {
 	font-size: 18px;
 }
 
+/* ****** CHORD ****** */
+
+#flow .flows {
+  opacity: .6;
+  border: 100% solid gray;
+}
+#flow .chord-hover {
+  position: absolute;
+  visibility: hidden;
+  background: #EEE;
+  padding: 15px 25px 25px 15px;
+  border: 1px solid gray;
+  border-radius: 5px;
+}
+
+@media screen and (min-device-width : 3000px) {
+  body
+    {
+      font-size: 45px;
+    }
+}
 
 
 /* ****** OTHER ****** */

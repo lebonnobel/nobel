@@ -3,52 +3,46 @@ nobelApp.factory('nobelService', ['$window', '$http', '$q', function ($window, $
 // It also filters data from controller in order to send to D3 in a proper format
     
     // The url to the data, for easy change if needed
-    var nobelDataUrl = "data/nobel/";
-    var gapminderDataUrl = "data/gapminder/";
+    this.nobelDataUrl = "data/nobel/";
+    this.dataSets = [
+        {
+            'title' : 'Countries',
+            'description' : '',
+            'filename' : 'countries'
+        }, 
+        {
+            'title' : 'Laureates',
+            'description' : '',
+            'filename' : 'laureates'
+        }, 
+        {
+            'title' : 'Prize',
+            'description' : '',
+            'filename' : 'prizes'
+        }
+    ];
     
     // The data storing variables
-    var prizesData = [];    
-    var laureatesData = [];    
-    var countriesData = [];
+    var globalPrizesData = [];    
+    var globalLaureatesData = [];    
+    var globalCountriesData = [];
+    var dataDictionary = {"prizes":globalPrizesData, "laureates":globalLaureatesData, "countries":globalCountriesData};
     
     //////////////////// DATA LOADING ////////////////////
-       
-    // Called from teh controller. We check jQuery before loading
-    this.loadData = function(){
-        // We start a check interval to wait until jQuery has loaded before we start reading the data
-        defer(jQueryLoadJSON);
+    
+    // This function loads all data sequential to ensure that all data is loaded properly, then it returns it in a callback
+    this.getAllData = function(callback){
+        var self = this;
+        this.getData("prizes", function(data){
+            self.getData("laureates", function(data){
+                self.getData("countries", function(data){
+                    callback(dataDictionary["prizes"], dataDictionary["laureates"], dataDictionary["countries"]);
+                });
+            });
+        });
     }
-
-    // Load all JSON files
-    function jQueryLoadJSON(callback){
-        // First we load all the nobel data
-        // Load the prizeData
-        $.getJSON(nobelDataUrl + "prize.json", function(json){
-            prizesData = json.prizes;
-            if (!isUndefinedOrEmpty(prizesData) && !isUndefinedOrEmpty(laureatesData) && !isUndefinedOrEmpty(countriesData)){ 
-                callback(); 
-            }
-        });
-        // Load the laureateData
-        $.getJSON(nobelDataUrl + "laureate.json", function(json){
-            laureatesData = json.laureates;
-            if (!isUndefinedOrEmpty(prizesData) && !isUndefinedOrEmpty(laureatesData) && !isUndefinedOrEmpty(countriesData)){ 
-                callback(); 
-            }
-        });
-        // Load the countriesData
-        $.getJSON(nobelDataUrl + "country.json", function(json){
-            countriesData = json.countries;
-            if (!isUndefinedOrEmpty(prizesData) && !isUndefinedOrEmpty(laureatesData) && !isUndefinedOrEmpty(countriesData)){ 
-                callback(); 
-            }
-        });
-        // Then we load all the gapminder data
-    }
-
-    //////////////////// DATA GETTER ////////////////////
-
-    // This function returns the data requested. Might be redundant due to the data variables being public, but use this to avoid changing the original data.
+    
+    // This function loads and returns the requested data in a callback
     this.getData = function(dataName, callback){
         var alreadyCalled = false;
         if (isUndefinedOrEmpty(prizesData) || isUndefinedOrEmpty(laureatesData) || isUndefinedOrEmpty(countriesData)){ 
@@ -66,11 +60,181 @@ nobelApp.factory('nobelService', ['$window', '$http', '$q', function ($window, $
                 alreadyCalled = true;
             }
             
+        // First we must check if jQuery has loaded
+        if (window.jQuery){
+            // Then we check if we have previously loaded the data already
+            if(!isUndefinedOrEmpty(dataDictionary[dataName])) {
+                // If the data has been loaded before, we return it instantly
+                callback(dataDictionary[dataName]);
+            // Otherwise we load the data and store it
+            } else {
+                $.getJSON(this.nobelDataUrl + dataName + ".json", function(json){
+                    // We store it
+                    dataDictionary[dataName] = json[Object.keys(json)[0]];
+                    // Send the loaded data back
+                    callback(json);
+                });
+            }
+        // If jQuery has not yet loaded, we wait 50 milliseconds
+        } else {
+            setTimeout(function() { defer(this.getData(dataName, callback)); }, 50);
+
         }
     }
+    
+    // Checks if an array is undefined or empty
+    function isUndefinedOrEmpty(array) {
+        return (array == undefined || array.length == 0);
+    }
+
+    //////////////////// DATA GETTER ////////////////////
+
+    // This function returns all data for the sunburst
+    this.getNobelDataForSunburst = function(year, showAllCountries, callback) {
+        var self = this;
+        this.getAllData(function(prizesData, laureatesData, countriesData){
+          if (year == undefined || year == "*" || year == "all" || year == 0) {
+            year = 3500;
+          }
+          var root = {"name": "flare", "children": []};
+          var categoryDictionary = {'chemistry': 0, 'literature': 1, 'peace': 2, 'physics': 3, 'medicine': 4, 'economics': 5}
+          var contName;
+          // for each continent
+          for (var k=0; k<self.continents.length; k++) {
+            var contObj = { "children": []};
+            contName = self.continents[k];
+            contObj["continent"] = contName; 
+            // Goes through each country and matches it to a continent
+            for (var l=0; l<countriesData.length; l++) {
+              // Finds which continent this country is located on
+              continentName = self.countryContinentDictionary[countriesData[l].name];
+              // If this country is supposed to be with this continent
+              // Look for laureates from this country
+              if (continentName == contName) {
+                var countryObj = { "children": []};
+                countryObj["country"] = countriesData[l].name;
+                countryObj["countryId"] = countriesData[l].code;
+                // this is an array with six empty arrays. Each empty array symbolizes a prize category, using categoryDictionary
+                // later all the arrays will be joined to one array 
+                var categoryArray = [ [], [], [], [], [], [] ];
+                // Loops through our laureates to look for laureates from this country
+                for (var n=0; n<laureatesData.length; n++){
+                  // If the laureate is born in this country, grab info about them
+                  if ( laureatesData[n].bornCountryCode == countriesData[l].code && laureatesData[n].bornCountry == countriesData[l].name) { 
+                    // If search for all prizes that have been awarded before the given year
+                    if (laureatesData[n].prizes[laureatesData[n].prizes.length-1].year <= year) {
+                      // Grabs info about the laureate and adds it to the laureateObj
+                      var laureateObj = {};
+                      var cat = laureatesData[n].prizes[laureatesData[n].prizes.length-1].category;
+                      var laureateName = laureatesData[n].firstname + " " + laureatesData[n].surname;
+                      var wonYear = laureatesData[n].prizes[laureatesData[n].prizes.length-1].year;
+                      laureateObj["laureate"] = laureateName;
+                      laureateObj["laureateId"] = laureatesData[n].id;
+                      laureateObj["gender"] = laureatesData[n].gender;
+                      laureateObj["category"] = cat;
+                      laureateObj["year"] = wonYear;
+                      // Puts the laureate in the correct array according to prize category
+                      categoryArray[categoryDictionary[cat]].push(laureateObj);
+                    }
+                  }
+                }
+                // Joins all the category arrays to one array
+                countryObj.children = categoryArray[0].concat(categoryArray[1],categoryArray[2],categoryArray[3],categoryArray[4],categoryArray[5]);
+                if (showAllCountries == true) {
+                    contObj.children.push(countryObj);
+                } else {
+                    if (countryObj.children.length>0) {
+                       contObj.children.push(countryObj); 
+                    }
+                }
+              }
+            }
+            root.children.push(contObj);
+          }
+          callback(root);
+       });
+    }
+    
+    // This function returns the data for the Chord Diagram
+    this.getNobelDataForChordDiagram = function (type, callback){
+        this.getAllData(function(prizesData, laureatesData, countriesData){
+            var dataArray = [['Disposition', 'Physics', 'Chemistry', 'Physiology or Medicine', 'Literature', 'Peace', 'Economics']];        
+            // If we have requested the gender data we calculate it here
+            if(type === "gender"){
+                var maleLaureatesArray = ['Men', 0, 0, 0, 0, 0 ,0];
+                var femaleLaureatesArray = ['Women', 0, 0, 0, 0, 0 ,0];
+                var orgLaureatesArray = ['Organizations', 0, 0, 0, 0, 0 ,0];
+                // We loop through our prizesData
+                for (var i = 0; i < prizesData.length; i++) {
+                  // For every laureate in this prize
+                  for (var j = 0; j < prizesData[i].laureates.length; j++) {
+                    var tempLaureate = getLaureateByID(laureatesData, prizesData[i].laureates[j].id);
+                    // Then check the laureates gender
+                    if(tempLaureate.gender == "male"){
+                        maleLaureatesArray[nobelCategoryDictionary[prizesData[i].category]+1]++;
+                    } else if(tempLaureate.gender == "female"){
+                        femaleLaureatesArray[nobelCategoryDictionary[prizesData[i].category]+1]++;
+                    } else {
+                        orgLaureatesArray[nobelCategoryDictionary[prizesData[i].category]+1]++;
+                    }
+                  }
+                }
+                // Then we append all the gender arrays
+                dataArray.push(maleLaureatesArray);
+                dataArray.push(femaleLaureatesArray);
+                dataArray.push(orgLaureatesArray);
+            // If we have requested the age data, we calculate it here
+            } else if(type === "age"){
+                var ageGroup1 = ['<35', 0, 0, 0, 0, 0, 0];
+                var ageGroup2 = ['36-45', 0, 0, 0, 0, 0, 0];
+                var ageGroup3 = ['46-55', 0, 0, 0, 0, 0, 0];
+                var ageGroup4 = ['56-65', 0, 0, 0, 0, 0, 0];
+                var ageGroup5 = ['66-75', 0, 0, 0, 0, 0, 0];
+                var ageGroup6 = ['76-85', 0, 0, 0, 0, 0, 0];
+                var ageGroup7 = ['86+', 0, 0, 0, 0, 0, 0];
+                // We loop through our prizesData
+                for (var i = 0; i < prizesData.length; i++) {
+                  // For every laureate in this prize
+                  for (var j = 0; j < prizesData[i].laureates.length; j++) {
+                    var tempLaureate = getLaureateByID(laureatesData, prizesData[i].laureates[j].id);
+                    // Then we calculate the laureates age at the prize award
+                    var bornDate = new Date(tempLaureate.born);
+                    var awardedDate = new Date(prizesData[i].year + '-12-10');
+                    // I have no idea why we subtract 1970, but saw it on das internetz and it seems to be working
+                    var laureateAgeWhenAwarded = new Date(awardedDate - bornDate).getFullYear() - 1970;
+                    if(laureateAgeWhenAwarded<=35){
+                        ageGroup1[nobelCategoryDictionary[prizesData[i].category]+1]++;
+                    } else if(laureateAgeWhenAwarded<=45){
+                        ageGroup2[nobelCategoryDictionary[prizesData[i].category]+1]++;
+                    } else if(laureateAgeWhenAwarded<=55){
+                        ageGroup3[nobelCategoryDictionary[prizesData[i].category]+1]++;
+                    } else if(laureateAgeWhenAwarded<=65){
+                        ageGroup4[nobelCategoryDictionary[prizesData[i].category]+1]++;
+                    } else if(laureateAgeWhenAwarded<=75){
+                        ageGroup5[nobelCategoryDictionary[prizesData[i].category]+1]++;
+                    } else if(laureateAgeWhenAwarded<=85){
+                        ageGroup6[nobelCategoryDictionary[prizesData[i].category]+1]++;
+                    } else if(laureateAgeWhenAwarded>=86){
+                        ageGroup7[nobelCategoryDictionary[prizesData[i].category]+1]++;
+                    }
+                  }
+                }
+                // Then we append all the age arrays
+                dataArray.push(ageGroup1);
+                dataArray.push(ageGroup2);
+                dataArray.push(ageGroup3);
+                dataArray.push(ageGroup4);
+                dataArray.push(ageGroup5);
+                dataArray.push(ageGroup6);
+                dataArray.push(ageGroup7);
+            }
+            callback(dataArray);
+        });
+    }
+
 
     // This function returns nobel data for the given country, by the given year
-    this.getNobelDataForCountry = function (countryName, year, callback) {
+    /*this.getNobelDataForCountry = function (countryName, year, callback) {
         if (isUndefinedOrEmpty(prizesData) || isUndefinedOrEmpty(laureatesData) || isUndefinedOrEmpty(countriesData)){ 
             jQueryLoadJSON(function(){
                 callback(deferedGetNobelDataForCountry(countryName, year));
@@ -78,245 +242,12 @@ nobelApp.factory('nobelService', ['$window', '$http', '$q', function ($window, $
         } else {
             callback(deferedGetNobelDataForCountry(countryName, year));
         }
-    }
-
-    // This function returns all data for the sunburst
-    this.getNobelDataForSunburst = function(year, showAllCountries) {
-      if (year == undefined || year == "*" || year == "all" || year == 0) {
-        year = 3500;
-      }
-      var root = {"name": "flare", "children": []};
-      var contName;
-      var prizesData;
-      var laureatesData;
-      var countriesData;
-      
-      var categoryDictionary = {'chemistry': 0, 'literature': 1, 'peace': 2, 'physics': 3, 'medicine': 4, 'economics': 5}
-
-      this.getData("prizes", function(d) {
-          prizesData = d;
-      });
-      this.getData("laureates", function(d) {
-          laureatesData = d;
-      });
-      this.getData("countries", function(d) {
-          countriesData = d;
-      });
-
-      // for each continent
-      for (var k=0; k<this.continents.length; k++) {
-        var contObj = { "children": []};
-        contName = this.continents[k];
-        contObj["continent"] = contName; 
-        
-        // Goes through each country and matches it to a continent
-        for (var l=0; l<countriesData.length; l++) {
-          
-          // Finds which continent this country is located on
-          continentName = this.countryContinentDictionary[countriesData[l].name];
-
-          // If this country is supposed to be with this continent
-          // Look for laureates from this country
-          if (continentName == contName) {
-            var countryObj = { "children": []};
-
-            countryObj["country"] = countriesData[l].name;
-            countryObj["countryId"] = countriesData[l].code;
-
-
-            // this is an array with six empty arrays. Each empty array symbolizes a prize category, using categoryDictionary
-            // later all the arrays will be joined to one array 
-            var categoryArray = [ 
-              [], [], [], [], [], []
-            ];
-
-            // Loops through our laureates to look for laureates from this country
-            for (var n=0; n<laureatesData.length; n++){
-
-              // If the laureate is born in this country, grab info about them
-              if ( laureatesData[n].bornCountryCode == countriesData[l].code && laureatesData[n].bornCountry == countriesData[l].name) { 
-                // If search for all prizes that have been awarded before the given year
-                if (laureatesData[n].prizes[laureatesData[n].prizes.length-1].year <= year) {
-                  // Grabs info about the laureate and adds it to the laureateObj
-                  var laureateObj = {};
-                  var cat = laureatesData[n].prizes[laureatesData[n].prizes.length-1].category;
-                  var laureateName = laureatesData[n].firstname + " " + laureatesData[n].surname;
-                  var wonYear = laureatesData[n].prizes[laureatesData[n].prizes.length-1].year;
-
-                  laureateObj["laureate"] = laureateName;
-                  laureateObj["laureateId"] = laureatesData[n].id;
-                  laureateObj["gender"] = laureatesData[n].gender;
-                  laureateObj["category"] = cat;
-                  laureateObj["year"] = wonYear;
-                
-                  // Puts the laureate in the correct array according to prize category
-                  categoryArray[categoryDictionary[cat]].push(laureateObj);
-                }
-              }
-              
-            }
-            // Joins all the category arrays to one array
-            countryObj.children = categoryArray[0].concat(categoryArray[1],categoryArray[2],categoryArray[3],categoryArray[4],categoryArray[5]);
- 
-            if (showAllCountries == true) {
-                contObj.children.push(countryObj);
-            } else {
-                if (countryObj.children.length>0) {
-                   contObj.children.push(countryObj); 
-                }
-            }
-            
-          }
-        }
-
-        root.children.push(contObj);
-      }
-      
-
-      return root;
-    }
+    }*/
     
-    // This function returns the data for the Chord Diagram
-    this.getNobelDataForChordDiagram = function (type, callback){
-        var alreadyCalled = false;
-        if (isUndefinedOrEmpty(prizesData) || isUndefinedOrEmpty(laureatesData) || isUndefinedOrEmpty(countriesData)){ 
-            jQueryLoadJSON(function(){
-                // To prevent several calls, we need to check if we already have called
-                if(!alreadyCalled){
-                    callback(deferedGetNobelDataForChordDiagram(type));
-                    alreadyCalled = true;
-                }
-            });
-        } else {
-            return deferedGetNobelDataForChordDiagram(type);
-        }
-    }
-
-    function deferedGetNobelDataForChordDiagram(type){
-        var dataArray = [['Disposition', 'Physics', 'Chemistry', 'Physiology or Medicine', 'Literature', 'Peace', 'Economics']];        
-        // If we have requested the gender data we calculate it here
-        if(type === "gender"){
-            var maleLaureatesArray = ['Men', 0, 0, 0, 0, 0 ,0];
-            var femaleLaureatesArray = ['Women', 0, 0, 0, 0, 0 ,0];
-            var orgLaureatesArray = ['Organizations', 0, 0, 0, 0, 0 ,0];
-            // We loop through our prizesData
-            for (var i = 0; i < prizesData.length; i++) {
-              // For every laureate in this prize
-              for (var j = 0; j < prizesData[i].laureates.length; j++) {
-                var tempLaureate = getLaureateByID(laureatesData, prizesData[i].laureates[j].id);
-                // Then check the laureates gender
-                switch(tempLaureate.gender){
-                case "male":
-                    maleLaureatesArray[nobelCategoryDictionary[prizesData[i].category]+1]++;
-                    break;
-                case "female":
-                    femaleLaureatesArray[nobelCategoryDictionary[prizesData[i].category]+1]++;
-                    break;
-                default:
-                    orgLaureatesArray[nobelCategoryDictionary[prizesData[i].category]+1]++;
-                    break;
-                }
-              }
-            }
-            // Then we append all the gender arrays
-            dataArray.push(maleLaureatesArray);
-            dataArray.push(femaleLaureatesArray);
-            dataArray.push(orgLaureatesArray);
-        // If we have requested the age data, we calculate it here
-        } else if(type === "age"){
-            var ageGroup1 = ['<35', 0, 0, 0, 0, 0, 0];
-            var ageGroup2 = ['36-45', 0, 0, 0, 0, 0, 0];
-            var ageGroup3 = ['46-55', 0, 0, 0, 0, 0, 0];
-            var ageGroup4 = ['56-65', 0, 0, 0, 0, 0, 0];
-            var ageGroup5 = ['66-75', 0, 0, 0, 0, 0, 0];
-            var ageGroup6 = ['76-85', 0, 0, 0, 0, 0, 0];
-            var ageGroup7 = ['86+', 0, 0, 0, 0, 0, 0];
-            // We loop through our prizesData
-            for (var i = 0; i < prizesData.length; i++) {
-              // For every laureate in this prize
-              for (var j = 0; j < prizesData[i].laureates.length; j++) {
-                var tempLaureate = getLaureateByID(laureatesData, prizesData[i].laureates[j].id);
-                // Then we calculate the laureates age at the prize award
-                var bornDate = new Date(tempLaureate.born);
-                var awardedDate = new Date(prizesData[i].year + '-12-10');
-                // I have no idea why we subtract 1970, but saw it on das internetz and it seems to be working
-                var laureateAgeWhenAwarded = new Date(awardedDate - bornDate).getFullYear() - 1970;
-                
-                if(laureateAgeWhenAwarded<=35){
-                    ageGroup1[nobelCategoryDictionary[prizesData[i].category]+1]++;
-                } else if(laureateAgeWhenAwarded<=45){
-                    ageGroup2[nobelCategoryDictionary[prizesData[i].category]+1]++;
-                } else if(laureateAgeWhenAwarded<=55){
-                    ageGroup3[nobelCategoryDictionary[prizesData[i].category]+1]++;
-                } else if(laureateAgeWhenAwarded<=65){
-                    ageGroup4[nobelCategoryDictionary[prizesData[i].category]+1]++;
-                } else if(laureateAgeWhenAwarded<=75){
-                    ageGroup5[nobelCategoryDictionary[prizesData[i].category]+1]++;
-                } else if(laureateAgeWhenAwarded<=85){
-                    ageGroup6[nobelCategoryDictionary[prizesData[i].category]+1]++;
-                } else if(laureateAgeWhenAwarded>=86){
-                    ageGroup7[nobelCategoryDictionary[prizesData[i].category]+1]++;
-                }
-              }
-            }
-            // Then we append all the age arrays
-            dataArray.push(ageGroup1);
-            dataArray.push(ageGroup2);
-            dataArray.push(ageGroup3);
-            dataArray.push(ageGroup4);
-            dataArray.push(ageGroup5);
-            dataArray.push(ageGroup6);
-            dataArray.push(ageGroup7);
-        }
-        return dataArray;
-    }
-
-
-    function deferedGetData(dataName){
-        // Temporary return array
-        var retData = [];
-        // We find and get the correct data requested
-        switch (dataName){
-        case "prizes":
-            retData = prizesData;
-            break;
-        case "laureates":
-            retData = laureatesData;
-            break;
-        case "countries":
-            retData = countriesData;
-            break;
-        default:
-            break;
-        }
-        // After we have found our data, we return it
-        return retData;   
-    }
-    
-    function deferedGetNobelDataForCountry(countryName, year){
-        var formattedData = [];
-        //var formattingArray = [["physics", "chemistry", "medicine", "litterature", "peace", "economics"], ["laureates"]];
-        formattedData = formatNobelDataForSunburst(prizesData, laureatesData, countriesData, countryName, year);
+    /*function deferedGetNobelDataForCountry(countryName, year){
         // Return the data
-        return formattedData;
-    }
-
-    function isUndefinedOrEmpty(array){
-        return (array == undefined || array.length == 0);
-    }
-
-    //////////////////// TIMEOUT ////////////////////
-
-    // This function checks if jQuery has been loaded, otherwise we wait a little
-    // jQuery is needed to load all our data, so no data operations can be done before it has been loaded
-    function defer(method) {
-        if (window.jQuery){
-            method();
-        }
-        else{
-            setTimeout(function() {defer(method);}, 50);
-        }
-    }
+        return formatNobelDataForSunburst(prizesData, laureatesData, countriesData, countryName, year);
+    }*/
 
     //////////////////// FORMATTING //////////////////////
 
