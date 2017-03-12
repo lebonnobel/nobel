@@ -11,38 +11,38 @@ nobelApp.controller('sunburst', function(nobelService, $scope) {
 
 	//predefined colors for continents
 	var colors = {
-		"Oceania": "#29374a" , //Purple
-		"North America": "#4e3f4f", //Blue
-		"South America": "#644141", //Cyan
-		"Asia": "#815f43", //Teal
-		"Africa": "#957b3d", //Amber
-		"Europe": "#556c51" //Deep Orange
+		"Oceania": "#84acad" , //Purple
+		"North America": "#7da7ae", //Blue
+		"South America": "#7da99e", //Cyan
+		"Asia": "#7f959a", //Teal
+		"Africa": "#9fc1b1", //Amber
+		"Europe": "#99bcbc" //Deep Orange
 	};
 
 	//below color variables returns a color in a predefined domain for countries belonging to the different continents
 	var OceaniaColor = d3.scale.linear()
 			.domain([1, 9])
-			.range(["#6a7c96", "#29374a"])
+			.range(["#546b6a", "#b5e1e0"])
 			.interpolate(d3.interpolateHcl);
 	var NAmericaColor = d3.scale.linear()
 			.domain([1, 9])
-			.range(["#9b879c", "#4e3f4f"])
+			.range(["#567275", "#a9dbe0"])
 			.interpolate(d3.interpolateHcl);
 	var SAmericaColor = d3.scale.linear()
 			.domain([1, 9])
-			.range(["#b98a8a", "#644141"])
+			.range(["547068", "#aedccf"])
 			.interpolate(d3.interpolateHcl);
 	var AsiaColor = d3.scale.linear()
 			.domain([1, 9])
-			.range(["#dfb28d", "#815f43"])
+			.range(["#505e60", "#afcbd0"])
 			.interpolate(d3.interpolateHcl);
 	var AfricaColor = d3.scale.linear()
 			.domain([1, 9])
-			.range(["#fad784", "#957b3d"])
+			.range(["#6d8478", "#d0e9db"])
 			.interpolate(d3.interpolateHcl);
 	var EuropeColor = d3.scale.linear()
 			.domain([1, 9])
-			.range(["#a5c39f", "#556c51"])
+			.range(["#637777", "#c9e8ea"])
 			.interpolate(d3.interpolateHcl);
 
 	//perhaps unnecessary atm, but returns predefined colors for the different continents
@@ -52,12 +52,12 @@ nobelApp.controller('sunburst', function(nobelService, $scope) {
 
 	//the predefined colors of the different prize categories
 	var categoryColors = {
-	  "physics":  "#efa833", //#455C7C",
-	  "literature": "#826a84", //#826A84",
-	  "medicine": "#ef7a65", //#A86D6D",
-	  "economics": "#faf775", //#D89F71",
-	  "chemistry": "#a86d6d", //#F9CE66",
-	  "peace": "#d89f71", //#8FB588"
+	  "physics":  "#455C7C", //#455C7C",
+	  "literature": "#826A84", //#826A84",
+	  "medicine": "#A86D6D", //#A86D6D",
+	  "economics": "#D89F71", //#D89F71",
+	  "chemistry": "#F9CE66", //#F9CE66",
+	  "peace": "#8FB588", //#8FB588"
 	};
 
 	//global variables needed further down
