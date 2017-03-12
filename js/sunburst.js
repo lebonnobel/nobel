@@ -216,12 +216,12 @@ nobelApp.controller('sunburst', function(nobelService, $scope) {
 
 				//get data?
 				q = queue()
-				  .defer(d3.json, "http://codepen.io/JohannaG92/pen/KWmZZv.js")
-				  .defer(d3.tsv, "http://codepen.io/JohannaG92/pen/xqdppQ.js")
+				  .defer(d3.json, "https://codepen.io/JohannaG92/pen/KWmZZv.js")
+				  .defer(d3.tsv, "https://codepen.io/JohannaG92/pen/xqdppQ.js")
 				  //.defer(d3.json, "http://codepen.io/JohannaG92/pen/VpbZBW.js")       // World bank data
 				  //.defer(d3.json, "http://codepen.io/JohannaG92/pen/RpVxQw.js")   // World bank data
-				  .defer(d3.json, "http://codepen.io/JohannaG92/pen/ZeKvrx.js")     // World bank data
-				  .defer(d3.json, "http://codepen.io/JohannaG92/pen/LWyeQv.js")     // Code to id jsonfile 
+				  .defer(d3.json, "https://codepen.io/JohannaG92/pen/ZeKvrx.js")     // World bank data
+				  .defer(d3.json, "https://codepen.io/JohannaG92/pen/LWyeQv.js")     // Code to id jsonfile 
 				  .await(ready);
 
 				// Här slutar ready
