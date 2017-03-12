@@ -60,4 +60,11 @@ body {
       border-radius: 5px;
     }
 
+    @media screen and (min-device-width : 3000px) {
+      body
+        {
+          font-size: 45px;
+        }
+    }
+
 /* ****** OTHER ****** */
