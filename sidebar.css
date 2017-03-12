@@ -1,0 +1,61 @@
+/* INFORUTA */
+#info {
+	background-color:#eee; 
+	width:100%; 
+	height:50%;
+	display:inline-block;
+	border-top: 1.5px solid #ddd;
+	padding: 5px 15px;
+	margin: 7% 0;
+	font-family: Helvetica, Arial, sans-serif;
+}
+
+#info td {
+	font-family: Helvetica, Arial, sans-serif;
+	font-size:14px;
+	padding: 0 15px 10px 0;
+}
+
+#info table {
+
+}
+
+#info h1 {
+	height: 50px;
+}
+
+
+/* LEGEND TILL HÖGER */
+#legend {
+	background-color:#eee; 
+	width:100%; 
+	height:40%;
+	display:inline-block;
+	border-top: 1.5px solid #ddd;
+	padding: 15px 15px;	    		
+	font-family: Helvetica, Arial, sans-serif;
+	font-size:12pt;
+	line-height: 10px;
+}
+
+#legend span {
+	font-size: 120%;
+	margin-right: 7px;
+	top: 3px;
+}
+
+
+/* LEGEND OVANFÖR */
+#topbar {
+	margin-top: 20px;
+	margin-bottom: 40px;
+	font-size: 9pt;
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 10pt;
+	letter-spacing: 2px;
+}
+
+#topbar div {
+	height:10px;
+	padding: 0;
+}
