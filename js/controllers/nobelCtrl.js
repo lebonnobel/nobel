@@ -60,10 +60,10 @@ nobelApp.controller('nobelCtrl',
 			// showAllCountries: bool/Empty. Send in true if you want to show all countries, if you only want to show winners, leave blank or false
 			// EX: nobelService.getNobelDataForSunburst(1930, true); <---- Shows all countries, and winners up to 1930
 			// EX: nobelService.getNobelDataForSunburst(0); <---- Shows only countries with winners for all years
-			$scope.nobelData = nobelService.getNobelDataForSunburst(0); 
-			$scope.$apply();	// $scope.$apply tells angular that we have loaded in the data so it updates the view
+			//$scope.nobelData = nobelService.getNobelDataForSunburst(0); 
+			//$scope.$apply();	// $scope.$apply tells angular that we have loaded in the data so it updates the view
 
-			console.log($scope.nobelData);
+			//console.log($scope.nobelData);
 		})		
 	}
   
