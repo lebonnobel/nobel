@@ -1,4 +1,4 @@
-nobelApp.controller('sunburst', function(nobelService, $scope) {
+nobelApp.controller('sunburst', function(worldBankService, nobelService, $scope) {
 
 	//sets up the intial variables
 	var width = 960,
@@ -212,7 +212,7 @@ nobelApp.controller('sunburst', function(nobelService, $scope) {
 				      .style("z-index", "4")
 				      .style("opacity", 0);
 
-				countryList = d3.select("#globe").append("select").attr("name", "countries");
+				countryList = d3.select("#globe").append("select").attr("name", "countries").style("visibility", "hidden");
 
 				//get data?
 				q = queue()
@@ -295,7 +295,7 @@ nobelApp.controller('sunburst', function(nobelService, $scope) {
 			    	.on("drag", function() {
 			        	var rotate = projection.rotate();
 			        	projection.rotate([d3.event.x * sens, -d3.event.y * sens, rotate[2]]);
-			        	svg.selectAll("path.land").attr("d", path);
+			        	svg.selectAll("path.land").attr("d", globepath);
 			        	svg.selectAll(".focused").classed("focused", focused = false);
 			        }))
 			  
@@ -360,7 +360,7 @@ nobelApp.controller('sunburst', function(nobelService, $scope) {
 			d3.select("select").on("change", function() {
 				privateUpdateMap(-1);  
 			});
-
+				
 			function code2Id(inputCode) {
 				  var number = null;
 				  globalCodeToId.forEach(function(d){
@@ -450,22 +450,25 @@ nobelApp.controller('sunburst', function(nobelService, $scope) {
 					fs = country2(globalCountries, n),
 					p = d3.geo.centroid(fs);
 
-				svg.selectAll(".focused").classed("focused", focused = false);
-
-				// Globe rotating
-				(function transition() {
-					d3.transition()
-						.duration(2500)
-						.tween("rotate", function() {
-							var r = d3.interpolate(projection.rotate(), [-p[0], -p[1]]);
-							return function(t) {
 					  			projection.rotate(r(t));
-					  			svg.selectAll("path").attr("d", globepath)
-					    			.classed("focused", function(d, i) { return d.id == fs.id ? focused = d : false; });
-					        };
-					    })
-				})
-				();
+				if(fs != undefined){
+					svg.selectAll(".focused").classed("focused", focused = false);
+
+					// Globe rotating
+					(function transition() {
+						d3.transition()
+							.duration(2500)
+							.tween("rotate", function() {
+								var r = d3.interpolate(projection.rotate(), [-p[0], -p[1]]);
+								return function(t) {
+									projection.rotate(r(t));
+									svg.selectAll("path").attr("d", globepath)
+										.classed("focused", function(d, i) { return d.id == fs.id ? focused = d : false; });
+								};
+							})
+					})
+					();
+				}
 			}
 
 		    d3.select("#container").on("mouseleave", mouseleave);
@@ -742,6 +745,7 @@ nobelApp.controller('sunburst', function(nobelService, $scope) {
 			handle.attr("transform", "translate(" + timeScale(value) + ", 0");
 			handle.select("text").text(formatDate(value));
 			updatePage(parseInt(formatDate(value)));
+			updateCountryColors(parseInt(formatDate(value)));
 		}
 	}
 
@@ -770,7 +774,7 @@ nobelApp.controller('sunburst', function(nobelService, $scope) {
 	}
 
 	function sunburstInit() {
-		sunburstLoad(1920);
+		sunburstLoad(2016);
 	}
 
 	//calls slider function which in turn calls for the sunburst page to update
@@ -779,6 +783,31 @@ nobelApp.controller('sunburst', function(nobelService, $scope) {
 	}
 
 	timesliderInit();
+
+
+	function updateCountryColors(year){
+		var theSvg = svg;
+		worldBankService.getDataForGlobe('mean-years-in-school', year, function(data){
+			if(svg != undefined){
+			var world = theSvg.selectAll("path.land")
+			.style("fill", function(d) {
+				var max = d3.max(data, function(d){ return d.value; });    // Max antal years in school
+				var color = null;
+				var sc = d3.scale.linear().range(['red','green']).domain([0, max]);
+				for (var i = 0; i < data.length; i++) {
+					if (globalById[d.id] == data[i].name){   // Om landet matchar/finns med i datat
+						color = sc(data[i].value);    // Räkna ut färg här
+						//color = "red";
+					}
+				}
+				if (color === null){
+					color = "gray"; // Om det inte finns någon data
+				}
+				return color;
+			 })	
+			}
+		})
+	}
 
 });
 
