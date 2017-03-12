@@ -44,22 +44,6 @@ nobelApp.factory('nobelService', ['$window', '$http', '$q', function ($window, $
     
     // This function loads and returns the requested data in a callback
     this.getData = function(dataName, callback){
-        var alreadyCalled = false;
-        if (isUndefinedOrEmpty(prizesData) || isUndefinedOrEmpty(laureatesData) || isUndefinedOrEmpty(countriesData)){ 
-            jQueryLoadJSON(function(){
-
-                //To prevent several calls, we need to check if we already have called
-                if(!alreadyCalled) {
-                    callback(deferedGetData(dataName));
-                    alreadyCalled = true;
-                }
-            });
-        } else {
-            if(!alreadyCalled) {
-                callback(deferedGetData(dataName));
-                alreadyCalled = true;
-            }
-            
         // First we must check if jQuery has loaded
         if (window.jQuery){
             // Then we check if we have previously loaded the data already
@@ -78,7 +62,6 @@ nobelApp.factory('nobelService', ['$window', '$http', '$q', function ($window, $
         // If jQuery has not yet loaded, we wait 50 milliseconds
         } else {
             setTimeout(function() { defer(this.getData(dataName, callback)); }, 50);
-
         }
     }
     

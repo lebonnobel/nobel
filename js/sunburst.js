@@ -89,7 +89,7 @@ nobelApp.controller('sunburst', function(nobelService, $scope) {
 
 	//loads json file & add attributes etc to the path (sunburst piece)
 	function sunburstLoad (year) {
-		nobelService.getNobelDataForSunburst(year, false, function(data) {
+		nobelService.getNobelDataForSunburst(year, false, function(json) {
 			chartOn = true;
 			
 			//$scope.nobelData = nobelService.getNobelDataForSunburst(2017,);
@@ -114,7 +114,7 @@ nobelApp.controller('sunburst', function(nobelService, $scope) {
 				.innerRadius(function(d) { return Math.max(0, y(d.y)); })
 				.outerRadius(function(d) { return Math.max(0, y(d.y + d.dy)); });
 
-			json = nobelService.getNobelDataForSunburst(year, false);
+			//json = nobelService.getNobelDataForSunburst(year, false);
 			//console.log("json", json);
 			path = vis.datum(json).selectAll("path")
 		    	.data(partition.nodes)
