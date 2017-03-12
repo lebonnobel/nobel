@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	
-  <title>Nobel Le Bon Ne Bol Lo Neb</title>
+  	<title>Nobel Le Bon Ne Bol Lo Neb</title>
 
   	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
   	
@@ -44,13 +44,15 @@
 			</div>
 		</div>
 		<!-- Here are the divs containing the separate visualization pages-->
-		<div id="globeSunburstPage" class="col-md-6" ng-hide="hideSunburst">
-			
-			<div id="globe">
+		<div id="globeSunburstPage" class="col-md-12" ng-hide="hideSunburst">
+			<div id="globeSunburst" class="col-md-7">
+				<div id="globe">
+				</div>
+				<div id="sunburst" ng-controller="sunburst">
+				</div>
 			</div>
-			<div id="sunburst" ng-controller="sunburst">
+			<div id ="timeslide" class="col-md-7">
 			</div>
-			
 		</div>
 		<div id="chord" ng-hide="hideChord">
 			chord diagram goes here
@@ -94,7 +96,6 @@
 	<script src="js/services/nobelService.js"></script>
 	<script src="js/lib/d3.v3.js"></script>
 	<script src="js/sunburst.js"></script>
-
 	<script src="js/chord.js"></script>
 
 	<script>

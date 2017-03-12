@@ -46,7 +46,7 @@ body {
 }
 
 /* ****** SUNBURST ****** */
-#globeSunburstPage {
+#globeSunburst {
 	width: 960px;
 	position: relative;
 	height: 750px;
@@ -86,11 +86,11 @@ body {
 
 /* ****** GLOBE ****** */
 .water {
-	fill: #01579B; /*#5853FF;*/
+	fill: #7b9eb1;/*#01579B; /*#5853FF;*/
 }
 
 .land {
-	fill: #A5D6A7; /*#83E863;*/
+	fill: #a9c099; /*#A5D6A7; /*#83E863;*/
 	stroke: #FFF;
 	stroke-width: 0.7px;
 }
@@ -101,7 +101,7 @@ body {
 }
 
 .focused {
-	fill: #F57C00; /*#32BD8D;*/
+	fill: #f58234; /*#F57C00; /*#32BD8D;*/
 }
 
 select {
@@ -124,6 +124,50 @@ select {
 	font-size: 14px;
 	border-radius: 4px;
 }
+
+/* ****** TIMESLIDER ****** */
+
+p {
+	margin: 50px;
+}
+
+a {
+	color: #4FDEF2;
+}
+
+.axis {
+	fill: gray;
+	-webkit-user-select: none;
+  	-moz-user-select: none;
+  	user-select: none;
+
+}
+
+.axis .halo {
+	stroke: gray;
+	stroke-width: 10px;
+	stroke-linecap: round;
+	padding: 4px;
+	font-size: 18px;
+}
+.tick text{
+	margin: 10px;
+	font-size: 18px;
+}
+
+.slider .handle path {
+	stroke: black;
+	stroke-width: 5px;
+	stroke-linecap: round;
+	pointer-events: none;
+}
+
+.slider .handle text {
+	fill: black;
+	text-align: center;
+	font-size: 18px;
+}
+
 
 
 /* ****** OTHER ****** */
