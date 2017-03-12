@@ -39,9 +39,6 @@ nobelApp.controller('nobelCtrl',
 		console.log($scope.nobelData);
 	}
 
-
-
-
 	//////////////////// ON LOAD ////////////////////
 	// This is a local on load function. All the variables created here will not be accessable from outside
 	//(function () {
@@ -53,10 +50,10 @@ nobelApp.controller('nobelCtrl',
 		// Gets the data
 		// Inside this function you can reach our data
 		nobelService.getData("prizes", function(data){
-
+      
 		});
 		
-		// nobelService.getNobelDataForSunburst ***********************************
+    // nobelService.getNobelDataForSunburst ***********************************
 		// Input: (year, showAllCountries, callback) 
 		// year: Int. Up until that year you want to show. Use 0 or '*' to show all years
 		// showAllCountries: bool/Empty. Send in true if you want to show all countries, if you only want to show winners, leave blank or false
@@ -67,8 +64,8 @@ nobelApp.controller('nobelCtrl',
 		//		console.log(data);		
 		// }); 
 		nobelService.getNobelDataForSunburst(0, undefined, function(data){
-			$scope.nobelData = data;
-			$scope.$apply();	// $scope.$apply tells angular that we have loaded in the data so it updates the view
+			//$scope.nobelData = data;
+			//$scope.$apply();	// $scope.$apply tells angular that we have loaded in the data so it updates the view
 			console.log($scope.nobelData);
 		});
 	}
@@ -114,6 +111,4 @@ nobelApp.controller('nobelCtrl',
 	$scope.getDataForGlobe('mean-years-in-school', 2009, function(data){
   		console.log(data);
   	});
-
-
 });
