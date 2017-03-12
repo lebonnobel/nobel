@@ -114,8 +114,6 @@ nobelApp.controller('sunburst', function(nobelService, $scope) {
 				.innerRadius(function(d) { return Math.max(0, y(d.y)); })
 				.outerRadius(function(d) { return Math.max(0, y(d.y + d.dy)); });
 
-			//json = nobelService.getNobelDataForSunburst(year, false);
-			//console.log("json", json);
 			path = vis.datum(json).selectAll("path")
 		    	.data(partition.nodes)
 		     .enter().append("path")
@@ -317,14 +315,10 @@ nobelApp.controller('sunburst', function(nobelService, $scope) {
 
 		    			for (i=0; i < data.length; i++){
 		    				var search = data[i];
-		    				//console.log("search-__data_iid", search.__data__.countryId);
 		    				if(search.__data__.countryId) {
 		    					
 		    					var country = search.__data__.countryId;
-		    					//console.log("IF", country);
-		    					//console.log("d", d);
 		    					if(country == ID){
-		    						//console.log("country = d", search.__data__.parent);
 		    						thisParent = search.__data__.parent;
 		    						currentRoot = thisParent.parent;
 		    						node = thisParent.parent;
@@ -385,7 +379,6 @@ nobelApp.controller('sunburst', function(nobelService, $scope) {
 			  globalCodeToId.forEach(function(d){
 			    if (d.id === inputId) {
 			      i = d.code;
-			      console.log("i", i);
 			    }
 			  });
 			  return i;
@@ -519,12 +512,9 @@ nobelApp.controller('sunburst', function(nobelService, $scope) {
 						.selectAll("path")
 							.style("opacity", 0.5);
 					
-					//if (relatives.indexOf(d)>=0){console.log("d", relatives.indexOf(d))};
-
 					//Highlight chosen piece and relatives (parent paths)
 					vis.selectAll("path")
 						.filter(function(d) {
-							//console.log("d in filter", d);
 							return (relatives.indexOf(d) >= 0);
 						})
 		    			.style("opacity", 1.0);
@@ -580,7 +570,6 @@ nobelApp.controller('sunburst', function(nobelService, $scope) {
 					current = current.parent;
 				}
 
-				//console.log("path", relativesPath);
 				return relativesPath;
 			}
 
@@ -638,11 +627,15 @@ nobelApp.controller('sunburst', function(nobelService, $scope) {
 		    		node = currentRoot;
 		    		
 		    	} else if (!d.children){
+		    		leafClick(d);
 		    		//here the winner info div will be called to show itself!
 		    		//it is not possible to rearrange the sunburst if the clicked path is a winner
 		    		//(ie. does not have any children)
 		    		return;
 		    	} else {
+		    		if (d.depth === 2) {
+		    			countryClick(d);
+		    		}
 		    		currentRoot = d;
 		    		node = d;
 		    		upDateFromSunburst(node.countryId);

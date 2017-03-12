@@ -45,12 +45,99 @@
 		</div>
 		<!-- Here are the divs containing the separate visualization pages-->
 		<div id="globeSunburstPage" class="col-md-12" ng-hide="hideSunburst">
-			<div id="globeSunburst" class="col-md-7">
-				<div id="globe">
+			<div id="main">
+				<div id="topbar" class="row">
+					<div class="col-md-offset-2"></div>
+					<div class="col-md-10">
+						<div class="row">
+							<div class="col-md-2" style="background-color:#F9CE66;"></div>
+							<div class="col-md-2" style="background-color:#D89F71;"></div>
+							<div class="col-md-2" style="background-color:#826A84;"></div>
+							<div class="col-md-2" style="background-color:#A86D6D;"></div>
+							<div class="col-md-2" style="background-color:#8FB588;"></div>
+							<div class="col-md-2" style="background-color:#455C7C;"></div>
+						</div>
+						<div class="row">
+							<div class="col-md-2" style="">Chemistry</div>
+							<div class="col-md-2" style="">Economics</div>
+							<div class="col-md-2" style="">Literature</div>
+							<div class="col-md-2" style="">Medicine</div>
+							<div class="col-md-2" style="">Peace</div>
+							<div class="col-md-2" style="">Physics</div>
+						</div>
+					</div>
 				</div>
-				<div id="sunburst" ng-controller="sunburst">
+      		</div>
+      		<div class="col-md-6">
+				<div id="globeSunburst">
+					<div id="globe">
+					</div>
+					<div id="sunburst" ng-controller="sunburst">
+					</div>
 				</div>
 			</div>
+			<div id="sidebar" class="col-md-6" style="float:left;">
+				<!--<div>
+			        <form ng-submit="" class="form-inline">
+						<div class="input-group input-block-level" style="width:100%;">
+							<label>Select country:</label>
+							<select class="form-control">
+							  <option value="sverige">Sverige</option>
+							  <option value="kina">Kina</option>
+							  <option value="frankrike">Frankrike</option>
+							  <option value="mexico">Mexico</option>
+							</select>
+						</div>
+					</form>
+				</div>-->
+	        	<div id="info">
+		      		<h1 id="name"></h1>
+		      		<table id="laureateInfo">
+		      			<tr>
+			      			<td>Country:</td> <td id="country"></td>
+			      		</tr>
+			      		<tr>
+			      			<td>Category:</td> <td id="category"></td>
+			      		</tr>
+			      		<tr>
+			      			<td>Year:</td> <td id="year"></td>
+			      		</tr>
+		      		</table>
+		      		<table id="countryInfo">
+		      			<tr>
+			      			<td>Number of laureates:</td> <td id="num"></td>
+			      		</tr>
+		      		</table>
+	      		</div>
+	      		<!--
+	       		 <div id="legend">
+	    		
+					  <p id="Chemistry">
+					   <span class="glyphicon glyphicon-stop" style="color:#F9CE66;"></span>
+					   Chemistry
+					  <p>
+					   	<p id="Economics">
+					   	<span class="glyphicon glyphicon-stop" style="color:#D89F71;"></span>
+					   Economics
+					  </p>
+					  <p id="Literature">
+					   <span class="glyphicon glyphicon-stop" style="color:#826A84;"></span>
+					   Literature
+					  </p>
+					  <p id="Medicine">
+					   <span class="glyphicon glyphicon-stop" style="color:#A86D6D;"></span>
+					   Medicine
+					  </p>
+						<p id="Peace">
+					   <span class="glyphicon glyphicon-stop" style="color:#8FB588;"></span>
+					   Peace
+					  </p>
+						<p id="Physics">
+					   <span class="glyphicon glyphicon-stop" style="color:#455C7C;"></span>
+					   Physics 
+					  </p>
+	      		</div>-->
+	   		</div>
 			<div id ="timeslide" class="col-md-7">
 			</div>
 		</div>
@@ -111,6 +198,7 @@
 	<script src="js/lib/d3.v3.js"></script>
 	<script src="js/sunburst.js"></script>
 	<script src="js/chord.js"></script>
+	<script src="js/info.js"></script>
 
 	<script>
 		// update the clicked choice (ie. sunburst or chord chart/project) so div gets active = changes color to indicate clicked
