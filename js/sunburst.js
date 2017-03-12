@@ -88,8 +88,8 @@ nobelApp.controller('sunburst', function(nobelService, $scope) {
 	var world;
 
 	//loads json file & add attributes etc to the path (sunburst piece)
-	function sunburstLoad (year = 1904) {
-		nobelService.getData("prizes", function(data) {
+	function sunburstLoad (year) {
+		nobelService.getNobelDataForSunburst(year, false, function(data) {
 			chartOn = true;
 			
 			//$scope.nobelData = nobelService.getNobelDataForSunburst(2017,);
@@ -777,7 +777,7 @@ nobelApp.controller('sunburst', function(nobelService, $scope) {
 	}
 
 	function sunburstInit() {
-		sunburstLoad(1999);
+		sunburstLoad(1920);
 	}
 
 	//calls slider function which in turn calls for the sunburst page to update
