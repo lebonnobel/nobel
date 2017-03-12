@@ -212,7 +212,7 @@ nobelApp.controller('sunburst', function(nobelService, $scope) {
 				      .style("z-index", "4")
 				      .style("opacity", 0);
 
-				countryList = d3.select("#globe").append("select").attr("name", "countries");
+				countryList = d3.select("#globe").append("select").attr("name", "countries").style("visibility", "hidden");
 
 				//get data?
 				q = queue()
@@ -449,23 +449,25 @@ nobelApp.controller('sunburst', function(nobelService, $scope) {
 				var rotate = projection.rotate(),
 					fs = country2(globalCountries, n),
 					p = d3.geo.centroid(fs);
+				
+				if(fs != undefined){
+					svg.selectAll(".focused").classed("focused", focused = false);
 
-				svg.selectAll(".focused").classed("focused", focused = false);
-
-				// Globe rotating
-				(function transition() {
-					d3.transition()
-						.duration(2500)
-						.tween("rotate", function() {
-							var r = d3.interpolate(projection.rotate(), [-p[0], -p[1]]);
-							return function(t) {
-					  			projection.rotate(r(t));
-					  			svg.selectAll("path").attr("d", globepath)
-					    			.classed("focused", function(d, i) { return d.id == fs.id ? focused = d : false; });
-					        };
-					    })
-				})
-				();
+					// Globe rotating
+					(function transition() {
+						d3.transition()
+							.duration(2500)
+							.tween("rotate", function() {
+								var r = d3.interpolate(projection.rotate(), [-p[0], -p[1]]);
+								return function(t) {
+									projection.rotate(r(t));
+									svg.selectAll("path").attr("d", globepath)
+										.classed("focused", function(d, i) { return d.id == fs.id ? focused = d : false; });
+								};
+							})
+					})
+					();
+				}
 			}
 
 		    d3.select("#container").on("mouseleave", mouseleave);
@@ -770,7 +772,7 @@ nobelApp.controller('sunburst', function(nobelService, $scope) {
 	}
 
 	function sunburstInit() {
-		sunburstLoad(2009);
+		sunburstLoad(2016);
 	}
 
 	//calls slider function which in turn calls for the sunburst page to update
