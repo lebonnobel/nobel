@@ -295,7 +295,7 @@ nobelApp.controller('sunburst', function(nobelService, $scope) {
 			    	.on("drag", function() {
 			        	var rotate = projection.rotate();
 			        	projection.rotate([d3.event.x * sens, -d3.event.y * sens, rotate[2]]);
-			        	svg.selectAll("path.land").attr("d", path);
+			        	svg.selectAll("path.land").attr("d", globepath);
 			        	svg.selectAll(".focused").classed("focused", focused = false);
 			        }))
 			  
@@ -360,7 +360,7 @@ nobelApp.controller('sunburst', function(nobelService, $scope) {
 			d3.select("select").on("change", function() {
 				privateUpdateMap(-1);  
 			});
-
+				
 			function code2Id(inputCode) {
 				  var number = null;
 				  globalCodeToId.forEach(function(d){
@@ -770,7 +770,7 @@ nobelApp.controller('sunburst', function(nobelService, $scope) {
 	}
 
 	function sunburstInit() {
-		sunburstLoad(1920);
+		sunburstLoad(2009);
 	}
 
 	//calls slider function which in turn calls for the sunburst page to update
