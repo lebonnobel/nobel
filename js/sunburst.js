@@ -450,7 +450,7 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, $scope)
 					fs = country2(globalCountries, n),
 					p = d3.geo.centroid(fs);
 
-					  			projection.rotate(r(t));
+				//projection.rotate(r(t));
 				if(fs != undefined){
 					svg.selectAll(".focused").classed("focused", focused = false);
 
