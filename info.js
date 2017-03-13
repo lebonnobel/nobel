@@ -17,6 +17,7 @@ function leafClick(d){
 	$("#country").html(d.parent.country);
 	$("#category").html(d.category);
 	$("#year").html(d.year);
+	$("#motivation").html(d.motivation);
 }
 
 function countryClick(d){
