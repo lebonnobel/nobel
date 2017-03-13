@@ -1,8 +1,9 @@
 nobelApp.controller('sunburst', function(worldBankService, nobelService, $scope) {
 
 	//sets up the intial variables
-	var width = 960,
-	    height = 750,
+	var screenSize = screen.width;
+	var width = screenSize * 0.6, //960
+	    height =  0.78125 * width,//750,
 	    radius = Math.min(width, height) / 2,
 	    x = d3.scale.linear()
 	    	.range([0, 2 * Math.PI]),
@@ -177,15 +178,15 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, $scope)
 		       	.each(stash);
 
 		    //globe specific variables
-		    var globeWidth = 378,
-		    	globeHeight = 378,
+		    var globeWidth = width * 0.39375, //378,
+		    	globeHeight = globeWidth, //378,
 		    	sens = 0.25,
 		    	focused;
 		    //will only load globe once as the data should be the same
 			function globeViz () {
 				//Setting projection
 				projection = d3.geo.orthographic()
-				  .scale(187)
+				  .scale(width * 0.1948) //187
 				  .rotate([0, 0])
 				  .translate([globeWidth / 2, globeHeight / 2])
 				  .clipAngle(90);
@@ -807,6 +808,38 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, $scope)
 			 })	
 			}
 		})
+	}
+
+	//Fulkod för att fixa size
+	$("#globeSunburst").css("width",width);
+	$("#globeSunburst").css("height",height);
+	$("#topbar").css("width",width);
+	$("#topbar").css("height",width/50);
+	$("#sidebar").css("position","absolute");
+	$("#sidebar").css("left",width);
+	$("#sidebar").css("width",width/2);
+	$("#sidebar h3").css("height",height/20);
+
+	$("#laureateInfo, #info h3").hide();
+	$("#countryInfo").hide();
+
+
+	function leafClick(d){
+		$("#laureateInfo, #info h3").show();
+		$("#countryInfo").hide();
+
+		$("#name").html(d.laureate);
+		$("#country").html(d.parent.country);
+		$("#category").html(d.category);
+		$("#year").html(d.year);
+	}
+
+	function countryClick(d){
+		$("#laureateInfo").hide();
+		$("#countryInfo, #info h3").show();
+
+		$("#name").html(d.country);
+		$("#num").html(d.children.length);
 	}
 
 });
