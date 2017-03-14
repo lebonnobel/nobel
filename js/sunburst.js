@@ -231,13 +231,8 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, $scope)
 				// Input: inputCode, format: "SE"
 				// Output: c, number
 					
-
-				// CALL FROM GLOBE TO SUNBURST
-				function updateSunburst(COUNTRYCODE) {
-					//console.log("updateSunburst");
-				  // Här får Maria kalla på sin sunburst
-				}
 			}
+
 			//Main globe function
 			function ready(error, world, countryData, schoolData, countryCodeToId) {
 				//console.log("ready");
@@ -281,7 +276,7 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, $scope)
 					.enter().append("path")
 					.attr("class", "land")
 					.attr("d", globepath)
-
+					.style("fill", getGlobeColor)
 					.classed("nonWinners", function(d) {
 					    var out = true;
 					    countryCodeToId.forEach(function(e) {
@@ -798,7 +793,19 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, $scope)
 		}
 	}
 
+	//function to get the land color
+	function getGlobeColor() {
+		var land = "#a9c099";
+		return land;
+	}
 
+	//if user no longer wants to see specific data /education data, the earth colors are reversed.
+	function reverseUpdateCountryColors() {
+		globeSvg.selectAll("path.land")
+			.style("fill", getGlobeColor);
+	}
+
+	//if user choses to see education data, then this runs
 	function updateCountryColors(year = 1901){
 		worldBankService.getDataForGlobe('mean-years-in-school', year, function(data){
 			if(globeSvg != undefined){

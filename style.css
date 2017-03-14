@@ -88,9 +88,8 @@ h1 {
 }
 
 .land {
-	fill: #a9c099; /*#A5D6A7; /*#83E863;*/
 	stroke: #FFF;
-	stroke-width: 0.3px;
+	stroke-width: 0.5px;
 }
 
 .land:hover {
