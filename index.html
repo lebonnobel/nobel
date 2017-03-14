@@ -46,7 +46,19 @@
 		<!-- Here are the divs containing the separate visualization pages-->
 		<div id="globeSunburstPage" class="col-md-12" ng-hide="hideSunburst">
 			<div id="main">
-				<div class="row">
+				
+
+      		</div>
+      		<div class="col-md-6">
+				<div id="globeSunburst">
+					<div id="globe">
+					</div>
+					<div id="sunburst" ng-controller="sunburst">
+					</div>
+				</div>
+			</div>
+			<div id="sidebar" class="col-md-6" style="float:left;">
+				<div class="categoryChoice row">
 							<div class="col-md-12">
 								<form class="catChoice">
 									<div class="col-md-6">
@@ -74,38 +86,6 @@
 								</form>
 							</div>
 						</div>
-				<div id="topbar" class="row">
-					<div class="col-md-1"></div>
-					<div class="col-md-10">
-
-						<div class="row">
-							<div class="col-md-2" style="background-color:#F9CE66;"></div>
-							<div class="col-md-2" style="background-color:#D89F71;"></div>
-							<div class="col-md-2" style="background-color:#826A84;"></div>
-							<div class="col-md-2" style="background-color:#A86D6D;"></div>
-							<div class="col-md-2" style="background-color:#8FB588;"></div>
-							<div class="col-md-2" style="background-color:#455C7C;"></div>
-						</div>
-						<div class="row">
-							<div class="col-md-2" style="">Chemistry</div>
-							<div class="col-md-2" style="">Economics</div>
-							<div class="col-md-2" style="">Literature</div>
-							<div class="col-md-2" style="">Medicine</div>
-							<div class="col-md-2" style="">Peace</div>
-							<div class="col-md-2" style="">Physics</div>
-						</div>
-					</div>
-				</div>
-      		</div>
-      		<div class="col-md-6">
-				<div id="globeSunburst">
-					<div id="globe">
-					</div>
-					<div id="sunburst" ng-controller="sunburst">
-					</div>
-				</div>
-			</div>
-			<div id="sidebar" class="col-md-6" style="float:left;">
 				<!--<div>
 			        <form ng-submit="" class="form-inline">
 						<div class="input-group input-block-level" style="width:100%;">
@@ -120,6 +100,7 @@
 					</form>
 				</div>-->
 	        	<div id="info">
+
 		      		<h3 id="name"></h3>
 		      		<table id="laureateInfo">
 		      			<tr>

@@ -1,7 +1,6 @@
 nobelApp.controller('sunburst', function(worldBankService, nobelService, yearService, $scope) {
 
 	$scope.$on('reloadSunburst', function (event, data) {
-		console.log("reloading sunburst", data.year); 
 		updatePage(data.year);
 	});
 
