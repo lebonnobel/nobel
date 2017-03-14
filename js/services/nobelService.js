@@ -73,7 +73,7 @@ nobelApp.factory('nobelService', ['$window', '$http', '$q', function ($window, $
     //////////////////// DATA GETTER ////////////////////
 
     // This function returns all data for the sunburst
-    this.getNobelDataForSunburst = function(year, showAllCountries, callback) {
+    this.getNobelDataForSunburst = function(year, showAllCountries, categoryChoice, callback) {
         var self = this;
         this.getAllData(function(prizesData, laureatesData, countriesData){
           if (year == undefined || year == "*" || year == "all" || year == 0) {

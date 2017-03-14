@@ -1,5 +1,5 @@
 nobelApp.controller('nobelCtrl', 
-	function(worldBankService, nobelService, $scope, $http, $rootScope, $timeout) {
+	function(worldBankService, nobelService, yearService, $scope, $http, $rootScope, $timeout) {
  	// Controller that controls the view
  	// Put $scope. in front of a variable name in order for the view to be able to use this variable
 	
@@ -25,6 +25,39 @@ nobelApp.controller('nobelCtrl',
 			$scope.hideProject = false;
 		}
 	}
+	////////////////////////////// PRIZE CATEGORIES ///////////////////////
+	$scope.catChoiceChemistry = true;
+	$scope.catChoiceEconomics = true;
+	$scope.catChoiceLiterature = true;
+	$scope.catChoiceMedicine = true;
+	$scope.catChoicePeace = false;
+	$scope.catChoicePhysics = true;
+	$scope.sliderYear = yearService.year;
+
+	$scope.catChoices = {
+		"chemistry": $scope.catChoiceChemistry,
+		"economics": $scope.catChoiceEconomics,
+		"literature": $scope.catChoiceLiterature,
+		"medicine": $scope.catChoiceMedicine,
+		"peace": $scope.catChoicePeace,
+		"physics": $scope.catChoicePhysics
+	};
+
+	$scope.catChoice = function() {
+		$scope.catChoices = {
+			"chemistry": $scope.catChoiceChemistry,
+			"economics": $scope.catChoiceEconomics,
+			"literature": $scope.catChoiceLiterature,
+			"medicine": $scope.catChoiceMedicine,
+			"peace": $scope.catChoicePeace,
+			"physics": $scope.catChoicePhysics
+		};
+		console.log($scope.catChoices,$scope.sliderYear.label);
+		$scope.$broadcast('reloadSunburst', {
+			year: $scope.sliderYear.label // send whatever you want
+		});
+	};
+
 	//////////////////////// NOBEL DATA ////////////////////////////////
 
 	$scope.searchCountryName = "Sweden";
@@ -77,11 +110,11 @@ nobelApp.controller('nobelCtrl',
 		// EX: nobelService.getNobelDataForSunburst(0, undefined, function(data){ <---- Returns only countries with winners for all years and prints the result
 		//		console.log(data);		
 		// }); 
-		nobelService.getNobelDataForSunburst(0, undefined, function(data){
+		//nobelService.getNobelDataForSunburst(0, false, "hej", function(data){
 			//$scope.nobelData = data;
 			//$scope.$apply();	// $scope.$apply tells angular that we have loaded in the data so it updates the view
-			console.log($scope.nobelData);
-		});
+		//	console.log($scope.nobelData);
+		//});
 	}
 
 	// To make our onStart function run on start
