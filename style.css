@@ -25,8 +25,8 @@ h1 {
 
 /* ****** TOP MENU BAR OF CHOICES ****** */
 #menubar {
-	margin-bottom: 0;
-	margin-top: 0;
+	margin: 0;
+	padding: 0;
 	text-align: center;
 	font-size: 18px;
 	color: white;
@@ -45,30 +45,214 @@ h1 {
 }
 
 .active {
-	background-color: #263238  !important; 
+	background-color: #37474F  !important; 
 	color: white !important;
+}
+
+/* ****** SUNBURST ****** */
+#globeSunburst {
+	width: 960px;
+	position: relative;
+	height: 750px;
+}
+
+#sunburst {
+	/*margin-top: -375px;
+	margin-left: -480px;*/
+	position: absolute;
+	z-index: 2;
+	/*left: 50%;
+	top: 50%;*/
+}
+
+/* ****** GLOBE POSITIONING ****** */
+#globe {
+	margin-left: 24.5%;
+	/*margin-top: -189.5px;*/
+	position: absolute;
+	z-index: 3;
+	/*right: 50%;*/
+	top: 24.5%;
+}
+
+/* ****** TOOLTIP SUNBURST ****** */
+.tooltip {
+	position: absolute;
+	z-index: 4;
+	background-color: white;
+	padding: 8px;
+	border: 1px solid #E0E0E0;
+	text-align: center;
+	font-size: 16px;
+	border-radius: 4px;	
+}
+
+
+/* ****** GLOBE ****** */
+.water {
+	fill: #7b9eb1;/*#01579B; /*#5853FF;*/
+}
+
+.land {
+	fill: #a9c099; /*#A5D6A7; /*#83E863;*/
+	stroke: #FFF;
+	stroke-width: 0.7px;
+}
+
+.land:hover {
+	fill: #FFB74D; /*#32BD8D;*/
+	stroke-width: 1px;
+}
+
+.focused {
+	fill: #f58234; /*#F57C00; /*#32BD8D;*/
+}
+
+select {
+	position: absolute;
+	top: 20px;
+	left: 580px;
+	border: solid #ccc 1px;
+	border-radius: 4px;
+	padding: 3px;
+
+}
+
+.countryTooltip {
+	position: absolute;
+	z-index: 4;
+	background: white;
+	padding: 8px;
+	text-align: center;
+	border: 1px solid #E0E0E0;
+	font-size: 14px;
+	border-radius: 4px;
+}
+
+/* ****** TIMESLIDER ****** */
+
+p {
+	margin: 50px;
+}
+
+a {
+	color: #4FDEF2;
+}
+
+.axis {
+	fill: gray;
+	-webkit-user-select: none;
+  	-moz-user-select: none;
+  	user-select: none;
+
+}
+
+.axis .halo {
+	stroke: gray;
+	stroke-width: 10px;
+	stroke-linecap: round;
+	padding: 4px;
+	font-size: 18px;
+}
+.tick text{
+	margin: 10px;
+	font-size: 18px;
+}
+
+.slider .handle path {
+	stroke: black;
+	stroke-width: 5px;
+	stroke-linecap: round;
+	pointer-events: none;
+}
+
+.slider .handle text {
+	fill: black;
+	text-align: center;
+	font-size: 18px;
 }
 
 /* ****** CHORD ****** */
 
-    #flow .flows {
-      opacity: .6;
-      border: 100% solid gray;
-    }
-    #flow .chord-hover {
-      position: absolute;
-      visibility: hidden;
-      background: #EEE;
-      padding: 15px 25px 25px 15px;
-      border: 1px solid gray;
-      border-radius: 5px;
-    }
+#flow .flows {
+  opacity: .6;
+  border: 100% solid gray;
+}
+#flow .chord-hover {
+  position: absolute;
+  visibility: hidden;
+  background: #EEE;
+  padding: 15px 25px 25px 15px;
+  border: 1px solid gray;
+  border-radius: 5px;
+}
 
-    @media screen and (min-device-width : 3000px) {
-      body
-        {
-          font-size: 45px;
-        }
+@media screen and (min-device-width : 3000px) {
+  body
+    {
+      font-size: 45px;
     }
+}
+
+/* ****** INFO DETAILS ****** */
+
+#info {
+	width:70%; 
+	display:inline-block;
+	border-top: 1.5px solid #ddd;
+	border-bottom: 1.5px solid #ddd;
+	font-family: Helvetica, Arial, sans-serif;
+	margin: 35% 0 0 10%;
+}
+
+
+#info td {
+	font-family: Helvetica, Arial, sans-serif;
+	font-size:14pt;
+}
+
+#info .inf{
+	font-size:10pt;
+}
+
+#info h3 {
+	font-size:16pt;
+	font-weight: bold;
+}
+
+/* ****** RIGHT LEGEND ****** 
+#legend {
+	background-color:#eee; 
+	width:100%; 
+	height:40%;
+	display:inline-block;
+	border-top: 1.5px solid #ddd;
+	padding: 15px 15px;	    		
+	font-family: Helvetica, Arial, sans-serif;
+	font-size:12pt;
+	line-height: 10px;
+}
+
+#legend span {
+	font-size: 120%;
+	margin-right: 7px;
+	top: 3px;
+}*/
+
+
+/* ****** TOP LEGEND ****** */
+#topbar {
+	margin-top: 3%;
+	margin-bottom: 5%;
+	margin-left: 1.2%;
+	font-size: 10pt;
+	font-family: Helvetica, Arial, sans-serif;
+}
+
+#topbar div {
+	height: 100%;
+	padding: 0;
+	margin: 0;
+}
 
 /* ****** OTHER ****** */
