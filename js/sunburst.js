@@ -451,7 +451,7 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, $scope)
 					fs = country2(globalCountries, n),
 					p = d3.geo.centroid(fs);
 
-					  			projection.rotate(r(t));
+				//projection.rotate(r(t));
 				if(fs != undefined){
 					svg.selectAll(".focused").classed("focused", focused = false);
 
@@ -775,7 +775,7 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, $scope)
 	}
 
 	function sunburstInit() {
-		sunburstLoad(2016);
+		sunburstLoad(1920);
 	}
 
 	//calls slider function which in turn calls for the sunburst page to update
@@ -802,7 +802,11 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, $scope)
 					}
 				}
 				if (color === null){
-					color = "gray"; // Om det inte finns någon data
+					if(data.length == 0){
+						color  = '#a9c099';
+					} else {
+						color = "gray"; // Om det inte finns någon data
+					}
 				}
 				return color;
 			 })	

@@ -13,10 +13,12 @@ function leafClick(d){
 	$("#laureateInfo, #info h1").show();
 	$("#countryInfo").hide();
 
+	$("#gender").html(d.gender);	
 	$("#name").html(d.laureate);
 	$("#country").html(d.parent.country);
 	$("#category").html(d.category);
-	$("#year").html(d.year);
+	$("#year").html(d.year);	
+	$("#motivation").html(d.motivation);
 }
 
 function countryClick(d){
