@@ -46,9 +46,38 @@
 		<!-- Here are the divs containing the separate visualization pages-->
 		<div id="globeSunburstPage" class="col-md-12" ng-hide="hideSunburst">
 			<div id="main">
+				<div class="row">
+							<div class="col-md-12">
+								<form>
+									<div class="col-md-6">
+										<label>
+											<input type="checkbox" ng-model="catChoiceChemistry" ng-change="catChoice()" /> Chemistry
+										</label></br>
+										<label>
+											<input type="checkbox" ng-model="catChoiceEconomics" ng-change="catChoice()" /> Economics
+										</label></br>
+										<label>
+											<input type="checkbox" ng-model="catChoiceLiterature" ng-change="catChoice()" /> Literature
+										</label>
+									</div>
+									<div class="col-md-6">
+										<label>
+											<input type="checkbox" ng-model="catChoiceMedicine" ng-change="catChoice()"/> Medicine
+										</label></br>
+										<label>
+											<input type="checkbox" ng-model="catChoicePeace" ng-change="catChoice()"/> Peace
+										</label></br>
+										<label>
+											<input type="checkbox" ng-model="catChoicePhysics" ng-change="catChoice()"/> Physics
+										</label>
+									</div>
+								</form>
+							</div>
+						</div>
 				<div id="topbar" class="row">
 					<div class="col-md-1"></div>
 					<div class="col-md-10">
+
 						<div class="row">
 							<div class="col-md-2" style="background-color:#F9CE66;"></div>
 							<div class="col-md-2" style="background-color:#D89F71;"></div>
