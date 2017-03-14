@@ -80,7 +80,7 @@ nobelApp.controller('nobelCtrl',
 		nobelService.getNobelDataForSunburst(0, undefined, function(data){
 			//$scope.nobelData = data;
 			//$scope.$apply();	// $scope.$apply tells angular that we have loaded in the data so it updates the view
-			console.log($scope.nobelData);
+			//console.log($scope.nobelData);
 		});
 	}
 
@@ -123,6 +123,6 @@ nobelApp.controller('nobelCtrl',
 
 	// JUST A TEST FUNCTION, JUST REMOVE IF YOU WANT
 	$scope.getDataForGlobe('mean-years-in-school', 2009, function(data){
-  		console.log(data);
+  		//console.log(data);
   	});
 });

@@ -57,21 +57,15 @@ h1 {
 }
 
 #sunburst {
-	/*margin-top: -375px;
-	margin-left: -480px;*/
 	position: absolute;
 	z-index: 2;
-	/*left: 50%;
-	top: 50%;*/
 }
 
 /* ****** GLOBE POSITIONING ****** */
 #globe {
 	margin-left: 30.3%;
-	/*margin-top: -189.5px;*/
 	position: absolute;
 	z-index: 3;
-	/*right: 50%;*/
 	top: 24.8%;
 }
 
@@ -96,16 +90,17 @@ h1 {
 .land {
 	fill: #a9c099; /*#A5D6A7; /*#83E863;*/
 	stroke: #FFF;
-	stroke-width: 0.7px;
+	stroke-width: 0.3px;
 }
 
 .land:hover {
-	fill: #FFB74D; /*#32BD8D;*/
-	stroke-width: 1px;
+	stroke: #616161; /*#FFB74D; /*#32BD8D;*/
+	stroke-width: 2px;
 }
 
 .focused {
-	fill: #f58234; /*#F57C00; /*#32BD8D;*/
+	stroke: #424242; /*#f58234; /*#F57C00; /*#32BD8D;*/
+	stroke-width: 2px;
 }
 
 select {
@@ -196,7 +191,6 @@ select {
 	font-family: Helvetica, Arial, sans-serif;
 	margin: 35% 0 0 10%;
 }
-
 
 #info td {
 	font-family: Helvetica, Arial, sans-serif;
