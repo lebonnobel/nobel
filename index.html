@@ -114,14 +114,14 @@
 			<div id ="timeslide" class="col-md-7">
 			</div>
 		</div>
-		<div id="chord" ng-hide="hideChord" >
+		<div id="chord" ng-hide="hideChord" ng-controller="chord">
 			<h1 id ="text">Now showing: Prizes by Category and Gender</h1>
   			<table>
   				<tr>
     				<td>
       					<form action="">
-        					<input type="radio" name="gender" value="gender" checked="checked" onclick="genderData()"> Gender<br></input>
-        					<input type="radio" name="gender" value="age" onclick="ageData()"> Age<br></input>
+        					<input type="radio" name="gender" value="gender" checked="checked" ng-click="genderData()"> Gender<br></input>
+        					<input type="radio" name="gender" value="age" ng-click="ageData()"> Age<br></input>
       					</form>
     				</td>
     				<td>
@@ -149,6 +149,7 @@
 	<script src="js/services/yearService.js"></script>
 	<script src="js/lib/d3.v3.js"></script>
 	<script src="js/sunburst.js"></script>
+	<script src="js/flowChord.js"></script>
 	<script src="js/chord.js"></script>
 	<script src="js/info.js"></script>
 
