@@ -1,8 +1,13 @@
-nobelApp.controller('sunburst', function(worldBankService, nobelService, $scope) {
+nobelApp.controller('sunburst', function(worldBankService, nobelService, yearService, $scope) {
+
+	$scope.$on('reloadSunburst', function (event, data) {
+		updatePage(data.year);
+	});
+
 	//sets up the intial variables
 	var screenSize = screen.width;
-	var width = screenSize * 0.6, //960
-	    height =  0.78125 * width,//750,
+	var width = screenSize * 0.5, //960
+	    height =  width,//750,
 	    radius = Math.min(width, height) / 2,
 	    x = d3.scale.linear()
 	    	.range([0, 2 * Math.PI]),
@@ -90,12 +95,11 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, $scope)
 
 	//loads json file & add attributes etc to the path (sunburst piece)
 	function sunburstLoad (year) {
-		//console.log("sunburstLoad");
-		nobelService.getNobelDataForSunburst(year, false, function(json) {
+		nobelService.getNobelDataForSunburst(year, false, $scope.catChoices, function(json) {
 			chartOn = true;
 			
 			//$scope.nobelData = nobelService.getNobelDataForSunburst(2017,);
-			$scope.$apply();
+			//$scope.$apply();
 
 			//sets up the svg canvas where sunburst is placed
 			vis = d3.select("#sunburst").append("svg")
@@ -179,7 +183,7 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, $scope)
 		       	.each(stash);
 
 		    //globe specific variables
-		    var globeWidth = width * 0.39375, //378,
+		    var globeWidth = width * 0.51, //378,
 		    	globeHeight = globeWidth, //378,
 		    	sens = 0.25,
 		    	focused;
@@ -188,7 +192,7 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, $scope)
 				//console.log("globeViz");
 				//Setting projection
 				projection = d3.geo.orthographic()
-				  .scale(width * 0.1948) //187
+				  .scale(width * 0.25) //187
 				  .rotate([0, 0])
 				  .translate([globeWidth / 2, globeHeight / 2])
 				  .clipAngle(90);
@@ -787,9 +791,12 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, $scope)
 			
 			//calls functions to update data as slider has been moved to new year
 			updatePage(parseInt(formatDate(value)));
-			
+
 			//updateCountryColors(parseInt(formatDate(value)));
 			//sliderYear = parseInt(formatDate(value));
+
+			yearService.update(formatDate(value));
+
 		}
 	}
 
@@ -865,8 +872,6 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, $scope)
 
 	timesliderInit();
 
-
-	
 
 	//Fulkod för att fixa size
 	$("#globeSunburst").css("width",width);
