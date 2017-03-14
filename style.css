@@ -255,4 +255,54 @@ a {
 	margin: 0;
 }
 
+.catChoice label {
+	cursor: pointer;
+}
+.catChoice input { display: none;} 
+
+.catChoiceCheckbox {
+	position: relative;
+	display: inline-block;
+	width: 15px;
+	height: 15px;
+	padding: 2px;
+	border-width: 3px;
+	border-style: solid;
+	background: none !important;
+}
+.catChoiceCheckbox span {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	display: none;
+}
+.color-chemistry span {
+	background-color:#F9CE66;
+	border-color: #F9CE66;
+}
+.color-economics span {
+	background-color:#D89F71;
+	border-color: #D89F71;
+}
+.color-literature span {
+	background-color:#826A84;
+	border-color: #826A84;
+}
+.color-medicine span {
+	background-color:#A86D6D;
+	border-color: #A86D6D;
+}
+.color-peace span {
+	background-color:#8FB588;
+	border-color: #8FB588;
+}
+.color-physics span {
+	background-color:#455C7C;
+	border-color: #455C7C;
+}
+.catChoice input[type=checkbox]:checked + .catChoiceCheckbox > span {
+	display: inline-block;
+}
 /* ****** OTHER ****** */
