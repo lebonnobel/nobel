@@ -1,7 +1,7 @@
 nobelApp.controller('sunburst', function(worldBankService, nobelService, $scope) {
 
 	//sets up the intial variables
-		var screenSize = screen.width;
+	var screenSize = screen.width;
 	var width = screenSize * 0.5, //960
 	    height =  width,//750,
 	    radius = Math.min(width, height) / 2,
