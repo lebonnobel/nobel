@@ -67,12 +67,12 @@ h1 {
 
 /* ****** GLOBE POSITIONING ****** */
 #globe {
-	margin-left: 30.3%;
+	margin-left: 24.5%;
 	/*margin-top: -189.5px;*/
 	position: absolute;
 	z-index: 3;
 	/*right: 50%;*/
-	top: 24.8%;
+	top: 24.5%;
 }
 
 /* ****** TOOLTIP SUNBURST ****** */
