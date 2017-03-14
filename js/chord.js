@@ -1,4 +1,9 @@
+
 nobelApp.controller('chord', function(nobelService, $scope) {
+
+
+// ********************* CHORD CODE ****************************
+
 
 
 

@@ -1,4 +1,8 @@
-nobelApp.controller('sunburst', function(worldBankService, nobelService, $scope) {
+nobelApp.controller('sunburst', function(worldBankService, nobelService, yearService, $scope) {
+
+	$scope.$on('reloadSunburst', function (event, data) {
+		updatePage(data.year);
+	});
 
 	//sets up the intial variables
 	var screenSize = screen.width;
@@ -90,11 +94,11 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, $scope)
 
 	//loads json file & add attributes etc to the path (sunburst piece)
 	function sunburstLoad (year) {
-		nobelService.getNobelDataForSunburst(year, false, function(json) {
+		nobelService.getNobelDataForSunburst(year, false, $scope.catChoices, function(json) {
 			chartOn = true;
 			
 			//$scope.nobelData = nobelService.getNobelDataForSunburst(2017,);
-			$scope.$apply();
+			//$scope.$apply();
 
 			//sets up the svg canvas where sunburst is placed
 			vis = d3.select("#sunburst").append("svg")
@@ -747,6 +751,8 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, $scope)
 			handle.select("text").text(formatDate(value));
 			updatePage(parseInt(formatDate(value)));
 			updateCountryColors(parseInt(formatDate(value)));
+			console.log("hello, i'm brushing", formatDate(value));
+			yearService.update(formatDate(value));
 		}
 	}
 

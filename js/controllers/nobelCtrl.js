@@ -1,5 +1,5 @@
 nobelApp.controller('nobelCtrl', 
-	function(worldBankService, nobelService, $scope, $http, $rootScope, $timeout) {
+	function(worldBankService, nobelService, yearService, $scope, $http, $rootScope, $timeout) {
  	// Controller that controls the view
  	// Put $scope. in front of a variable name in order for the view to be able to use this variable
 	
@@ -25,6 +25,76 @@ nobelApp.controller('nobelCtrl',
 			$scope.hideProject = false;
 		}
 	}
+	////////////////////////////// PRIZE CATEGORIES ///////////////////////
+	$scope.catChoiceChemistry = true;
+	$scope.catChoiceEconomics = true;
+	$scope.catChoiceLiterature = true;
+	$scope.catChoiceMedicine = true;
+	$scope.catChoicePeace = true;
+	$scope.catChoicePhysics = true;
+	$scope.catList = [$scope.catChoiceChemistry, $scope.catChoiceEconomics, $scope.catChoiceLiterature, $scope.catChoiceMedicine, $scope.catChoicePeace, $scope.catChoicePhysics];
+	$scope.sliderYear = yearService.year;
+
+	$scope.catChoices = {
+			"chemistry": $scope.catChoiceChemistry, "economics": $scope.catChoiceEconomics, "literature": $scope.catChoiceLiterature, "medicine": $scope.catChoiceMedicine, "peace": $scope.catChoicePeace, "physics": $scope.catChoicePhysics
+		};
+	$scope.catChoices.dict = {
+		"chemistry": 0,
+		"economics": 1,
+		"literature": 2,
+		"medicine": 3,
+		"peace": 4,
+		"physics": 5
+	};
+	$scope.catChoices.array = ["chemistry","economics","literature","medicine","peace","physics"];
+	$scope.catChoices.emptyArray = [ [], [], [], [], [], [] ];
+
+	$scope.catChoice = function() {
+		$scope.catChoices = {
+			"chemistry": $scope.catChoiceChemistry, "economics": $scope.catChoiceEconomics, "literature": $scope.catChoiceLiterature, "medicine": $scope.catChoiceMedicine, "peace": $scope.catChoicePeace, "physics": $scope.catChoicePhysics
+		};
+		$scope.catChoices.array = [];
+		$scope.catChoices.dict = {};
+		$scope.catChoices.emptyArray = [];
+
+		// If the choice is checked (true), we are going to show
+		if ($scope.catChoiceChemistry === true) {
+			$scope.catChoices.array.push("chemistry");
+			$scope.catChoices.emptyArray.push([]);
+		}
+		if ($scope.catChoiceEconomics === true) {
+			$scope.catChoices.array.push("economics");
+			$scope.catChoices.emptyArray.push([]);
+		}
+		if ($scope.catChoiceLiterature === true) {
+			$scope.catChoices.array.push("literature");
+			$scope.catChoices.emptyArray.push([]);
+		}
+		if ($scope.catChoiceMedicine === true) {
+			$scope.catChoices.array.push("medicine");
+			$scope.catChoices.emptyArray.push([]);
+		}
+		if ($scope.catChoicePeace === true) {
+			$scope.catChoices.array.push("peace");
+			$scope.catChoices.emptyArray.push([]);
+		}
+		if ($scope.catChoicePhysics === true) {
+			$scope.catChoices.array.push("physics");
+			$scope.catChoices.emptyArray.push([]);
+		}
+		// Create a category dictionary containing each category and their id
+		// Will be used by service
+		for (var i=0; i<$scope.catChoices.array.length; i++) {
+			var cat = $scope.catChoices.array[i];
+			$scope.catChoices.dict[cat] = i;
+		}
+
+
+		$scope.$broadcast('reloadSunburst', {
+			year: $scope.sliderYear.label // send whatever you want
+		});
+	};
+
 	//////////////////////// NOBEL DATA ////////////////////////////////
 
 	$scope.searchCountryName = "Sweden";
@@ -77,11 +147,11 @@ nobelApp.controller('nobelCtrl',
 		// EX: nobelService.getNobelDataForSunburst(0, undefined, function(data){ <---- Returns only countries with winners for all years and prints the result
 		//		console.log(data);		
 		// }); 
-		nobelService.getNobelDataForSunburst(0, undefined, function(data){
+		//nobelService.getNobelDataForSunburst(0, false, "hej", function(data){
 			//$scope.nobelData = data;
 			//$scope.$apply();	// $scope.$apply tells angular that we have loaded in the data so it updates the view
-			console.log($scope.nobelData);
-		});
+		//	console.log($scope.nobelData);
+		//});
 	}
 
 	// To make our onStart function run on start

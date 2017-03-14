@@ -73,14 +73,19 @@ nobelApp.factory('nobelService', ['$window', '$http', '$q', function ($window, $
     //////////////////// DATA GETTER ////////////////////
 
     // This function returns all data for the sunburst
-    this.getNobelDataForSunburst = function(year, showAllCountries, callback) {
+    this.getNobelDataForSunburst = function(year, showAllCountries, categoryChoice, callback) {
         var self = this;
         this.getAllData(function(prizesData, laureatesData, countriesData){
           if (year == undefined || year == "*" || year == "all" || year == 0) {
             year = 3500;
           }
           var root = {"name": "flare", "children": []};
-          var categoryDictionary = {'chemistry': 0, 'literature': 1, 'peace': 2, 'physics': 3, 'medicine': 4, 'economics': 5}
+          var categoryDictionary;
+          if (categoryChoice.dict === undefined) {
+            categoryDictionary = { "chemistry": 0, "economics": 1, "literature": 2, "medicine": 3, "peace": 4, "physics": 5 };
+          } else {
+            categoryDictionary = angular.copy(categoryChoice.dict);
+          }
           var contName;
           // for each continent
           for (var k=0; k<self.continents.length; k++) {
@@ -99,7 +104,12 @@ nobelApp.factory('nobelService', ['$window', '$http', '$q', function ($window, $
                 countryObj["countryId"] = countriesData[l].code;
                 // this is an array with six empty arrays. Each empty array symbolizes a prize category, using categoryDictionary
                 // later all the arrays will be joined to one array 
-                var categoryArray = [ [], [], [], [], [], [] ];
+                var categoryArray = [];
+                if (categoryChoice.emptyArray == undefined) {
+                    categoryArray = [ [], [], [], [], [], [] ];
+                } else {
+                    categoryArray = angular.copy(categoryChoice.emptyArray);
+                }
                 // Loops through our laureates to look for laureates from this country
                 for (var n=0; n<laureatesData.length; n++){
                   // If the laureate is born in this country, grab info about them
@@ -117,13 +127,19 @@ nobelApp.factory('nobelService', ['$window', '$http', '$q', function ($window, $
                       laureateObj["category"] = cat;
                       laureateObj["year"] = wonYear;                      
                       laureateObj["motivation"] = laureatesData[n].prizes[laureatesData[n].prizes.length-1].motivation;
+                      
                       // Puts the laureate in the correct array according to prize category
-                      categoryArray[categoryDictionary[cat]].push(laureateObj);
+                      if(categoryDictionary[cat] !== undefined) {
+                        categoryArray[categoryDictionary[cat]].push(laureateObj);
+                      }
                     }
                   }
                 }
                 // Joins all the category arrays to one array
-                countryObj.children = categoryArray[0].concat(categoryArray[1],categoryArray[2],categoryArray[3],categoryArray[4],categoryArray[5]);
+                for (var x=0; x<categoryChoice.array.length; x++) {
+                    countryObj.children = countryObj.children.concat(categoryArray[x]);
+                }
+
                 if (showAllCountries == true) {
                     contObj.children.push(countryObj);
                 } else {
