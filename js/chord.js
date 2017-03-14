@@ -1,7 +1,4 @@
-document.getElementsByTagName("input")[0].style.width = screen.width * 0.03 + "px";
-document.getElementsByTagName("input")[0].style.height = screen.width * 0.03 + "px";
-document.getElementsByTagName("input")[1].style.width = screen.width * 0.03 + "px";
-document.getElementsByTagName("input")[1].style.height = screen.width * 0.03 + "px";
+
 // ********************* CHORD CODE ****************************
 
 /*
