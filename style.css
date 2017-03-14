@@ -131,14 +131,6 @@ select {
 
 /* ****** TIMESLIDER ****** */
 
-p {
-	margin: 50px;
-}
-
-a {
-	color: #4FDEF2;
-}
-
 .axis {
 	fill: gray;
 	-webkit-user-select: none;
@@ -151,16 +143,16 @@ a {
 	stroke: gray;
 	stroke-width: 10px;
 	stroke-linecap: round;
-	padding: 4px;
+	padding: 5px;
 	font-size: 18px;
 }
 .tick text{
-	margin: 10px;
+	
 	font-size: 18px;
 }
 
 .slider .handle path {
-	stroke: black;
+	stroke: black; /* color of the handle on timeslider (w year moving with it)*/
 	stroke-width: 5px;
 	stroke-linecap: round;
 	pointer-events: none;
@@ -223,8 +215,8 @@ a {
 
 /* ****** RIGHT LEGEND ****** */
 #legend {
-	background-color:#eee; 
-	width:100%; 
+	background-color:#eee;
+	/*width:100%;*/ 
 	height:40%;
 	display:inline-block;
 	border-top: 1.5px solid #ddd;
@@ -243,9 +235,10 @@ a {
 
 /* ****** TOP LEGEND ****** */
 #topbar {
+	width: 960px; 
 	margin-top: 10px;
 	margin-bottom: 40px;
-	margin-left: 10px;
+	margin-left: 90px;
 	font-size: 9pt;
 	font-family: Helvetica, Arial, sans-serif;
 	font-size: 10pt;

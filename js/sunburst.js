@@ -673,8 +673,8 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, $scope)
 			.clamp(true);
 
 		//initial value
-		var startValue = timeScale(new Date('1920'));
-			startingValue = new Date('1920');
+		var startValue = timeScale(new Date('1901'));
+			startingValue = new Date('1901');
 
 		//defines brush
 		var brush = d3.svg.brush()
@@ -742,48 +742,14 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, $scope)
 				brush.extent([value, value]);
 			}
 
-			handle.attr("transform", "translate(" + timeScale(value) + ", 0");
+			handle.attr("transform", "translate(" + timeScale(value) + ", 0)");
 			handle.select("text").text(formatDate(value));
+			
+			//calls functions to update data as slider has been moved to new year
 			updatePage(parseInt(formatDate(value)));
 			updateCountryColors(parseInt(formatDate(value)));
 		}
 	}
-
-	function updatePage(year) {
-		if (chartOn === false) {
-			sunburstInit();
-		} else {
-			document.getElementById("sunburst").innerHTML = "";
-			//document.getElementById("globe").innerHTML = "";
-			d3.select('#sunburst').selectAll("*").remove();
-			//d3.select('#globe').selectAll("*").remove();
-			vis = "";
-			arc = "";
-			partition = "";
-			json = "";
-			path = "";
-
-			sunburstLoad(year);
-		}	
-	}
-
-	// Stash the old values for transition.
-	function stash(d) {
-	   d.x0 = d.x;
-	   d.dx0 = d.dx;
-	}
-
-	function sunburstInit() {
-		sunburstLoad(1920);
-	}
-
-	//calls slider function which in turn calls for the sunburst page to update
-	function timesliderInit() {
-		slider();
-	}
-
-	timesliderInit();
-
 
 	function updateCountryColors(year){
 		var theSvg = svg;
@@ -812,6 +778,46 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, $scope)
 			}
 		})
 	}
+
+	//updates globe + sunburst svg with new data by calling sunburstLoad(year)
+	function updatePage(year) {
+		if (chartOn === false) {
+			sunburstInit();
+		} else {
+			document.getElementById("sunburst").innerHTML = "";
+			//document.getElementById("globe").innerHTML = "";
+			d3.select('#sunburst').selectAll("*").remove();
+			//d3.select('#globe').selectAll("*").remove();
+			vis = "";
+			arc = "";
+			partition = "";
+			json = "";
+			path = "";
+
+			sunburstLoad(year);
+		}	
+	}
+
+	// Stash the old values for transition.
+	function stash(d) {
+	   d.x0 = d.x;
+	   d.dx0 = d.dx;
+	}
+
+	//starts the visualization with given year
+	function sunburstInit() {
+		sunburstLoad(1901);
+	}
+
+	//calls slider function which in turn calls for the sunburst page to update
+	function timesliderInit() {
+		slider();
+	}
+
+	timesliderInit();
+
+
+	
 
 });
 
