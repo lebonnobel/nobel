@@ -249,7 +249,7 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, yearSer
 				      .attr("class", "countryTooltip")
 				      .style("opacity", 0);
 
-				countryList = d3.select("#globe").append("select").attr("name", "countries").style("visibility", "hidden");
+				countryList = d3.select("#globe").append("select").attr("name", "countries");
 
 				//get data?
 				q = queue()
@@ -265,8 +265,7 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, yearSer
 
 				// Returns the id of the country code 
 				// Input: inputCode, format: "SE"
-				// Output: c, number
-					
+				// Output: c, number				
 			}
 
 			//Main globe function
@@ -297,15 +296,15 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, yearSer
 
 				//Dragging water on the globe
 				globeSvg.selectAll("path.water")
-				.call(d3.behavior.drag()
-			        .origin(function() { var r = projection.rotate(); return {x: r[0] / sens, y: -r[1] / sens}; })
-			        .on("drag", function() {
-			          var rotate = projection.rotate();
-			          projection.rotate([d3.event.x * sens, -d3.event.y * sens, rotate[2]]);
-			          globeSvg.selectAll("path.land").attr("d", globepath);
-			          globeSvg.selectAll(".focused").classed("focused", focused = false);
-			        })
-			      );
+					.call(d3.behavior.drag()
+				        .origin(function() { var r = projection.rotate(); return {x: r[0] / sens, y: -r[1] / sens}; })
+				        .on("drag", function() {
+				          var rotate = projection.rotate();
+				          projection.rotate([d3.event.x * sens, -d3.event.y * sens, rotate[2]]);
+				          globeSvg.selectAll("path.land").attr("d", globepath);
+				          globeSvg.selectAll(".focused").classed("focused", focused = false);
+				        })
+			      	);
 
 				world = globeSvg.selectAll("path.land")
 					.data(countries)
@@ -321,23 +320,24 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, yearSer
 					      }
 					    })
 					    return out;
-					  })
+					})
 
-				//Drag event
-				.call(d3.behavior.drag()
-			    	.origin(function() { var r = projection.rotate(); return {x: r[0] / sens, y: -r[1] / sens}; })
-			    	.on("drag", function() {
-			        	var rotate = projection.rotate();
-			        	projection.rotate([d3.event.x * sens, -d3.event.y * sens, rotate[2]]);
-			        	globeSvg.selectAll("path.land").attr("d", globepath);
-			        	globeSvg.selectAll(".focused").classed("focused", focused = false);
-			        }))
+					//Drag event
+					.call(d3.behavior.drag()
+				    	.origin(function() { var r = projection.rotate(); return {x: r[0] / sens, y: -r[1] / sens}; })
+				    	.on("drag", function() {
+				        	var rotate = projection.rotate();
+				        	projection.rotate([d3.event.x * sens, -d3.event.y * sens, rotate[2]]);
+				        	globeSvg.selectAll("path.land").attr("d", globepath);
+				        	globeSvg.selectAll(".focused").classed("focused", focused = false);
+				        })
+				    )
 			  
-				//Mouse events
-				.on("click", globeClick)
-				.on("mouseover", globeMouseover)
-				.on("mouseleave", globeMouseleave)
-				.on("mousemove", globeMousemove);	
+					//Mouse events
+					.on("click", globeClick)
+					.on("mouseover", globeMouseover)
+					.on("mouseleave", globeMouseleave)
+					.on("mousemove", globeMousemove);	
 			} 
 			
 			function globeClick(d) {
