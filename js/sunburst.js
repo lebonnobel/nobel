@@ -839,10 +839,11 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, yearSer
 		$("#countryInfo").hide();
 
 		$("#laureate_gender").html(d.gender);
+		$("#laureate_born").html(d.born);
 		$("#laureate_name").html(d.laureate);
 		$("#laureate_country").html(d.parent.country);
 		$("#laureate_category").html(d.category);
-		$("#laureate_year").html(d.year);
+		$("#laureate_year").html(d.prizeYear);
 		if (d.motivation !== undefined) {
 			$("#laureate_motivation").html(d.motivation);
 		} else {

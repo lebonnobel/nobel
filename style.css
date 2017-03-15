@@ -204,6 +204,9 @@ a {
 	font-family: Helvetica, Arial, sans-serif;
 	margin: 35% 0 0 10%;
 }
+#laureate_gender {
+	text-transform: capitalize;
+}
 
 /*
 #info td {
@@ -219,6 +222,7 @@ a {
 #info h3 {
 	font-size:16pt;
 	font-weight: bold;
+	height: auto !important;
 }
 
 /* ****** RIGHT LEGEND ****** 
