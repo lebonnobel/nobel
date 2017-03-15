@@ -57,22 +57,17 @@ h1 {
 }
 
 #sunburst {
-	/*margin-top: -375px;
-	margin-left: -480px;*/
 	position: absolute;
 	z-index: 2;
-	/*left: 50%;
-	top: 50%;*/
 }
 
 /* ****** GLOBE POSITIONING ****** */
 #globe {
 	margin-left: 24.5%;
-	/*margin-top: -189.5px;*/
 	position: absolute;
 	z-index: 3;
-	/*right: 50%;*/
 	top: 24.5%;
+
 }
 
 /* ****** TOOLTIP SUNBURST ****** */
@@ -94,18 +89,18 @@ h1 {
 }
 
 .land {
-	fill: #a9c099; /*#A5D6A7; /*#83E863;*/
 	stroke: #FFF;
-	stroke-width: 0.7px;
+	stroke-width: 0.5px;
 }
 
 .land:hover {
-	fill: #FFB74D; /*#32BD8D;*/
-	stroke-width: 1px;
+	stroke: #616161; /*#FFB74D; /*#32BD8D;*/
+	stroke-width: 2px;
 }
 
 .focused {
-	fill: #f58234; /*#F57C00; /*#32BD8D;*/
+	stroke: #424242; /*#f58234; /*#F57C00; /*#32BD8D;*/
+	stroke-width: 2px;
 }
 
 select {
@@ -131,14 +126,6 @@ select {
 
 /* ****** TIMESLIDER ****** */
 
-p {
-	margin: 50px;
-}
-
-a {
-	color: #4FDEF2;
-}
-
 .axis {
 	fill: gray;
 	-webkit-user-select: none;
@@ -151,16 +138,16 @@ a {
 	stroke: gray;
 	stroke-width: 10px;
 	stroke-linecap: round;
-	padding: 4px;
+	padding: 5px;
 	font-size: 18px;
 }
 .tick text{
-	margin: 10px;
+	
 	font-size: 18px;
 }
 
 .slider .handle path {
-	stroke: black;
+	stroke: black; /* color of the handle on timeslider (w year moving with it)*/
 	stroke-width: 5px;
 	stroke-linecap: round;
 	pointer-events: none;
@@ -208,12 +195,6 @@ a {
 	text-transform: capitalize;
 }
 
-/*
-#info td {
-	font-family: Helvetica, Arial, sans-serif;
-	font-size:14pt;
-}
-*/
 #info .inf{
 	font-weight: bold;
 	vertical-align: top;
@@ -225,31 +206,13 @@ a {
 	height: auto !important;
 }
 
-/* ****** RIGHT LEGEND ****** 
-#legend {
-	background-color:#eee; 
-	width:100%; 
-	height:40%;
-	display:inline-block;
-	border-top: 1.5px solid #ddd;
-	padding: 15px 15px;	    		
-	font-family: Helvetica, Arial, sans-serif;
-	font-size:12pt;
-	line-height: 10px;
-}
-
-#legend span {
-	font-size: 120%;
-	margin-right: 7px;
-	top: 3px;
-}*/
-
 
 /* ****** TOP LEGEND ****** */
 #topbar {
 	margin-top: 3%;
 	margin-bottom: 5%;
 	margin-left: 1.2%;
+
 	font-size: 10pt;
 	font-family: Helvetica, Arial, sans-serif;
 }

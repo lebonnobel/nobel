@@ -46,14 +46,12 @@
 		<!-- Here are the divs containing the separate visualization pages-->
 		<div id="globeSunburstPage" class="col-md-12" ng-hide="hideSunburst">
 			<div id="main">
-				
-
       		</div>
       		<div class="col-md-6">
-				<div id="globeSunburst">
+				<div id="globeSunburst" ng-controller="sunburst">
 					<div id="globe">
 					</div>
-					<div id="sunburst" ng-controller="sunburst">
+					<div id="sunburst">
 					</div>
 				</div>
 			</div>
@@ -85,22 +83,15 @@
 									</div>
 								</form>
 							</div>
-						</div>
-				<!--<div>
-			        <form ng-submit="" class="form-inline">
-						<div class="input-group input-block-level" style="width:100%;">
-							<label>Select country:</label>
-							<select class="form-control">
-							  <option value="sverige">Sverige</option>
-							  <option value="kina">Kina</option>
-							  <option value="frankrike">Frankrike</option>
-							  <option value="mexico">Mexico</option>
-							</select>
-						</div>
-					</form>
-				</div>-->
-	        	<div id="info">
+				</div>
+				<div class="additionalDataForGlobe row">
+					<p> Select additional data to show </p>
+					<select required ng-model="wbDataChoice" ng-options="wbd.title for wbd in worldBankData" ng-change="onWbDataChange(wbDataChoice)">
+						<option value=""> -- Select -- </option>
+					</select>
+				</div>
 
+	        	<div id="info">
 		      		<h3 id="laureate_name"></h3>
 		      		<table id="laureateInfo">
 		      			<tr>
@@ -115,12 +106,6 @@
 		      			<tr>
 			      			<td class="inf">Country:</td> <td id="laureate_country"></td>
 			      		</tr>
-			      		<!--<tr>
-			      			<td class="inf">Category:</td> <td id="laureate_category"></td>
-			      		</tr>
-			      		<tr>
-			      			<td class="inf">Year:</td> <td id="laureate_year"></td>
-			      		</tr>-->
 			      		<tr>
 			      			<td class="inf">Motivation:</td> <td id="laureate_motivation"></td>
 			      		</tr>
@@ -131,34 +116,6 @@
 			      		</tr>
 		      		</table>
 	      		</div>
-	      		<!--
-	       		 <div id="legend">
-	    		
-					  <p id="Chemistry">
-					   <span class="glyphicon glyphicon-stop" style="color:#F9CE66;"></span>
-					   Chemistry
-					  <p>
-					   	<p id="Economics">
-					   	<span class="glyphicon glyphicon-stop" style="color:#D89F71;"></span>
-					   Economics
-					  </p>
-					  <p id="Literature">
-					   <span class="glyphicon glyphicon-stop" style="color:#826A84;"></span>
-					   Literature
-					  </p>
-					  <p id="Medicine">
-					   <span class="glyphicon glyphicon-stop" style="color:#A86D6D;"></span>
-					   Medicine
-					  </p>
-						<p id="Peace">
-					   <span class="glyphicon glyphicon-stop" style="color:#8FB588;"></span>
-					   Peace
-					  </p>
-						<p id="Physics">
-					   <span class="glyphicon glyphicon-stop" style="color:#455C7C;"></span>
-					   Physics 
-					  </p>
-	      		</div>-->
 	   		</div>
 			<div id ="timeslide" class="col-md-7">
 			</div>
@@ -183,28 +140,6 @@
 		<div id="project" ng-hide="hideProject" >
 			Our project goes here ish
 		</div>
-		<!--
-		We need this but to work in the background.
-		Country: <input type="text" name="countryName" ng-model="searchCountryName"> 
-		Up to what year: <input type="text" name="year" ng-model="searchYear">
-
-		<button ng-click="getNobelPrizeData()">Click to get data</button>
-		<div ng-repeat="x in nobelData">
-			{{x}}
-		</div>
-		<p></p>
-		<div>
-			<p>Select data from World Bank:</p>
-			<select required ng-model="wbDataChoice" ng-options="wbd.title for wbd in worldBankData" ng-change="onWbDataChange(wbDataChoice)">
-		        <option value=""> --Select-- </option>
-		    </select>
-		    <div ng-repeat="x in wbData">
-				{{x}}
-			</div>
-		</div> 
-		<div ng-repeat="x in nobelData">
-			{{x}}
-		</div>-->
 	</div>
 
 	<!-- Angular Scripts -->
