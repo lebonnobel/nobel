@@ -125,7 +125,8 @@ nobelApp.factory('nobelService', ['$window', '$http', '$q', function ($window, $
                       laureateObj["laureateId"] = laureatesData[n].id;
                       laureateObj["gender"] = laureatesData[n].gender;
                       laureateObj["category"] = cat;
-                      laureateObj["year"] = wonYear;                      
+                      laureateObj["prizeYear"] = wonYear; 
+                      laureateObj["born"] = laureatesData[n].born;                    
                       laureateObj["motivation"] = laureatesData[n].prizes[laureatesData[n].prizes.length-1].motivation;
 
                       // Puts the laureate in the correct array according to prize category
