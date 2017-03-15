@@ -1,4 +1,4 @@
-nobelApp.controller('sunburst', function(worldBankService, nobelService, yearService, $scope) {
+nobelApp.controller('sunburst', function(worldBankService, nobelService, yearService, prizeService, $scope) {
 
 	$scope.$on('reloadSunburst', function (event, data) {
 		updatePage(data.year);
@@ -751,8 +751,9 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, yearSer
 			handle.select("text").text(formatDate(value));
 			updatePage(parseInt(formatDate(value)));
 			updateCountryColors(parseInt(formatDate(value)));
-			console.log("hello, i'm brushing", formatDate(value));
 			yearService.update(formatDate(value));
+			$scope.$parent.safeApply();
+			
 		}
 	}
 
@@ -857,7 +858,13 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, yearSer
 		$("#countryInfo, #info h3").show();
 
 		$("#laureate_name").html(d.country);
-		$("#num").html(d.children.length);
+		prizeService.updatePrizes(d.children.length);
+		prizeService.updateCountry(d.country);
+
+		$scope.$emit('clickedCountrySunburst', {
+			prizes: d.children.length,
+			country: d.country
+		});
 	}
 
 });

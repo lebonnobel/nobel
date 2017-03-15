@@ -1,5 +1,5 @@
 nobelApp.controller('nobelCtrl', 
-	function(worldBankService, nobelService, yearService, $scope, $http, $rootScope, $timeout) {
+	function($scope,worldBankService, nobelService, yearService, prizeService,  $http, $rootScope, $timeout) {
  	// Controller that controls the view
  	// Put $scope. in front of a variable name in order for the view to be able to use this variable
 	
@@ -105,6 +105,22 @@ nobelApp.controller('nobelCtrl',
 		});
 	};
 
+	////////////////////// TOTAL PRIZES ////////////////////////////
+	$scope.totalPrizes = prizeService.prizes;
+	$scope.totalPrizesCountry = prizeService.country;
+
+	$scope.$on('clickedCountrySunburst', function (event, data) {
+		$scope.updatePrizes(data);
+	});
+	$scope.updatePrizes = function(data) {
+		if (data != undefined) {
+			prizeService.updatePrizes(data.prizes);
+			prizeService.updateCountry(data.country);
+		}
+		
+		$scope.$apply();
+	}
+
 	//////////////////////// NOBEL DATA ////////////////////////////////
 
 	$scope.searchCountryName = "Sweden";
@@ -203,6 +219,19 @@ nobelApp.controller('nobelCtrl',
 
 	// JUST A TEST FUNCTION, JUST REMOVE IF YOU WANT
 	$scope.getDataForGlobe('mean-years-in-school', 2009, function(data){
-  		console.log(data);
+  		//console.log(data);
   	});
+
+
+  	////////////////// OTHER ////////////////////////////
+  	$scope.safeApply = function(fn) {
+	  var phase = this.$root.$$phase;
+	  if(phase == '$apply' || phase == '$digest') {
+	    if(fn && (typeof(fn) === 'function')) {
+	      fn();
+	    }
+	  } else {
+	    this.$apply(fn);
+	  }
+	};
 });
