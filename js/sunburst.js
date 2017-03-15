@@ -326,7 +326,6 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, yearSer
 		    						thisParent = search.__data__.parent;
 		    						currentRoot = thisParent.parent;
 		    						node = thisParent.parent;
-		    						console.log("node", node);
 		    						found = true;
 		    					} 
 		    				}
@@ -350,7 +349,6 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, yearSer
 
 			function globeMouseover(d) {
 				//console.log("globeMouseover");
-				console.log("mouseover d", id2Code(d.id));
 				mouseover(id2Code(d.id));
 
 				var country = '<span class="country">' + countryById[d.id]
@@ -792,7 +790,7 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, yearSer
 			//calls functions to update data as slider has been moved to new year
 			updatePage(parseInt(formatDate(value)));
 
-			//updateCountryColors(parseInt(formatDate(value)));
+			updateCountryColors(parseInt(formatDate(value)));
 			//sliderYear = parseInt(formatDate(value));
 
 			yearService.update(formatDate(value));
@@ -813,21 +811,25 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, yearSer
 	}
 
 	//if user choses to see education data, then this runs
-	function updateCountryColors(year = 1901){
+	function updateCountryColors(year){
 		worldBankService.getDataForGlobe('mean-years-in-school', year, function(data){
 			if(globeSvg != undefined){
 			var world = globeSvg.selectAll("path.land")
-			.style("fill", function(d) {
-				var max = d3.max(data, function(d){ return d.value; }); // Max antal years in school
-				var color = null;
-				var sc = d3.scale.linear().range(['#F3E5F5','#7B1FA2']).domain([0, max]);
-				for (var i = 0; i < data.length; i++) {
-					if (globalById[d.id] == data[i].name){   // Om landet matchar/finns med i datat
-						color = sc(data[i].value);    // Räkna ut färg här
+				.style("fill", function(d) {
+					var max = d3.max(data, function(d){ return d.value; }); // Max antal years in school
+					var color = null;
+					var sc = d3.scale.linear().range(['#F3E5F5','#7B1FA2']).domain([0, max]);
+					for (var i = 0; i < data.length; i++) {
+						if (globalById[d.id] == data[i].name){   // Om landet matchar/finns med i datat
+							color = sc(data[i].value);    // Räkna ut färg här
+						} 
 					}
-				}
-				return color;
-			 })	
+
+					if (!color) {
+						color = getGlobeColor();
+					}
+					return color;
+			 	})	
 			}
 		})
 	}
