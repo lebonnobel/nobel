@@ -628,7 +628,6 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, yearSer
 		    	}
 
 		    	if (i == 0) {
-		    		//console.log("x", x);
 		    		var xd = d3.interpolate(x.domain(), [node.x, node.x + node.dx]);
 		    		return function(t) {
 		    			x.domain(xd(t));
