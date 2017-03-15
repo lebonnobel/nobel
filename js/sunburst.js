@@ -846,7 +846,7 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, yearSer
 		if (d.motivation !== undefined) {
 			$("#laureate_motivation").html(d.motivation);
 		} else {
-			$("#laureate_motivation").html(" &mdash;");
+			$("#laureate_motivation").html("&nbsp;&mdash;");
 		}
 
 	}
