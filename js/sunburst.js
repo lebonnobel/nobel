@@ -4,67 +4,6 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, yearSer
 		updatePage(data.year);
 	});
 
-	//sets up the intial variables
-	var screenSize = screen.width;
-	var width = screenSize * 0.5, //960
-	    height =  width,//750,
-	    radius = Math.min(width, height) / 2,
-	    x = d3.scale.linear()
-	    	.range([0, 2 * Math.PI]),
-	    y = d3.scale.sqrt()
-	    	.range([0, radius]);
-
-	//predefined colors for continents
-	var colors = {
-		"Oceania": "#84acad" , //Purple
-		"North America": "#7da7ae", //Blue
-		"South America": "#7da99e", //Cyan
-		"Asia": "#7f959a", //Teal
-		"Africa": "#9fc1b1", //Amber
-		"Europe": "#99bcbc" //Deep Orange
-	};
-
-	//below color variables returns a color in a predefined domain for countries belonging to the different continents
-	var OceaniaColor = d3.scale.linear()
-			.domain([1, 9])
-			.range(["#546b6a", "#b5e1e0"])
-			.interpolate(d3.interpolateHcl);
-	var NAmericaColor = d3.scale.linear()
-			.domain([1, 9])
-			.range(["#567275", "#a9dbe0"])
-			.interpolate(d3.interpolateHcl);
-	var SAmericaColor = d3.scale.linear()
-			.domain([1, 9])
-			.range(["547068", "#aedccf"])
-			.interpolate(d3.interpolateHcl);
-	var AsiaColor = d3.scale.linear()
-			.domain([1, 9])
-			.range(["#505e60", "#afcbd0"])
-			.interpolate(d3.interpolateHcl);
-	var AfricaColor = d3.scale.linear()
-			.domain([1, 9])
-			.range(["#6d8478", "#d0e9db"])
-			.interpolate(d3.interpolateHcl);
-	var EuropeColor = d3.scale.linear()
-			.domain([1, 9])
-			.range(["#637777", "#c9e8ea"])
-			.interpolate(d3.interpolateHcl);
-
-	//perhaps unnecessary atm, but returns predefined colors for the different continents
-	function colorPicker (country) {
-		return colors[String(country)];
-	}
-
-	//the predefined colors of the different prize categories
-	var categoryColors = {
-	  "physics":  "#455C7C", //#455C7C",
-	  "literature": "#826A84", //#826A84",
-	  "medicine": "#A86D6D", //#A86D6D",
-	  "economics": "#D89F71", //#D89F71",
-	  "chemistry": "#F9CE66", //#F9CE66",
-	  "peace": "#8FB588", //#8FB588"
-	};
-
 	//global variables needed further down
 	var node;
 	var currentRoot;
@@ -92,6 +31,99 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, yearSer
 	var countryById = {};
 	var countries;
 	var world;
+
+	//sets up the intial variables
+	var screenSize = screen.width;
+	var width = screenSize * 0.5, //960
+	    height =  width,//750,
+	    radius = Math.min(width, height) / 2,
+	    x = d3.scale.linear()
+	    	.range([0, 2 * Math.PI]),
+	    y = d3.scale.sqrt()
+	    	.range([0, radius]);
+
+	//predefined colors for continents
+	var colors = {
+		"Oceania": "#84acad" , 
+		"North America": "#7da7ae", 
+		"South America": "#7da99e",
+		"Asia": "#7f959a", 
+		"Africa": "#9fc1b1", 
+		"Europe": "#99bcbc" 
+	};
+
+	var countryColorList = {};
+
+	function colorGenerator(continent, country) {
+		var color;
+		if(!countryColorList[country]){
+			color = continentColors(continent);
+			countryColorList[country] = color;
+		} else {
+			color = countryColorList[country];
+		}
+		return color;
+	}
+
+	//perhaps unnecessary atm, but returns predefined colors for the different continents
+	function colorPicker (country) {
+		return colors[String(country)];
+	}
+
+	function continentColors(continent) {
+		var color;
+		if (continent === "Oceania") {
+			var colors = d3.scale.linear()
+				.domain([1, 9])
+				.range(["#546b6a", "#b5e1e0"])
+				.interpolate(d3.interpolateHcl);
+			color = colors(Math.floor(Math.random()*10)); 
+		} else if (continent === "North America") {
+			var colors = d3.scale.linear()
+				.domain([1, 9])
+				.range(["#567275", "#a9dbe0"])
+				.interpolate(d3.interpolateHcl);
+				color = colors(Math.floor(Math.random()*10));
+		} else if (continent === "South America"){
+			var colors = d3.scale.linear()
+				.domain([1, 9])
+				.range(["#547068", "#aedccf"])
+				.interpolate(d3.interpolateHcl);
+				console.log("south america");
+				color = colors(Math.floor(Math.random()*10));
+		} else if (continent === "Asia") {
+			var colors = d3.scale.linear()
+				.domain([1, 9])
+				.range(["#505e60", "#afcbd0"])
+				.interpolate(d3.interpolateHcl);
+				color = colors(Math.floor(Math.random()*10));
+		} else if (continent === "Africa") {
+			var colors = d3.scale.linear()
+				.domain([1, 9])
+				.range(["#6d8478", "#d0e9db"])
+				.interpolate(d3.interpolateHcl);
+				color = colors(Math.floor(Math.random()*10));
+		} else if (continent === "Europe") {
+			var colors = d3.scale.linear()
+				.domain([1, 9])
+				.range(["#637777", "#c9e8ea"])
+				.interpolate(d3.interpolateHcl);
+				color = colors(Math.floor(Math.random()*10));
+		}
+		console.log("color d3 scale", color);
+		return color;
+	}
+
+	//the predefined colors of the different prize categories
+	var categoryColors = {
+	  "physics":  "#455C7C", //#455C7C",
+	  "literature": "#826A84", //#826A84",
+	  "medicine": "#A86D6D", //#A86D6D",
+	  "economics": "#D89F71", //#D89F71",
+	  "chemistry": "#F9CE66", //#F9CE66",
+	  "peace": "#8FB588", //#8FB588"
+	};
+
 
 	//loads json file & add attributes etc to the path (sunburst piece)
 	function sunburstLoad (year) {
@@ -162,17 +194,17 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, yearSer
 			    		} else if (d["country"]) {
 			    			var parent = d.parent["continent"];
 			    			if(parent === "Africa") {
-			    				return AfricaColor(Math.floor(Math.random()*10));
+			    				return colorGenerator("Africa", d["country"]);
 			    			} else if(parent === "North America") {
-			    				return NAmericaColor(Math.floor(Math.random()*10));
+			    				return colorGenerator("North America", d["country"]);
 			    			} else if(parent === "South America") {
-			    				return SAmericaColor(Math.floor(Math.random()*10));
+			    				return colorGenerator("South America", d["country"]);
 			    			} else if(parent === "Europe") {
-			    				return EuropeColor(Math.floor(Math.random()*10));
+			    				return colorGenerator("Europe", d["country"]);
 			    			} else if(parent === "Asia") {
-			    				return AsiaColor(Math.floor(Math.random()*10));
+			    				return colorGenerator("Asia", d["country"]);
 			    			} else if(parent === "Oceania") {
-			    				return OceaniaColor(Math.floor(Math.random()*10));
+			    				return colorGenerator("Oceania", d["country"]);
 			    			}
 			    		}
 			    	}
