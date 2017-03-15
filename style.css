@@ -103,16 +103,6 @@ h1 {
 	stroke-width: 2px;
 }
 
-select {
-	position: absolute;
-	top: 20px;
-	left: 580px;
-	border: solid #ccc 1px;
-	border-radius: 4px;
-	padding: 3px;
-
-}
-
 .countryTooltip {
 	position: absolute;
 	z-index: 4;

@@ -249,7 +249,15 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, yearSer
 				      .attr("class", "countryTooltip")
 				      .style("opacity", 0);
 
-				countryList = d3.select("#globe").append("select").attr("name", "countries");
+				countryList = d3.select("#selectCountryDiv").append("select")
+					.attr("name", "countries")
+					.attr("class","countryChoice")
+					.attr("id", "selectCountry");
+
+				d3.selectAll("#selectCountry").on("change", function() {
+					privateUpdateMap(-1);  
+				});
+
 
 				//get data?
 				q = queue()
@@ -406,9 +414,10 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, yearSer
 
 			//Country focus on option select
 			// Här sätter man en listener som körs när man byter land
-			d3.select("select").on("change", function() {
+			d3.selectAll("#selectCountry").on("change", function() {
 				privateUpdateMap(-1);  
 			});
+
 				
 			function code2Id(inputCode) {
 				//console.log("code2Id");
@@ -438,7 +447,7 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, yearSer
 			// This function is a copy of country()
 			function country2(cnt, n) {
 				//console.log("country2");
-			  var sel = document.getElementsByTagName("select")[0];
+			  var sel = $('select.countryChoice')[0];
 			  for(var i = 0, l = cnt.length; i < l; i++) {
 			    if(cnt[i].id == n) {return cnt[i];}
 			  }
@@ -449,9 +458,8 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, yearSer
 			// The function rotates the map and selects the country
 			// If n == -1 the call comes from the selection list
 			function privateUpdateMap(n) {
-				//console.log("privateUpdateMap");
 			    // Getting the selection tag
-			    var t = document.getElementsByTagName("select")[0];
+			    var t = $('select.countryChoice')[0];
 			    var rotate = projection.rotate();
 			    var focusedCountry; 
 
@@ -501,7 +509,7 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, yearSer
 				//console.log("upDateFromSunburst");
 				n = code2Id(COUNTRYCODE);
 					  
-				d3.selectAll("select").property("value", n);   // Making the country selected in the selection after clicking
+				d3.selectAll("select.countryChoice").property("value", n);   // Making the country selected in the selection after clicking
 
 				var rotate = projection.rotate(),
 					fs = country2(globalCountries, n),
