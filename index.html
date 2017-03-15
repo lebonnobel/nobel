@@ -61,24 +61,24 @@
 								<form class="catChoice">
 									<div class="col-md-6">
 										<label class="color-chemistry">
-											<input type="checkbox" ng-model="catChoiceChemistry" ng-change="catChoice()" checked/><span class="catChoiceCheckbox"><span></span></span> Chemistry
+											<input type="checkbox" ng-model="catChoiceChemistry" ng-checked="catChoiceChemistry" ng-change="catChoice()" checked/><span class="catChoiceCheckbox"><span></span></span> Chemistry
 										</label></br>
 										<label class="color-economics">
-											<input type="checkbox" ng-model="catChoiceEconomics" ng-change="catChoice()" checked/><span class="catChoiceCheckbox"><span></span></span> Economics
+											<input type="checkbox" ng-model="catChoiceEconomics" ng-checked="catChoiceEconomics" ng-change="catChoice()" checked/><span class="catChoiceCheckbox"><span></span></span> Economics
 										</label></br>
 										<label class="color-literature">
-											<input type="checkbox" ng-model="catChoiceLiterature" ng-change="catChoice()" checked/><span class="catChoiceCheckbox"><span></span></span> Literature
+											<input type="checkbox" ng-model="catChoiceLiterature" ng-checked="catChoiceLiterature" ng-change="catChoice()" checked/><span class="catChoiceCheckbox"><span></span></span> Literature
 										</label>
 									</div>
 									<div class="col-md-6">
 										<label class="color-medicine">
-											<input type="checkbox" ng-model="catChoiceMedicine" ng-change="catChoice()" checked/><span class="catChoiceCheckbox"><span></span></span> Medicine
+											<input type="checkbox" ng-model="catChoiceMedicine" ng-checked="catChoiceMedicine" ng-change="catChoice()" checked/><span class="catChoiceCheckbox"><span></span></span> Medicine
 										</label></br>
 										<label class="color-peace">
-											<input type="checkbox" ng-model="catChoicePeace" ng-change="catChoice()" checked/><span class="catChoiceCheckbox"><span></span></span> Peace
+											<input type="checkbox" ng-model="catChoicePeace" ng-checked="catChoicePeace" ng-change="catChoice()" checked/><span class="catChoiceCheckbox"><span></span></span> Peace
 										</label></br>
 										<label class="color-physics">
-											<input type="checkbox" ng-model="catChoicePhysics" ng-change="catChoice()" checked/><span class="catChoiceCheckbox"><span></span></span> Physics
+											<input type="checkbox" ng-model="catChoicePhysics" ng-checked="catChoicePhysics" ng-change="catChoice()" checked/><span class="catChoiceCheckbox"><span></span></span> Physics
 										</label>
 									</div>
 								</form>
@@ -86,22 +86,22 @@
 				</div>
 
 	        	<div id="info">
-		      		<h3 id="name"></h3>
+		      		<h3 id="laureate_name"></h3>
 		      		<table id="laureateInfo">
 		      			<tr>
-			      			<td class="inf">Gender:</td> <td id="gender"></td>
+		      				<td class="inf" colspan="2">Nobel prize in <span id="laureate_category"></span> <span id="laureate_year"></span></td>
+		      			</tr>
+		      			<tr>
+			      			<td class="inf">Gender:</td> <td id="laureate_gender"></td>
+			      		</tr>
+			      		<tr>
+			      			<td class="inf">Born:</td> <td id="laureate_born"></td>
 			      		</tr>
 		      			<tr>
-			      			<td class="inf">Country:</td> <td id="country"></td>
+			      			<td class="inf">Country:</td> <td id="laureate_country"></td>
 			      		</tr>
 			      		<tr>
-			      			<td class="inf">Category:</td> <td id="category"></td>
-			      		</tr>
-			      		<tr>
-			      			<td class="inf">Year:</td> <td id="year"></td>
-			      		</tr>
-			      		<tr>
-			      			<td class="inf">Motivation:</td> <td id="motivation"></td>
+			      			<td class="inf">Motivation:</td> <td id="laureate_motivation"></td>
 			      		</tr>
 		      		</table>
 		      		<table id="countryInfo">
@@ -151,7 +151,6 @@
 	<script src="js/sunburst.js"></script>
 	<script src="js/flowChord.js"></script>
 	<script src="js/chord.js"></script>
-	<script src="js/info.js"></script>
 
 	<script>
 		// update the clicked choice (ie. sunburst or chord chart/project) so div gets active = changes color to indicate clicked

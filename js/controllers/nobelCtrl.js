@@ -39,54 +39,64 @@ nobelApp.controller('nobelCtrl',
 			"chemistry": $scope.catChoiceChemistry, "economics": $scope.catChoiceEconomics, "literature": $scope.catChoiceLiterature, "medicine": $scope.catChoiceMedicine, "peace": $scope.catChoicePeace, "physics": $scope.catChoicePhysics
 		};
 	$scope.catChoices.dict = {
-		"chemistry": 0,
-		"economics": 1,
-		"literature": 2,
-		"medicine": 3,
-		"peace": 4,
-		"physics": 5
+		"chemistry": 0, "economics": 1, "literature": 2, "medicine": 3, "peace": 4, "physics": 5
 	};
 	$scope.catChoices.array = ["chemistry","economics","literature","medicine","peace","physics"];
 	$scope.catChoices.emptyArray = [ [], [], [], [], [], [] ];
 
 	$scope.catChoice = function() {
-		$scope.catChoices = {
-			"chemistry": $scope.catChoiceChemistry, "economics": $scope.catChoiceEconomics, "literature": $scope.catChoiceLiterature, "medicine": $scope.catChoiceMedicine, "peace": $scope.catChoicePeace, "physics": $scope.catChoicePhysics
-		};
-		$scope.catChoices.array = [];
-		$scope.catChoices.dict = {};
-		$scope.catChoices.emptyArray = [];
+		if ($scope.catChoices.array.length === 1) {
+			$scope.catChoices.array = ["chemistry","economics","literature","medicine","peace","physics"];
+			$scope.catChoices.emptyArray = [ [], [], [], [], [], [] ];
+			$scope.catChoices.dict = {
+				"chemistry": 0, "economics": 1, "literature": 2, "medicine": 3, "peace": 4, "physics": 5
+			};
+			$scope.catChoiceChemistry = true;
+			$scope.catChoiceEconomics = true;
+			$scope.catChoiceLiterature = true;
+			$scope.catChoiceMedicine = true;
+			$scope.catChoicePeace = true;
+			$scope.catChoicePhysics = true;
+		} else {
 
-		// If the choice is checked (true), we are going to show
-		if ($scope.catChoiceChemistry === true) {
-			$scope.catChoices.array.push("chemistry");
-			$scope.catChoices.emptyArray.push([]);
-		}
-		if ($scope.catChoiceEconomics === true) {
-			$scope.catChoices.array.push("economics");
-			$scope.catChoices.emptyArray.push([]);
-		}
-		if ($scope.catChoiceLiterature === true) {
-			$scope.catChoices.array.push("literature");
-			$scope.catChoices.emptyArray.push([]);
-		}
-		if ($scope.catChoiceMedicine === true) {
-			$scope.catChoices.array.push("medicine");
-			$scope.catChoices.emptyArray.push([]);
-		}
-		if ($scope.catChoicePeace === true) {
-			$scope.catChoices.array.push("peace");
-			$scope.catChoices.emptyArray.push([]);
-		}
-		if ($scope.catChoicePhysics === true) {
-			$scope.catChoices.array.push("physics");
-			$scope.catChoices.emptyArray.push([]);
-		}
-		// Create a category dictionary containing each category and their id
-		// Will be used by service
-		for (var i=0; i<$scope.catChoices.array.length; i++) {
-			var cat = $scope.catChoices.array[i];
-			$scope.catChoices.dict[cat] = i;
+			$scope.catChoices = {
+				"chemistry": $scope.catChoiceChemistry, "economics": $scope.catChoiceEconomics, "literature": $scope.catChoiceLiterature, "medicine": $scope.catChoiceMedicine, "peace": $scope.catChoicePeace, "physics": $scope.catChoicePhysics
+			};
+			$scope.catChoices.array = [];
+			$scope.catChoices.dict = {};
+			$scope.catChoices.emptyArray = [];
+
+			// If the choice is checked (true), we are going to show
+			if ($scope.catChoiceChemistry === true) {
+				$scope.catChoices.array.push("chemistry");
+				$scope.catChoices.emptyArray.push([]);
+			}
+			if ($scope.catChoiceEconomics === true) {
+				$scope.catChoices.array.push("economics");
+				$scope.catChoices.emptyArray.push([]);
+			}
+			if ($scope.catChoiceLiterature === true) {
+				$scope.catChoices.array.push("literature");
+				$scope.catChoices.emptyArray.push([]);
+			}
+			if ($scope.catChoiceMedicine === true) {
+				$scope.catChoices.array.push("medicine");
+				$scope.catChoices.emptyArray.push([]);
+			}
+			if ($scope.catChoicePeace === true) {
+				$scope.catChoices.array.push("peace");
+				$scope.catChoices.emptyArray.push([]);
+			}
+			if ($scope.catChoicePhysics === true) {
+				$scope.catChoices.array.push("physics");
+				$scope.catChoices.emptyArray.push([]);
+			}
+			// Create a category dictionary containing each category and their id
+			// Will be used by service
+			for (var i=0; i<$scope.catChoices.array.length; i++) {
+				var cat = $scope.catChoices.array[i];
+				$scope.catChoices.dict[cat] = i;
+			}
 		}
 
 

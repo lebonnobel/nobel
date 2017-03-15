@@ -191,19 +191,19 @@ select {
 	font-family: Helvetica, Arial, sans-serif;
 	margin: 35% 0 0 10%;
 }
-
-#info td {
-	font-family: Helvetica, Arial, sans-serif;
-	font-size:14pt;
+#laureate_gender {
+	text-transform: capitalize;
 }
 
 #info .inf{
-	font-size:10pt;
+	font-weight: bold;
+	vertical-align: top;
 }
 
 #info h3 {
 	font-size:16pt;
 	font-weight: bold;
+	height: auto !important;
 }
 
 
