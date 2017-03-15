@@ -741,9 +741,9 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, yearSer
 	function slider() {
 		//console.log("slider");
 		formatDate = d3.time.format("%Y");
-		var margin = {top: 50, right: 50, bottom: 50, left: 50}
-		var width = 960 - margin.left - margin.right,
-			height = 300 - margin.bottom - margin.top;
+		var margin = {top: 50, right: 30, bottom: 50, left: 30}
+		var width = 400 - margin.left - margin.right,
+			height = 110 - margin.bottom - margin.top;
 
 		//scale function
 		var timeScale = d3.time.scale()
@@ -763,7 +763,7 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, yearSer
 
 		var sliderSvg = d3.select('#timeslide').append('svg')
 			.attr("width", width + margin.left + margin.right)
-			.attr("height", width + margin.top + margin.bottom)
+			.attr("height", height + margin.top + margin.bottom)
 			.append("g")
 			//classic transform to position g
 			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -923,12 +923,12 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, yearSer
 	$("#sidebar").css("width",width/2);
 	$("#sidebar h3").css("height",height/20);
 
-	$("#laureateInfo, #info h3").hide();
+	$("#laureateInfo, #info").hide();
 	$("#countryInfo").hide();
 
 
 	function leafClick(d){
-		$("#laureateInfo, #info h3").show();
+		$("#laureateInfo, #info").show();
 		$("#countryInfo").hide();
 
 		$("#laureate_gender").html(d.gender);
@@ -946,7 +946,7 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, yearSer
 
 	function countryClick(d){
 		$("#laureateInfo").hide();
-		$("#countryInfo, #info h3").show();
+		$("#countryInfo, #info").show();
 
 		$("#laureate_name").html(d.country);
 		prizeService.updatePrizes(d.children.length);
