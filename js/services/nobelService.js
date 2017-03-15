@@ -127,7 +127,7 @@ nobelApp.factory('nobelService', ['$window', '$http', '$q', function ($window, $
                       laureateObj["category"] = cat;
                       laureateObj["year"] = wonYear;                      
                       laureateObj["motivation"] = laureatesData[n].prizes[laureatesData[n].prizes.length-1].motivation;
-                      
+
                       // Puts the laureate in the correct array according to prize category
                       if(categoryDictionary[cat] !== undefined) {
                         categoryArray[categoryDictionary[cat]].push(laureateObj);
@@ -140,7 +140,7 @@ nobelApp.factory('nobelService', ['$window', '$http', '$q', function ($window, $
                     countryObj.children = countryObj.children.concat(categoryArray[x]);
                 }
 
-                if (showAllCountries == true) {
+                if (showAllCountries == true || categoryChoice.array.length === 0) {
                     contObj.children.push(countryObj);
                 } else {
                     if (countryObj.children.length>0) {
