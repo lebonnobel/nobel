@@ -838,17 +838,24 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, yearSer
 		$("#laureateInfo, #info h3").show();
 		$("#countryInfo").hide();
 
-		$("#name").html(d.laureate);
-		$("#country").html(d.parent.country);
-		$("#category").html(d.category);
-		$("#year").html(d.year);
+		$("#laureate_gender").html(d.gender);
+		$("#laureate_name").html(d.laureate);
+		$("#laureate_country").html(d.parent.country);
+		$("#laureate_category").html(d.category);
+		$("#laureate_year").html(d.year);
+		if (d.motivation !== undefined) {
+			$("#laureate_motivation").html(d.motivation);
+		} else {
+			$("#laureate_motivation").html(" &mdash;");
+		}
+
 	}
 
 	function countryClick(d){
 		$("#laureateInfo").hide();
 		$("#countryInfo, #info h3").show();
 
-		$("#name").html(d.country);
+		$("#laureate_name").html(d.country);
 		$("#num").html(d.children.length);
 	}
 
