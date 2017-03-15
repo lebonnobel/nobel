@@ -1,4 +1,4 @@
-nobelApp.factory('nobelService', ['$window', '$http', '$q', function ($window, $http, $q) {
+nobelApp.factory('nobelService', ['$window', '$http', '$q', 'prizeService', function ($window, $http, $q, prizeService) {
 // This service loads all the Nobel data and stores it in variables for other parts of our visualization to acquire
 // It also filters data from controller in order to send to D3 in a proper format
     
@@ -139,6 +139,9 @@ nobelApp.factory('nobelService', ['$window', '$http', '$q', function ($window, $
                 // Joins all the category arrays to one array
                 for (var x=0; x<categoryChoice.array.length; x++) {
                     countryObj.children = countryObj.children.concat(categoryArray[x]);
+                }
+                if (prizeService.country !== undefined && prizeService.country.label == countriesData[l].name) {
+                    prizeService.updatePrizes(countryObj.children.length);
                 }
 
                 if (showAllCountries == true || categoryChoice.array.length === 0) {
