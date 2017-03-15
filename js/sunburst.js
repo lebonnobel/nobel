@@ -70,6 +70,7 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, yearSer
 		return colors[String(country)];
 	}
 
+	//generates colors for countries, depending on which continent they belong to
 	function continentColors(continent) {
 		var color;
 		if (continent === "Oceania") {
@@ -89,7 +90,7 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, yearSer
 				.domain([1, 9])
 				.range(["#547068", "#aedccf"])
 				.interpolate(d3.interpolateHcl);
-				console.log("south america");
+				//console.log("south america");
 				color = colors(Math.floor(Math.random()*10));
 		} else if (continent === "Asia") {
 			var colors = d3.scale.linear()
@@ -110,7 +111,7 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, yearSer
 				.interpolate(d3.interpolateHcl);
 				color = colors(Math.floor(Math.random()*10));
 		}
-		console.log("color d3 scale", color);
+		//console.log("color d3 scale", color);
 		return color;
 	}
 
@@ -123,7 +124,6 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, yearSer
 	  "chemistry": "#F9CE66", //#F9CE66",
 	  "peace": "#8FB588", //#8FB588"
 	};
-
 
 	//loads json file & add attributes etc to the path (sunburst piece)
 	function sunburstLoad (year) {
@@ -821,7 +821,7 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, yearSer
 			//calls functions to update data as slider has been moved to new year
 			updatePage(parseInt(formatDate(value)));
 
-			updateCountryColors(parseInt(formatDate(value)));
+			updateCountryColors(parseInt(formatDate(value)), $scope.$parent.chosenWBD);
 			//sliderYear = parseInt(formatDate(value));
 
 			yearService.update(formatDate(value));
@@ -842,8 +842,8 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, yearSer
 	}
 
 	//if user choses to see education data, then this runs
-	function updateCountryColors(year){
-		worldBankService.getDataForGlobe('mean-years-in-school', year, function(data){
+	function updateCountryColors(year, dataset){
+		worldBankService.getDataForGlobe(dataset, year, function(data){
 			if(globeSvg != undefined){
 			var world = globeSvg.selectAll("path.land")
 				.style("fill", function(d) {

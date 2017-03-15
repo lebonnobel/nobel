@@ -2,12 +2,7 @@ nobelApp.factory('worldBankService', ['$window', '$http', '$q', function ($windo
 	// This service takes care of the data from the World Bank 
 
 	this.wbDataUrl = "data/worldbank/";
-	this.dataSets = [
-		{
-			'title' : 'Countries',
-			'description' : '',
-			'filename' : 'countries'
-		}, 
+	this.dataSets = [ 
 		{
 			'title' : 'Education spending',
 			'description' : '',

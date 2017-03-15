@@ -84,6 +84,12 @@
 								</form>
 							</div>
 				</div>
+				<div class="additionalDataForGlobe row">
+					<p> Select additional data to show </p>
+					<select required ng-model="wbDataChoice" ng-options="wbd.title for wbd in worldBankData" ng-change="onWbDataChange(wbDataChoice)">
+						<option value=""> -- Select -- </option>
+					</select>
+				</div>
 
 	        	<div id="info">
 		      		<h3 id="laureate_name"></h3>
