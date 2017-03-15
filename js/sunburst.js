@@ -540,7 +540,7 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, yearSer
 			    	} else if (d["depth"] === 3) {
 			    		content = '<span class="winner"><strong>' + d["laureate"]
 			    		+ '</strong></br>'+ d["category"]
-			    		+ ', ' + d["year"]
+			    		+ ', ' + d["prizeYear"]
 			    		+ '</span>';
 			    	}
 			    	//calls tooltip to show content
