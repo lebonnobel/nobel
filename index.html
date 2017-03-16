@@ -46,27 +46,8 @@
 		<!-- Here are the divs containing the separate visualization pages-->
 		<div id="globeSunburstPage" class="col-md-12" ng-hide="hideSunburst">
 			<div id="main">
-				<div id="topbar" class="row">
-					<div class="col-md-1"></div>
-					<div class="col-md-10">
-						<div class="row">
-							<div class="col-md-2" style="background-color:#F9CE66;"></div>
-							<div class="col-md-2" style="background-color:#D89F71;"></div>
-							<div class="col-md-2" style="background-color:#826A84;"></div>
-							<div class="col-md-2" style="background-color:#A86D6D;"></div>
-							<div class="col-md-2" style="background-color:#8FB588;"></div>
-							<div class="col-md-2" style="background-color:#455C7C;"></div>
-						</div>
-						<div class="row">
-							<div class="col-md-2" style="">Chemistry</div>
-							<div class="col-md-2" style="">Economics</div>
-							<div class="col-md-2" style="">Literature</div>
-							<div class="col-md-2" style="">Medicine</div>
-							<div class="col-md-2" style="">Peace</div>
-							<div class="col-md-2" style="">Physics</div>
-						</div>
-					</div>
-				</div>
+				
+
       		</div>
       		<div class="col-md-6">
 				<div id="globeSunburst">
@@ -77,6 +58,34 @@
 				</div>
 			</div>
 			<div id="sidebar" class="col-md-6" style="float:left;">
+				<div class="categoryChoice row">
+							<div class="col-md-12">
+								<form class="catChoice">
+									<div class="col-md-6">
+										<label class="color-chemistry">
+											<input type="checkbox" ng-model="catChoiceChemistry" ng-change="catChoice()" checked/><span class="catChoiceCheckbox"><span></span></span> Chemistry
+										</label></br>
+										<label class="color-economics">
+											<input type="checkbox" ng-model="catChoiceEconomics" ng-change="catChoice()" checked/><span class="catChoiceCheckbox"><span></span></span> Economics
+										</label></br>
+										<label class="color-literature">
+											<input type="checkbox" ng-model="catChoiceLiterature" ng-change="catChoice()" checked/><span class="catChoiceCheckbox"><span></span></span> Literature
+										</label>
+									</div>
+									<div class="col-md-6">
+										<label class="color-medicine">
+											<input type="checkbox" ng-model="catChoiceMedicine" ng-change="catChoice()" checked/><span class="catChoiceCheckbox"><span></span></span> Medicine
+										</label></br>
+										<label class="color-peace">
+											<input type="checkbox" ng-model="catChoicePeace" ng-change="catChoice()" checked/><span class="catChoiceCheckbox"><span></span></span> Peace
+										</label></br>
+										<label class="color-physics">
+											<input type="checkbox" ng-model="catChoicePhysics" ng-change="catChoice()" checked/><span class="catChoiceCheckbox"><span></span></span> Physics
+										</label>
+									</div>
+								</form>
+							</div>
+						</div>
 				<!--<div>
 			        <form ng-submit="" class="form-inline">
 						<div class="input-group input-block-level" style="width:100%;">
@@ -91,6 +100,7 @@
 					</form>
 				</div>-->
 	        	<div id="info">
+
 		      		<h3 id="name"></h3>
 		      		<table id="laureateInfo">
 		      			<tr>
@@ -201,6 +211,7 @@
  	<script src="js/data/dataFormatter.js"></script>-->
 	<script src="js/services/worldBankService.js"></script>
 	<script src="js/services/nobelService.js"></script>
+	<script src="js/services/yearService.js"></script>
 	<script src="js/lib/d3.v3.js"></script>
 	<script src="js/sunburst.js"></script>
 	<script src="js/flowChord.js"></script>
