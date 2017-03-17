@@ -33,8 +33,8 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, yearSer
 	var world;
 
 	//sets up the intial variables
+	// width is relative to window size instead of screen size
 	var screenSize = window.innerWidth;
-	console.log(screenSize);
 	var width = screenSize * 0.5, //960
 	    height =  width,//750,
 	    radius = Math.min(width, height) / 2,
@@ -913,7 +913,6 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, yearSer
 
 	timesliderInit();
 
-	console.log("hello",width);
 	//Fulkod för att fixa size
 	$("#globeSunburst").css("width",width);
 	$("#globeSunburst").css("height",height);
@@ -957,6 +956,27 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, yearSer
 			country: d.country
 		});
 	}
+
+	// window.onresize = function(event) {
+	//     screenSize = window.innerWidth;
+	// 	width = screenSize * 0.5, //960
+	//     height =  width,//750,
+	//     radius = Math.min(width, height) / 2,
+	//     x = d3.scale.linear()
+	//     	.range([0, 2 * Math.PI]),
+	//     y = d3.scale.sqrt()
+	//     	.range([0, radius]);
+	//     console.log(yearService.year);
+	//     updatePage(yearService.year.label);
+
+	//     //globe specific variables
+ //    	globeWidth = width * 0.51; //378,
+ //    	globeHeight = globeWidth; //378,
+ //    	sens = 0.25;
+ //    	var focused;
+	//     //will only load globe once as the data should be the same
+	// 	globeViz()
+	// }
 
 });
 

@@ -32,18 +32,18 @@
 	<div id="container-fluid wrapper">
 		<!-- top menu bar for choice of visualization -->
 		<div id="menubar" class="col-md-12">
-			<div class="col-md-6 active" id="choice1" ng-click="pageButton('globeSunburstPage')">
+			<div class="col-xs-6 active" id="choice1" ng-click="pageButton('globeSunburstPage')">
 				Sunburst
 			</div>
-			<div class="col-md-6" id="choice2" ng-click="pageButton('chord')">
+			<div class="col-xs-6" id="choice2" ng-click="pageButton('chord')">
 				Chord Chart
 			</div>
 		</div>
 		<!-- Here are the divs containing the separate visualization pages-->
-		<div id="globeSunburstPage" class="col-md-12" ng-hide="hideSunburst">
+		<div id="globeSunburstPage" class="col-xs-12" ng-hide="hideSunburst">
 			<div id="main" class="row">
       		
-	      		<div class="col-md-6">
+	      		<div class="col-sm-6">
 					<div id="globeSunburst" ng-controller="sunburst">
 						<div id="globe">
 						</div>
@@ -51,10 +51,10 @@
 						</div>
 					</div>
 				</div>
-				<div id="sidebar" class="col-md-6" style="float:left;">
+				<div id="sidebar" class="col-sm-6" style="float:left;">
 					<div class="categoryChoice row">	
 						<form class="catChoice">
-							<div class="col-md-6">
+							<div class="col-sm-6">
 								<label class="color-chemistry">
 									<input type="checkbox" ng-model="catChoiceChemistry" ng-checked="catChoiceChemistry" ng-change="catChoice()" checked/><span class="catChoiceCheckbox"><span></span></span> Chemistry
 								</label></br>
@@ -65,7 +65,7 @@
 									<input type="checkbox" ng-model="catChoiceLiterature" ng-checked="catChoiceLiterature" ng-change="catChoice()" checked/><span class="catChoiceCheckbox"><span></span></span> Literature
 								</label>
 							</div>
-							<div class="col-md-6">
+							<div class="col-sm-6">
 								<label class="color-medicine">
 									<input type="checkbox" ng-model="catChoiceMedicine" ng-checked="catChoiceMedicine" ng-change="catChoice()" checked/><span class="catChoiceCheckbox"><span></span></span> Medicine
 								</label></br>
@@ -91,13 +91,13 @@
 					</div>
 
 					<div class="row selectCountryDiv">
-						<div class="col-md-12" id="selectCountryDiv">
+						<div class="col-sm-12" id="selectCountryDiv">
 							<p>Choose country </p>
 						</div>
 					</div>
 
 		        	<div class="row" >
-		        		<div class="col-md-12" id="info">
+		        		<div class="col-sm-10" id="info">
 				      		<h3 id="laureate_name"></h3>
 				      		<table id="laureateInfo">
 				      			<tr>
