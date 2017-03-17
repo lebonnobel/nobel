@@ -944,13 +944,13 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 		wikipediaService.apiWikiSearch(d.laureate, "image", function(data){
 			$("#laureate_img").html('<img src="'+data+'">');
 			//$("#laureate_img").html('<img src="'+data+'">');
-			console.log(data);
+			//console.log(data);
 		});
 		// First clear previous data
 		$("#laureate_wiki").html("");
 		wikipediaService.apiWikiSearch(d.laureate, "info", function(data){
 			$("#laureate_wiki").html(data);
-			console.log(data);
+			//console.log(data);
 		});
 
 		$("#laureate_gender").html(d.gender);
