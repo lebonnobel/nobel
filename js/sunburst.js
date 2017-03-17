@@ -1,4 +1,4 @@
-nobelApp.controller('sunburst', function(worldBankService, nobelService, yearService, prizeService, $scope) {
+nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nobelService, yearService, prizeService, $scope) {
 
 	$scope.$on('reloadSunburst', function (event, data) {
 		updatePage(data.year);
@@ -393,9 +393,14 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, yearSer
 			function globeMouseover(d) {
 				//console.log("globeMouseover");
 				mouseover(id2Code(d.id));
+				
+				/*var country = ($scope.$parent.chosenWBD != undefined || $scope.$parent.chosenWBD != '') ? 
+				'<span class="country">' + countryById[d.id] + '<br>' + $scope.$parent.chosenWBD + ': 1' + '</span>' :
+				'<span class="country">' + countryById[d.id] + '</span>';*/
+				
+				var country = '<span class="country">' + countryById[d.id] + '</span>';
+				
 
-				var country = '<span class="country">' + countryById[d.id]
-			                    + '</span>'
 				countryTooltip.html(country);
 
 				countryTooltip.transition()
@@ -935,6 +940,18 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, yearSer
 	function leafClick(d){
 		$("#laureateInfo, #info").show();
 		$("#countryInfo").hide();
+		$("#laureate_img").html("");
+		wikipediaService.apiWikiSearch(d.laureate, "image", function(data){
+			$("#laureate_img").html('<img src="'+data+'">');
+			//$("#laureate_img").html('<img src="'+data+'">');
+			console.log(data);
+		});
+		// First clear previous data
+		$("#laureate_wiki").html("");
+		wikipediaService.apiWikiSearch(d.laureate, "info", function(data){
+			$("#laureate_wiki").html(data);
+			console.log(data);
+		});
 
 		$("#laureate_gender").html(d.gender);
 		$("#laureate_born").html(d.born);

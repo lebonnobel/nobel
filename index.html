@@ -104,6 +104,7 @@
 		        		<div class="col-md-12" id="info">
 				      		<h3 id="laureate_name"></h3>
 				      		<table id="laureateInfo">
+				      			<span id="laureate_img" style="height:200px; width:200px"></span>
 				      			<tr>
 				      				<td class="inf" colspan="2">Nobel prize in <span id="laureate_category"></span> <span id="laureate_year"></span></td>
 				      			</tr>
@@ -118,6 +119,9 @@
 					      		</tr>
 					      		<tr>
 					      			<td class="inf">Motivation:</td> <td id="laureate_motivation"></td>
+					      		</tr>
+								<tr>
+					      			<td class="inf">Wiki:</td> <td id="laureate_wiki"></td>
 					      		</tr>
 				      		</table>
 				      		<table id="countryInfo">
@@ -164,7 +168,8 @@
 	<script src="js/services/prizeService.js"></script>
 	<script src="js/services/worldBankService.js"></script>
 	<script src="js/services/nobelService.js"></script>
-	<script src="js/services/yearService.js"></script>
+	<script src="js/services/yearService.js"></script>	
+	<script src="js/services/wikipediaService.js"></script>
 	<script src="js/lib/d3.v3.js"></script>
 	<script src="js/sunburst.js"></script>
 	<script src="js/flowChord.js"></script>
