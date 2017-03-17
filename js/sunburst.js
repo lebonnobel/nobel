@@ -33,7 +33,8 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, yearSer
 	var world;
 
 	//sets up the intial variables
-	var screenSize = screen.width;
+	var screenSize = window.innerWidth;
+	console.log(screenSize);
 	var width = screenSize * 0.5, //960
 	    height =  width,//750,
 	    radius = Math.min(width, height) / 2,
@@ -912,16 +913,15 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, yearSer
 
 	timesliderInit();
 
-
+	console.log("hello",width);
 	//Fulkod för att fixa size
 	$("#globeSunburst").css("width",width);
 	$("#globeSunburst").css("height",height);
 	$("#topbar").css("width",width);
 	$("#topbar").css("height",width/50);
 	$("#sidebar").css("position","absolute");
-	$("#sidebar").css("left",width);
-	$("#sidebar").css("width",width/2);
-	$("#sidebar h3").css("height",height/20);
+	$("#sidebar").css("left",width+50);
+	$("#sidebar").css("width",width*0.8);
 
 	$("#laureateInfo, #info").hide();
 	$("#countryInfo").hide();
