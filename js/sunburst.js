@@ -4,6 +4,10 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, yearSer
 		updatePage(data.year);
 	});
 
+	$scope.$on('reverseGlobeColours', function (event, data) {
+		reverseUpdateCountryColors();
+	});
+
 	//global variables needed further down
 	var node;
 	var currentRoot;
@@ -857,7 +861,7 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, yearSer
 				.style("fill", function(d) {
 					var max = d3.max(data, function(d){ return d.value; }); // Max antal years in school
 					var color = null;
-					var sc = d3.scale.linear().range(['#F3E5F5','#7B1FA2']).domain([0, max]);
+					var sc = d3.scale.linear().range(['#6d6372','#dad4dd']).domain([0, max]);
 					for (var i = 0; i < data.length; i++) {
 						if (globalById[d.id] == data[i].name){   // Om landet matchar/finns med i datat
 							color = sc(data[i].value);    // Räkna ut färg här
