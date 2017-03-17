@@ -393,6 +393,7 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, yearSer
 			function globeMouseover(d) {
 				//console.log("globeMouseover");
 				mouseover(id2Code(d.id));
+				console.log(d);
 
 				var country = '<span class="country">' + countryById[d.id]
 			                    + '</span>'
@@ -864,6 +865,7 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, yearSer
 					for (var i = 0; i < data.length; i++) {
 						if (globalById[d.id] == data[i].name){   // Om landet matchar/finns med i datat
 							color = sc(data[i].value);    // Räkna ut färg här
+							console.log(data[i].value);
 						}
 
 					}
