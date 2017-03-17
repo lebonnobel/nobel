@@ -1,5 +1,5 @@
 nobelApp.controller('nobelCtrl', 
-	function($scope,worldBankService, nobelService, yearService, prizeService,  $http, $rootScope, $timeout) {
+	function($scope,worldBankService, nobelService, wikipediaService, yearService, prizeService,  $http, $rootScope, $timeout) {
  	// Controller that controls the view
  	// Put $scope. in front of a variable name in order for the view to be able to use this variable
 	
@@ -163,6 +163,8 @@ nobelApp.controller('nobelCtrl',
       
 		});
 		
+		//wikipediaService.wikiSearch();
+		//worldBankService.genData();
     // nobelService.getNobelDataForSunburst ***********************************
 		// Input: (year, showAllCountries, callback) 
 		// year: Int. Up until that year you want to show. Use 0 or '*' to show all years
@@ -181,7 +183,7 @@ nobelApp.controller('nobelCtrl',
 	}
 
 	// To make our onStart function run on start
-	$scope.onStart();
+	
 	
 	//////////////////////////// WORLD BANK DATA /////////////////////////////
 
@@ -237,4 +239,7 @@ nobelApp.controller('nobelCtrl',
 	    this.$apply(fn);
 	  }
 	};
+
+
+	$scope.onStart();
 });
