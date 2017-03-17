@@ -198,17 +198,16 @@ nobelApp.controller('nobelCtrl',
 			// This function gets the data from worldbankService
 			// It uses a callback, (the 'function(d)' part), instead of waiting for the returning result
 			// the callback waits until the getData function is calling for it
-			worldBankService.getData(wbDataChoice.filename, function(d){
-				console.log("Here's your data", d);
-				$scope.wbData = d;
+
+			$scope.$broadcast('updateCountryColors', {
+				year: yearService.year.label,
+				dataset: $scope.chosenWBD
 			});
 
 		} else {
 			$scope.wbData = '';
 			$scope.chosenWBD = '';
-			$scope.$broadcast('reverseGlobeColours', {
-
-			});
+			$scope.$broadcast('reverseGlobeColours');
 		}
 	}
 	

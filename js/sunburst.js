@@ -1,12 +1,16 @@
 nobelApp.controller('sunburst', function(worldBankService, nobelService, yearService, prizeService, $scope) {
 
-	$scope.$on('reloadSunburst', function (event, data) {
+	$scope.$on('reloadSunburst', function(event, data) {
 		updatePage(data.year);
 	});
 
-	$scope.$on('reverseGlobeColours', function (event, data) {
+	$scope.$on('reverseGlobeColours', function(event, data) {
 		reverseUpdateCountryColors();
 	});
+
+	$scope.$on('updateCountryColors', function(event, data) {
+		updateCountryColors(data.year, data.dataset)
+	})
 
 	//global variables needed further down
 	var node;
