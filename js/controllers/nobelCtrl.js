@@ -50,6 +50,7 @@ nobelApp.controller('nobelCtrl',
 	$scope.catChoices.emptyArray = [ [], [], [], [], [], [] ];
 
 	$scope.catChoice = function() {
+		console.log("Your choices",$scope.catChoices);
 		if ($scope.catChoices.array.length === 1) {
 			$scope.catChoices.array = ["chemistry","economics","literature","medicine","peace","physics"];
 			$scope.catChoices.emptyArray = [ [], [], [], [], [], [] ];
@@ -96,6 +97,7 @@ nobelApp.controller('nobelCtrl',
 				$scope.catChoices.array.push("physics");
 				$scope.catChoices.emptyArray.push([]);
 			}
+			console.log("blabla",$scope.catChoices);
 			// Create a category dictionary containing each category and their id
 			// Will be used by service
 			for (var i=0; i<$scope.catChoices.array.length; i++) {
