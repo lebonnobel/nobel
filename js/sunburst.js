@@ -480,6 +480,7 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, yearSer
 			      focusedCountry = n;
 			      d3.selectAll("select").property("value", n.id);   // Making the country selected in the selection after clicking
 			    }
+				console.log("Hey", focusedCountry);
 			    p = d3.geo.centroid(focusedCountry);
 
 			    //console.log(id2Code(focusedCountry.id));

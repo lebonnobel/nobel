@@ -7,6 +7,11 @@ nobelApp.controller('nobelCtrl',
 	$scope.hideSunburst = false;
 	$scope.hideChord = true;
 	$scope.hideProject = true;
+	$scope.isLoading = true;
+
+	$timeout(function() {
+		$scope.isLoading = false;
+	}, 1000);
 
 
 	//hide/show of different views (sunburst/chord/project)
