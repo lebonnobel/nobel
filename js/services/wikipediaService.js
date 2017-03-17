@@ -1,6 +1,6 @@
 nobelApp.factory('wikipediaService', ['$window', '$http', '$q', function ($window, $http, $q, $resource) {
 	
-	var apiUrl = "http://en.wikipedia.org/w/api.php?";
+	var apiUrl = "https://en.wikipedia.org/w/api.php?";
 	var apiExtractsQuery = "action=query&prop=extracts&exintro&indexpageids=true&format=json";
 	var apiImagesQuery = "action=query&prop=pageimages&pithumbsize=200&exintro&indexpageids=true&format=json";
 	
