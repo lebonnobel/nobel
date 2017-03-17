@@ -202,9 +202,13 @@ nobelApp.controller('nobelCtrl',
 				console.log("Here's your data", d);
 				$scope.wbData = d;
 			});
+
 		} else {
 			$scope.wbData = '';
 			$scope.chosenWBD = '';
+			$scope.$broadcast('reverseGlobeColours', {
+
+			});
 		}
 	}
 	
