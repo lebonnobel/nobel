@@ -859,12 +859,13 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, yearSer
 			var world = globeSvg.selectAll("path.land")
 				.style("fill", function(d) {
 					var max = d3.max(data, function(d){ return d.value; }); // Max antal years in school
-					var color = null;
-					var sc = d3.scale.linear().range(['#6d6372','#dad4dd']).domain([0, max]);
+					var color = "#cccccc";
+					var sc = d3.scale.linear().range(['#546043','#d5e286']).domain([0, max]);
 					for (var i = 0; i < data.length; i++) {
 						if (globalById[d.id] == data[i].name){   // Om landet matchar/finns med i datat
 							color = sc(data[i].value);    // Räkna ut färg här
-						} 
+						}
+
 					}
 
 					if (!color) {
