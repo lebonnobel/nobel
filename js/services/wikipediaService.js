@@ -9,10 +9,10 @@ nobelApp.factory('wikipediaService', ['$window', '$http', '$q', function ($windo
     	var corrQuery;
     	if(type == "image") {
 			corrQuery= apiUrl + apiImagesQuery + "&generator=search&gsrlimit=1&gsrsearch=" 
-			+ replaceAll(query, " ", "-");
+			+ replaceCharsToLink(query);
     	} else if (type == "info") {
 			corrQuery= apiUrl + apiExtractsQuery + "&generator=search&gsrlimit=1&gsrsearch=" 
-			+ replaceAll(query, " ", "-");
+			+ replaceCharsToLink(query);
     	}
 
 		console.log(corrQuery);
@@ -45,8 +45,15 @@ nobelApp.factory('wikipediaService', ['$window', '$http', '$q', function ($windo
 		});
     }
 
-    function replaceAll(str, find, replace) {
-  		return str.replace(new RegExp(find, 'g'), replace);
+    function replaceCharsToLink(str) {
+    	var retStr = str;
+  		// First replace spaces
+  		retStr = retStr.replace(new RegExp(" ", 'g'), "-");  		
+		// Then replace wierd characters
+  		retStr = retStr.replace(new RegExp("á", 'g'), "a");
+  		retStr = retStr.replace(new RegExp("é", 'g'), "e");
+  		retStr = retStr.replace(new RegExp("ó", 'g'), "o");
+  		return retStr;
 	}
 
 
