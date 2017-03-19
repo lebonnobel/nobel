@@ -161,12 +161,10 @@ nobelApp.factory('nobelService', ['$window', '$http', '$q', 'prizeService', func
     
     // This function returns the data for the Chord Diagram
     this.getNobelDataForChordDiagram = function (type, callback){
-        console.log("WOOP");
         this.getAllData(function(prizesData, laureatesData, countriesData){
             var dataArray = [['Disposition', 'Physics', 'Chemistry', 'Physiology or Medicine', 'Literature', 'Peace', 'Economics']];        
             // If we have requested the gender data we calculate it here
             if(type === "gender"){
-                console.log("gender");
                 var maleLaureatesArray = ['Men', [], [], [], [], [], []];
                 var femaleLaureatesArray = ['Women', [], [], [], [], [], []];
                 var orgLaureatesArray = ['Organizations', [], [], [], [], [], []];
@@ -175,12 +173,10 @@ nobelApp.factory('nobelService', ['$window', '$http', '$q', 'prizeService', func
                   // For every laureate in this prize
                   for (var j = 0; j < prizesData[i].laureates.length; j++) {
                     var tempLaureate = getLaureateByID(laureatesData, prizesData[i].laureates[j].id);
-                    console.log(tempLaureate);
                     // Then check the laureates gender
                     if(tempLaureate.gender == "male"){
                         maleLaureatesArray[nobelCategoryDictionary[prizesData[i].category]+1].push(tempLaureate);
                     } else if(tempLaureate.gender == "female"){
-                        console.log(tempLaureate);
                         femaleLaureatesArray[nobelCategoryDictionary[prizesData[i].category]+1].push(tempLaureate);
                     } else {
                         orgLaureatesArray[nobelCategoryDictionary[prizesData[i].category]+1].push(tempLaureate);
