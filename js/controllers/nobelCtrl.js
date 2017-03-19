@@ -1,5 +1,5 @@
 nobelApp.controller('nobelCtrl', 
-	function(worldBankService, nobelService, yearService, $scope, $http, $rootScope, $timeout) {
+	function($scope,worldBankService, nobelService, wikipediaService, yearService, prizeService,  $http, $rootScope, $timeout) {
  	// Controller that controls the view
  	// Put $scope. in front of a variable name in order for the view to be able to use this variable
 	
@@ -39,54 +39,64 @@ nobelApp.controller('nobelCtrl',
 			"chemistry": $scope.catChoiceChemistry, "economics": $scope.catChoiceEconomics, "literature": $scope.catChoiceLiterature, "medicine": $scope.catChoiceMedicine, "peace": $scope.catChoicePeace, "physics": $scope.catChoicePhysics
 		};
 	$scope.catChoices.dict = {
-		"chemistry": 0,
-		"economics": 1,
-		"literature": 2,
-		"medicine": 3,
-		"peace": 4,
-		"physics": 5
+		"chemistry": 0, "economics": 1, "literature": 2, "medicine": 3, "peace": 4, "physics": 5
 	};
 	$scope.catChoices.array = ["chemistry","economics","literature","medicine","peace","physics"];
 	$scope.catChoices.emptyArray = [ [], [], [], [], [], [] ];
 
 	$scope.catChoice = function() {
-		$scope.catChoices = {
-			"chemistry": $scope.catChoiceChemistry, "economics": $scope.catChoiceEconomics, "literature": $scope.catChoiceLiterature, "medicine": $scope.catChoiceMedicine, "peace": $scope.catChoicePeace, "physics": $scope.catChoicePhysics
-		};
-		$scope.catChoices.array = [];
-		$scope.catChoices.dict = {};
-		$scope.catChoices.emptyArray = [];
+		if ($scope.catChoices.array.length === 1) {
+			$scope.catChoices.array = ["chemistry","economics","literature","medicine","peace","physics"];
+			$scope.catChoices.emptyArray = [ [], [], [], [], [], [] ];
+			$scope.catChoices.dict = {
+				"chemistry": 0, "economics": 1, "literature": 2, "medicine": 3, "peace": 4, "physics": 5
+			};
+			$scope.catChoiceChemistry = true;
+			$scope.catChoiceEconomics = true;
+			$scope.catChoiceLiterature = true;
+			$scope.catChoiceMedicine = true;
+			$scope.catChoicePeace = true;
+			$scope.catChoicePhysics = true;
+		} else {
 
-		// If the choice is checked (true), we are going to show
-		if ($scope.catChoiceChemistry === true) {
-			$scope.catChoices.array.push("chemistry");
-			$scope.catChoices.emptyArray.push([]);
-		}
-		if ($scope.catChoiceEconomics === true) {
-			$scope.catChoices.array.push("economics");
-			$scope.catChoices.emptyArray.push([]);
-		}
-		if ($scope.catChoiceLiterature === true) {
-			$scope.catChoices.array.push("literature");
-			$scope.catChoices.emptyArray.push([]);
-		}
-		if ($scope.catChoiceMedicine === true) {
-			$scope.catChoices.array.push("medicine");
-			$scope.catChoices.emptyArray.push([]);
-		}
-		if ($scope.catChoicePeace === true) {
-			$scope.catChoices.array.push("peace");
-			$scope.catChoices.emptyArray.push([]);
-		}
-		if ($scope.catChoicePhysics === true) {
-			$scope.catChoices.array.push("physics");
-			$scope.catChoices.emptyArray.push([]);
-		}
-		// Create a category dictionary containing each category and their id
-		// Will be used by service
-		for (var i=0; i<$scope.catChoices.array.length; i++) {
-			var cat = $scope.catChoices.array[i];
-			$scope.catChoices.dict[cat] = i;
+			$scope.catChoices = {
+				"chemistry": $scope.catChoiceChemistry, "economics": $scope.catChoiceEconomics, "literature": $scope.catChoiceLiterature, "medicine": $scope.catChoiceMedicine, "peace": $scope.catChoicePeace, "physics": $scope.catChoicePhysics
+			};
+			$scope.catChoices.array = [];
+			$scope.catChoices.dict = {};
+			$scope.catChoices.emptyArray = [];
+
+			// If the choice is checked (true), we are going to show
+			if ($scope.catChoiceChemistry === true) {
+				$scope.catChoices.array.push("chemistry");
+				$scope.catChoices.emptyArray.push([]);
+			}
+			if ($scope.catChoiceEconomics === true) {
+				$scope.catChoices.array.push("economics");
+				$scope.catChoices.emptyArray.push([]);
+			}
+			if ($scope.catChoiceLiterature === true) {
+				$scope.catChoices.array.push("literature");
+				$scope.catChoices.emptyArray.push([]);
+			}
+			if ($scope.catChoiceMedicine === true) {
+				$scope.catChoices.array.push("medicine");
+				$scope.catChoices.emptyArray.push([]);
+			}
+			if ($scope.catChoicePeace === true) {
+				$scope.catChoices.array.push("peace");
+				$scope.catChoices.emptyArray.push([]);
+			}
+			if ($scope.catChoicePhysics === true) {
+				$scope.catChoices.array.push("physics");
+				$scope.catChoices.emptyArray.push([]);
+			}
+			// Create a category dictionary containing each category and their id
+			// Will be used by service
+			for (var i=0; i<$scope.catChoices.array.length; i++) {
+				var cat = $scope.catChoices.array[i];
+				$scope.catChoices.dict[cat] = i;
+			}
 		}
 
 
@@ -94,6 +104,22 @@ nobelApp.controller('nobelCtrl',
 			year: $scope.sliderYear.label // send whatever you want
 		});
 	};
+
+	////////////////////// TOTAL PRIZES ////////////////////////////
+	$scope.totalPrizes = prizeService.prizes;
+	$scope.totalPrizesCountry = prizeService.country;
+
+	$scope.$on('clickedCountrySunburst', function (event, data) {
+		$scope.updatePrizes(data);
+	});
+	$scope.updatePrizes = function(data) {
+		if (data != undefined) {
+			prizeService.updatePrizes(data.prizes);
+			prizeService.updateCountry(data.country);
+		}
+		
+		$scope.$apply();
+	}
 
 	//////////////////////// NOBEL DATA ////////////////////////////////
 
@@ -137,6 +163,8 @@ nobelApp.controller('nobelCtrl',
       
 		});
 		
+		//wikipediaService.wikiSearch();
+		//worldBankService.genData();
     // nobelService.getNobelDataForSunburst ***********************************
 		// Input: (year, showAllCountries, callback) 
 		// year: Int. Up until that year you want to show. Use 0 or '*' to show all years
@@ -155,18 +183,20 @@ nobelApp.controller('nobelCtrl',
 	}
 
 	// To make our onStart function run on start
-	$scope.onStart();
+	
 	
 	//////////////////////////// WORLD BANK DATA /////////////////////////////
 
 	// Shows which datasets you can choose from, specified in worldBankService
 	$scope.worldBankData = worldBankService.dataSets;
+	$scope.chosenWBD;
 
 	// This function is called when a wb (World bank) dataset is chosen from the dropdown list
 	$scope.onWbDataChange = function(wbDataChoice) {
 		console.log("You chose this data",wbDataChoice);
 		// only get the data if the wbDataChoice is valid
 		if (wbDataChoice !== undefined) {
+			$scope.chosenWBD = wbDataChoice.filename;
 			// This function gets the data from worldbankService
 			// It uses a callback, (the 'function(d)' part), instead of waiting for the returning result
 			// the callback waits until the getData function is calling for it
@@ -174,8 +204,13 @@ nobelApp.controller('nobelCtrl',
 				console.log("Here's your data", d);
 				$scope.wbData = d;
 			});
+
 		} else {
 			$scope.wbData = '';
+			$scope.chosenWBD = '';
+			$scope.$broadcast('reverseGlobeColours', {
+
+			});
 		}
 	}
 	
@@ -193,6 +228,22 @@ nobelApp.controller('nobelCtrl',
 
 	// JUST A TEST FUNCTION, JUST REMOVE IF YOU WANT
 	$scope.getDataForGlobe('mean-years-in-school', 2009, function(data){
-  		console.log(data);
+  		//console.log(data);
   	});
+
+
+  	////////////////// OTHER ////////////////////////////
+  	$scope.safeApply = function(fn) {
+	  var phase = this.$root.$$phase;
+	  if(phase == '$apply' || phase == '$digest') {
+	    if(fn && (typeof(fn) === 'function')) {
+	      fn();
+	    }
+	  } else {
+	    this.$apply(fn);
+	  }
+	};
+
+
+	$scope.onStart();
 });

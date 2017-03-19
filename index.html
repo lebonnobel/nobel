@@ -45,116 +45,94 @@
 		</div>
 		<!-- Here are the divs containing the separate visualization pages-->
 		<div id="globeSunburstPage" class="col-md-12" ng-hide="hideSunburst">
-			<div id="main">
-				
-
-      		</div>
-      		<div class="col-md-6">
-				<div id="globeSunburst">
-					<div id="globe">
-					</div>
-					<div id="sunburst" ng-controller="sunburst">
+			<div id="main" class="row">
+      		
+	      		<div class="col-md-6">
+					<div id="globeSunburst" ng-controller="sunburst">
+						<div id="globe">
+						</div>
+						<div id="sunburst">
+						</div>
 					</div>
 				</div>
-			</div>
-			<div id="sidebar" class="col-md-6" style="float:left;">
-				<div class="categoryChoice row">
-							<div class="col-md-12">
-								<form class="catChoice">
-									<div class="col-md-6">
-										<label class="color-chemistry">
-											<input type="checkbox" ng-model="catChoiceChemistry" ng-change="catChoice()" checked/><span class="catChoiceCheckbox"><span></span></span> Chemistry
-										</label></br>
-										<label class="color-economics">
-											<input type="checkbox" ng-model="catChoiceEconomics" ng-change="catChoice()" checked/><span class="catChoiceCheckbox"><span></span></span> Economics
-										</label></br>
-										<label class="color-literature">
-											<input type="checkbox" ng-model="catChoiceLiterature" ng-change="catChoice()" checked/><span class="catChoiceCheckbox"><span></span></span> Literature
-										</label>
-									</div>
-									<div class="col-md-6">
-										<label class="color-medicine">
-											<input type="checkbox" ng-model="catChoiceMedicine" ng-change="catChoice()" checked/><span class="catChoiceCheckbox"><span></span></span> Medicine
-										</label></br>
-										<label class="color-peace">
-											<input type="checkbox" ng-model="catChoicePeace" ng-change="catChoice()" checked/><span class="catChoiceCheckbox"><span></span></span> Peace
-										</label></br>
-										<label class="color-physics">
-											<input type="checkbox" ng-model="catChoicePhysics" ng-change="catChoice()" checked/><span class="catChoiceCheckbox"><span></span></span> Physics
-										</label>
-									</div>
-								</form>
+				<div id="sidebar" class="col-md-6" style="float:left;">
+					<div class="categoryChoice row">	
+						<form class="catChoice">
+							<div class="col-md-6">
+								<label class="color-chemistry">
+									<input type="checkbox" ng-model="catChoiceChemistry" ng-checked="catChoiceChemistry" ng-change="catChoice()" checked/><span class="catChoiceCheckbox"><span></span></span> Chemistry
+								</label></br>
+								<label class="color-economics">
+									<input type="checkbox" ng-model="catChoiceEconomics" ng-checked="catChoiceEconomics" ng-change="catChoice()" checked/><span class="catChoiceCheckbox"><span></span></span> Economics
+								</label></br>
+								<label class="color-literature">
+									<input type="checkbox" ng-model="catChoiceLiterature" ng-checked="catChoiceLiterature" ng-change="catChoice()" checked/><span class="catChoiceCheckbox"><span></span></span> Literature
+								</label>
 							</div>
-						</div>
-				<!--<div>
-			        <form ng-submit="" class="form-inline">
-						<div class="input-group input-block-level" style="width:100%;">
-							<label>Select country:</label>
-							<select class="form-control">
-							  <option value="sverige">Sverige</option>
-							  <option value="kina">Kina</option>
-							  <option value="frankrike">Frankrike</option>
-							  <option value="mexico">Mexico</option>
+							<div class="col-md-6">
+								<label class="color-medicine">
+									<input type="checkbox" ng-model="catChoiceMedicine" ng-checked="catChoiceMedicine" ng-change="catChoice()" checked/><span class="catChoiceCheckbox"><span></span></span> Medicine
+								</label></br>
+								<label class="color-peace">
+									<input type="checkbox" ng-model="catChoicePeace" ng-checked="catChoicePeace" ng-change="catChoice()" checked/><span class="catChoiceCheckbox"><span></span></span> Peace
+								</label></br>
+								<label class="color-physics">
+									<input type="checkbox" ng-model="catChoicePhysics" ng-checked="catChoicePhysics" ng-change="catChoice()" checked/><span class="catChoiceCheckbox"><span></span></span> Physics
+								</label>
+							</div>
+						</form>	
+					</div>
+
+					<div id ="timeslide" class="row">
+					</div>
+					<div class="additionalDataForGlobe row">
+						<div class="col-md-12">
+							<p>Select additional data to show </p>
+							<select required ng-model="wbDataChoice" ng-options="wbd.title for wbd in worldBankData" ng-change="onWbDataChange(wbDataChoice)">
+								<option value=""> -- Select -- </option>
 							</select>
 						</div>
-					</form>
-				</div>-->
-	        	<div id="info">
+					</div>
 
-		      		<h3 id="name"></h3>
-		      		<table id="laureateInfo">
-		      			<tr>
-			      			<td class="inf">Gender:</td> <td id="gender"></td>
-			      		</tr>
-		      			<tr>
-			      			<td class="inf">Country:</td> <td id="country"></td>
-			      		</tr>
-			      		<tr>
-			      			<td class="inf">Category:</td> <td id="category"></td>
-			      		</tr>
-			      		<tr>
-			      			<td class="inf">Year:</td> <td id="year"></td>
-			      		</tr>
-			      		<tr>
-			      			<td class="inf">Motivation:</td> <td id="motivation"></td>
-			      		</tr>
-		      		</table>
-		      		<table id="countryInfo">
-		      			<tr>
-			      			<td class="inf">Number of laureates:</td> <td id="num"></td>
-			      		</tr>
-		      		</table>
-	      		</div>
-	      		<!--
-	       		 <div id="legend">
-	    		
-					  <p id="Chemistry">
-					   <span class="glyphicon glyphicon-stop" style="color:#F9CE66;"></span>
-					   Chemistry
-					  <p>
-					   	<p id="Economics">
-					   	<span class="glyphicon glyphicon-stop" style="color:#D89F71;"></span>
-					   Economics
-					  </p>
-					  <p id="Literature">
-					   <span class="glyphicon glyphicon-stop" style="color:#826A84;"></span>
-					   Literature
-					  </p>
-					  <p id="Medicine">
-					   <span class="glyphicon glyphicon-stop" style="color:#A86D6D;"></span>
-					   Medicine
-					  </p>
-						<p id="Peace">
-					   <span class="glyphicon glyphicon-stop" style="color:#8FB588;"></span>
-					   Peace
-					  </p>
-						<p id="Physics">
-					   <span class="glyphicon glyphicon-stop" style="color:#455C7C;"></span>
-					   Physics 
-					  </p>
-	      		</div>-->
-	   		</div>
-			<div id ="timeslide" class="col-md-7">
+					<div class="row selectCountryDiv">
+						<div class="col-md-12" id="selectCountryDiv">
+							<p>Choose country </p>
+						</div>
+					</div>
+
+		        	<div class="row" >
+		        		<div class="col-md-12" id="info">
+				      		<h3 id="laureate_name"></h3>
+				      		<table id="laureateInfo">
+				      			<span id="laureate_img" style="height:200px; width:200px"></span>
+				      			<tr>
+				      				<td class="inf" colspan="2">Nobel prize in <span id="laureate_category"></span> <span id="laureate_year"></span></td>
+				      			</tr>
+				      			<tr>
+					      			<td class="inf">Gender:</td> <td id="laureate_gender"></td>
+					      		</tr>
+					      		<tr>
+					      			<td class="inf">Born:</td> <td id="laureate_born"></td>
+					      		</tr>
+				      			<tr>
+					      			<td class="inf">Country:</td> <td id="laureate_country"></td>
+					      		</tr>
+					      		<tr>
+					      			<td class="inf">Motivation:</td> <td id="laureate_motivation"></td>
+					      		</tr>
+								<tr>
+					      			<td class="inf">Wiki:</td> <td id="laureate_wiki"></td>
+					      		</tr>
+				      		</table>
+				      		<table id="countryInfo">
+				      			<tr>
+					      			<td class="inf">Number of laureates:</td> <td><span>{{totalPrizes.label}}</span></td>
+					      		</tr>
+				      		</table>
+				      	</div>
+		      		</div>
+		   		</div>
+				
 			</div>
 		</div>
 		<div id="chord" ng-hide="hideChord" ng-controller="chord">
@@ -177,28 +155,6 @@
 		<div id="project" ng-hide="hideProject" >
 			Our project goes here ish
 		</div>
-		<!--
-		We need this but to work in the background.
-		Country: <input type="text" name="countryName" ng-model="searchCountryName"> 
-		Up to what year: <input type="text" name="year" ng-model="searchYear">
-
-		<button ng-click="getNobelPrizeData()">Click to get data</button>
-		<div ng-repeat="x in nobelData">
-			{{x}}
-		</div>
-		<p></p>
-		<div>
-			<p>Select data from World Bank:</p>
-			<select required ng-model="wbDataChoice" ng-options="wbd.title for wbd in worldBankData" ng-change="onWbDataChange(wbDataChoice)">
-		        <option value=""> --Select-- </option>
-		    </select>
-		    <div ng-repeat="x in wbData">
-				{{x}}
-			</div>
-		</div> 
-		<div ng-repeat="x in nobelData">
-			{{x}}
-		</div>-->
 	</div>
 
 	<!-- Angular Scripts -->
@@ -209,14 +165,15 @@
 	<script src="https://d3js.org/queue.v1.min.js"></script>
  	<!--<script src="js/data/dataManager.js"></script>
  	<script src="js/data/dataFormatter.js"></script>-->
+	<script src="js/services/prizeService.js"></script>
 	<script src="js/services/worldBankService.js"></script>
 	<script src="js/services/nobelService.js"></script>
-	<script src="js/services/yearService.js"></script>
+	<script src="js/services/yearService.js"></script>	
+	<script src="js/services/wikipediaService.js"></script>
 	<script src="js/lib/d3.v3.js"></script>
 	<script src="js/sunburst.js"></script>
 	<script src="js/flowChord.js"></script>
 	<script src="js/chord.js"></script>
-	<script src="js/info.js"></script>
 
 	<script>
 		// update the clicked choice (ie. sunburst or chord chart/project) so div gets active = changes color to indicate clicked

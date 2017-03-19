@@ -4,7 +4,7 @@ nobelApp.service("yearService", function($q) {
   //primitive type can't be updated with angular.copy and changes to those
   //primitives can't be watched.
   serviceDef.year = {
-    label: 'aValue'
+    label: '1920'
   };
   serviceDef.update = function(newYear) {
     var deferred = $q.defer();
