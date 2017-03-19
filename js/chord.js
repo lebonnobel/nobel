@@ -1,5 +1,5 @@
 
-nobelApp.controller('chord', function(nobelService, $scope) {
+nobelApp.controller('chord', function(nobelService, prizeService, $scope) {
 
 
 // ********************* CHORD CODE ****************************
@@ -19,8 +19,8 @@ nobelApp.controller('chord', function(nobelService, $scope) {
 
 	nobelService.getNobelDataForChordDiagram("age",function(data) {
 		laureateAgeGroups = data;
-
-		chordAge = [data[0], 
+		chordAge = [
+    [data[0][0], data[0][1], data[0][2], data[0][3], data[0][4], data[0][5], data[0][6]],    
 		[data[1][0], data[1][1].length, data[1][2].length, data[1][3].length, data[1][4].length, data[1][5].length, data[1][6].length], 
 		[data[2][0], data[2][1].length, data[2][2].length, data[2][3].length, data[2][4].length, data[2][5].length, data[2][6].length],
 		[data[3][0], data[3][1].length, data[3][2].length, data[3][3].length, data[3][4].length, data[3][5].length, data[3][6].length],
@@ -28,21 +28,27 @@ nobelApp.controller('chord', function(nobelService, $scope) {
 		[data[5][0], data[5][1].length, data[5][2].length, data[5][3].length, data[5][4].length, data[5][5].length, data[5][6].length], 
 		[data[6][0], data[6][1].length, data[6][2].length, data[6][3].length, data[6][4].length, data[6][5].length, data[6][6].length], 
 		[data[7][0], data[7][1].length, data[7][2].length, data[7][3].length, data[7][4].length, data[7][5].length, data[7][6].length]];
-	});
+	   //console.log(chordAge);
+     //console.log(data);
+  });
+    
   	
   	nobelService.getNobelDataForChordDiagram("gender",function(data) {
-  		laureateGenderGroups = data;
+  	laureateGenderGroups = data;
 
-		chordGender = [data[0], 
+		chordGender = [
+    [data[0][0], data[0][1], data[0][2], data[0][3], data[0][4], data[0][5], data[0][6]],
 		[data[1][0], data[1][1].length, data[1][2].length, data[1][3].length, data[1][4].length, data[1][5].length, data[1][6].length], 
 		[data[2][0], data[2][1].length, data[2][2].length, data[2][3].length, data[2][4].length, data[2][5].length, data[2][6].length],
 		[data[3][0], data[3][1].length, data[3][2].length, data[3][3].length, data[3][4].length, data[3][5].length, data[3][6].length]];
+		console.log(chordGender);
+    console.log(laureateGenderGroups);
 		
-		var chordData = chordGender;
-  		var chordOld = chordData;
-  		chordDiagram = d3.elts.flowChord().colors(chordColors).rimWidth(screen.height*0.035);
-  		chordDiagram.oldD(chordOld);
-  		d3.select("#flow").datum(chordData).call(chordDiagram);
+    var chordData = chordGender;
+  	var chordOld = chordData;
+  	chordDiagram = d3.elts.flowChord().colors(chordColors).rimWidth(screen.height*0.035);
+  	chordDiagram.oldD(chordOld);
+  	d3.select("#flow").datum(chordData).call(chordDiagram);
 	});
   	
   // ********************* CODE FOR SETTING IT UP ***************************
@@ -50,7 +56,7 @@ nobelApp.controller('chord', function(nobelService, $scope) {
   // Functions for changing from Gender to Age and Age to Gender.
 
   $scope.genderData = function() {
-    document.getElementById("text").innerHTML = "Now showing: Prizes by Category and Gender";
+    //document.getElementById("text").innerHTML = "Now showing: Prizes by Category and Gender";
     chordData = chordGender; 
     chordOld = chordGender;
     chordColors = genderColors;
@@ -61,7 +67,7 @@ nobelApp.controller('chord', function(nobelService, $scope) {
 
 
   $scope.ageData = function() {
-    document.getElementById("text").innerHTML = "Now showing: Prizes by Category and Age";
+    //document.getElementById("text").innerHTML = "Now showing: Prizes by Category and Age";
     chordData = chordAge; 
     chordOld = chordAge;
     chordColors = ageColors;
