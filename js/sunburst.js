@@ -756,9 +756,9 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 	function slider() {
 		//console.log("slider");
 		formatDate = d3.time.format("%Y");
-		var margin = {top: 50, right: 30, bottom: 50, left: 30}
+		var margin = {top: 30, right: 30, bottom: 30, left: 30}
 		var width = 400 - margin.left - margin.right,
-			height = 110 - margin.bottom - margin.top;
+			height = 80 - margin.bottom - margin.top;
 
 		//scale function
 		var timeScale = d3.time.scale()
@@ -811,6 +811,9 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 		slider.selectAll(".extent, .resize")
 			.remove();
 
+		var ticks = d3.selectAll('.tick text')
+			.style("font-size", "14px");
+
 		slider.select(".background")
 			.attr("height", height);
 
@@ -819,11 +822,12 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 
 		handle.append("path")
 			.attr("transform", "translate(0," + height / 2 + ")")
-			.attr("d", "M 0 -20 V 20")
+			.attr("d", "M 0 -15 V 15")
 
 		handle.append("text")
 			.text(startingValue)
-			.attr("transform", "translate(" + (-18) + "," + (height / 2 - 25) + ")")
+			.style("font-size", "14px")
+			.attr("transform", "translate(" + (-18) + "," + (height / 2 - 20) + ")")
 
 		slider
 			.call(brush.event)
@@ -933,9 +937,9 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 	$("#globeSunburst").css("height",height);
 	$("#topbar").css("width",width);
 	$("#topbar").css("height",width/50);
-	$("#sidebar").css("position","absolute");
-	$("#sidebar").css("left",width+50);
-	$("#sidebar").css("width",width*0.8);
+	//$("#sidebar").css("position","absolute");
+	//$("#sidebar").css("left",width+50);
+	//$("#sidebar").css("width",width*0.8);
 
 	$("#laureateInfo, #info").hide();
 	$("#countryInfo").hide();

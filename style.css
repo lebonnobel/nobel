@@ -23,6 +23,16 @@ h1 {
 	margin-top:0px;
 }
 
+.remove-left-space {
+	padding-left: 0;
+	margin-left: 0;
+}
+.remove-right-space {
+	padding-right: 0;
+	margin-right: 0;
+}
+
+
 /* ****** TOP MENU BAR OF CHOICES ****** */
 #menubar {
 	margin: 0;
@@ -171,11 +181,26 @@ h1 {
     }
 }
 
-/* ****** INFO DETAILS ****** */
+/* ****** INFO DETAILS / SIDEBAR ****** */
+#sidebar {
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
+select {
+	width: 160px;
+}
+.data-selections-col {
+	border-left: 1px solid #ccc;
+}
+#sidebar > div > div { 
+	padding-bottom: 15px;
+}
 
 #info {
-	width: 87%;
-	margin-top: 30px;
+	width: 95%;
+	margin-top: 0px;
 	margin-bottom: 10px;
 	margin-left: 15px;
 	background: #eee;
@@ -187,8 +212,8 @@ h1 {
 
 #info .inf{
 	font-weight: bold;
-	vertical-align: top;
 }
+table td { vertical-align: top; }
 
 #info h3 {
 	font-size:16pt;
@@ -213,8 +238,13 @@ h1 {
 	margin: 0;
 }
 
+
+.categoryChoice h5 {
+	font-weight: bold;
+}
 .catChoice label {
 	cursor: pointer;
+	font-weight: normal;
 }
 .catChoice input { display: none;} 
 
