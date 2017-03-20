@@ -1,12 +1,16 @@
 nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nobelService, yearService, prizeService, $scope) {
 
-	$scope.$on('reloadSunburst', function (event, data) {
+	$scope.$on('reloadSunburst', function(event, data) {
 		updatePage(data.year);
 	});
 
-	$scope.$on('reverseGlobeColours', function (event, data) {
+	$scope.$on('reverseGlobeColours', function(event, data) {
 		reverseUpdateCountryColors();
 	});
+
+	$scope.$on('updateCountryColors', function(event, data) {
+		updateCountryColors(data.year, data.dataset)
+	})
 
 	//global variables needed further down
 	var node;
@@ -37,7 +41,8 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 	var world;
 
 	//sets up the intial variables
-	var screenSize = screen.width;
+	// width is relative to window size instead of screen size
+	var screenSize = window.innerWidth;
 	var width = screenSize * 0.5, //960
 	    height =  width,//750,
 	    radius = Math.min(width, height) / 2,
@@ -480,6 +485,7 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 			      focusedCountry = n;
 			      d3.selectAll("select").property("value", n.id);   // Making the country selected in the selection after clicking
 			    }
+				console.log("Hey", focusedCountry);
 			    p = d3.geo.centroid(focusedCountry);
 
 			    //console.log(id2Code(focusedCountry.id));
@@ -922,16 +928,14 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 
 	timesliderInit();
 
-
 	//Fulkod för att fixa size
 	$("#globeSunburst").css("width",width);
 	$("#globeSunburst").css("height",height);
 	$("#topbar").css("width",width);
 	$("#topbar").css("height",width/50);
 	$("#sidebar").css("position","absolute");
-	$("#sidebar").css("left",width);
-	$("#sidebar").css("width",width/2);
-	$("#sidebar h3").css("height",height/20);
+	$("#sidebar").css("left",width+50);
+	$("#sidebar").css("width",width*0.8);
 
 	$("#laureateInfo, #info").hide();
 	$("#countryInfo").hide();
@@ -979,6 +983,27 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 			country: d.country
 		});
 	}
+
+	// window.onresize = function(event) {
+	//     screenSize = window.innerWidth;
+	// 	width = screenSize * 0.5, //960
+	//     height =  width,//750,
+	//     radius = Math.min(width, height) / 2,
+	//     x = d3.scale.linear()
+	//     	.range([0, 2 * Math.PI]),
+	//     y = d3.scale.sqrt()
+	//     	.range([0, radius]);
+	//     console.log(yearService.year);
+	//     updatePage(yearService.year.label);
+
+	//     //globe specific variables
+ //    	globeWidth = width * 0.51; //378,
+ //    	globeHeight = globeWidth; //378,
+ //    	sens = 0.25;
+ //    	var focused;
+	//     //will only load globe once as the data should be the same
+	// 	globeViz()
+	// }
 
 });
 

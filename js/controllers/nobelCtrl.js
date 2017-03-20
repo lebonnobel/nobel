@@ -7,6 +7,11 @@ nobelApp.controller('nobelCtrl',
 	$scope.hideSunburst = false;
 	$scope.hideChord = true;
 	$scope.hideProject = true;
+	$scope.isLoading = true;
+
+	$timeout(function() {
+		$scope.isLoading = false;
+	}, 1000);
 
 
 	//hide/show of different views (sunburst/chord/project)
@@ -44,8 +49,11 @@ nobelApp.controller('nobelCtrl',
 	$scope.catChoices.array = ["chemistry","economics","literature","medicine","peace","physics"];
 	$scope.catChoices.emptyArray = [ [], [], [], [], [], [] ];
 
-	$scope.catChoice = function() {
-		if ($scope.catChoices.array.length === 1) {
+	$scope.catChoice = function(choice) {
+		console.log("Your choice",choice);
+		// If there's only one choice left and it's the one you clicked, refill all the category choices to true
+		if ($scope.catChoices.array.length === 1 && $scope.catChoices.array[0] === choice) {
+
 			$scope.catChoices.array = ["chemistry","economics","literature","medicine","peace","physics"];
 			$scope.catChoices.emptyArray = [ [], [], [], [], [], [] ];
 			$scope.catChoices.dict = {
@@ -57,6 +65,7 @@ nobelApp.controller('nobelCtrl',
 			$scope.catChoiceMedicine = true;
 			$scope.catChoicePeace = true;
 			$scope.catChoicePhysics = true;
+
 		} else {
 
 			$scope.catChoices = {
@@ -200,17 +209,16 @@ nobelApp.controller('nobelCtrl',
 			// This function gets the data from worldbankService
 			// It uses a callback, (the 'function(d)' part), instead of waiting for the returning result
 			// the callback waits until the getData function is calling for it
-			worldBankService.getData(wbDataChoice.filename, function(d){
-				console.log("Here's your data", d);
-				$scope.wbData = d;
+
+			$scope.$broadcast('updateCountryColors', {
+				year: yearService.year.label,
+				dataset: $scope.chosenWBD
 			});
 
 		} else {
 			$scope.wbData = '';
 			$scope.chosenWBD = '';
-			$scope.$broadcast('reverseGlobeColours', {
-
-			});
+			$scope.$broadcast('reverseGlobeColours');
 		}
 	}
 	
