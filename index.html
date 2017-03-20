@@ -63,49 +63,54 @@
 						</div>
 					</div>
 				</div>
-				<div id="sidebar" class="col-sm-6" style="float:left;">
-					<div class="categoryChoice row">	
-						<form class="catChoice">
-							<div class="col-sm-6">
-								<label class="color-chemistry">
-									<input type="checkbox" ng-model="catChoiceChemistry" ng-checked="catChoiceChemistry" ng-change="catChoice('chemistry')" checked/><span class="catChoiceCheckbox"><span></span></span> Chemistry
-								</label></br>
-								<label class="color-economics">
-									<input type="checkbox" ng-model="catChoiceEconomics" ng-checked="catChoiceEconomics" ng-change="catChoice('economics')" checked/><span class="catChoiceCheckbox"><span></span></span> Economics
-								</label></br>
-								<label class="color-literature">
-									<input type="checkbox" ng-model="catChoiceLiterature" ng-checked="catChoiceLiterature" ng-change="catChoice('literature')" checked/><span class="catChoiceCheckbox"><span></span></span> Literature
-								</label>
+				<div id="sidebar" class="col-sm-5 col-sm-offset-6" style="float:left;">
+					<div class="categoryChoice row">
+						<div class="col-sm-12">
+							<div class="col-sm-7 remove-left-space remove-right-space">
+								<h5>Choose category</h5>
+								<div class="col-sm-6 remove-left-space catChoice">
+									<label class="color-chemistry">
+										<input type="checkbox" ng-model="catChoiceChemistry" ng-checked="catChoiceChemistry" ng-change="catChoice('chemistry')" checked/><span class="catChoiceCheckbox"><span></span></span> Chemistry
+									</label></br>
+									<label class="color-economics">
+										<input type="checkbox" ng-model="catChoiceEconomics" ng-checked="catChoiceEconomics" ng-change="catChoice('economics')" checked/><span class="catChoiceCheckbox"><span></span></span> Economics
+									</label></br>
+									<label class="color-literature">
+										<input type="checkbox" ng-model="catChoiceLiterature" ng-checked="catChoiceLiterature" ng-change="catChoice('literature')" checked/><span class="catChoiceCheckbox"><span></span></span> Literature
+									</label>
+								</div>
+								<div class="col-sm-6 remove-left-space remove-right-space catChoice">
+									<label class="color-medicine">
+										<input type="checkbox" ng-model="catChoiceMedicine" ng-checked="catChoiceMedicine" ng-change="catChoice('medicine')" checked/><span class="catChoiceCheckbox"><span></span></span> Medicine
+									</label></br>
+									<label class="color-peace">
+										<input type="checkbox" ng-model="catChoicePeace" ng-checked="catChoicePeace" ng-change="catChoice('peace')" checked/><span class="catChoiceCheckbox"><span></span></span> Peace
+									</label></br>
+									<label class="color-physics">
+										<input type="checkbox" ng-model="catChoicePhysics" ng-checked="catChoicePhysics" ng-change="catChoice('physics')" checked/><span class="catChoiceCheckbox"><span></span></span> Physics
+									</label>
+								</div>
 							</div>
-							<div class="col-sm-6">
-								<label class="color-medicine">
-									<input type="checkbox" ng-model="catChoiceMedicine" ng-checked="catChoiceMedicine" ng-change="catChoice('medicine')" checked/><span class="catChoiceCheckbox"><span></span></span> Medicine
-								</label></br>
-								<label class="color-peace">
-									<input type="checkbox" ng-model="catChoicePeace" ng-checked="catChoicePeace" ng-change="catChoice('peace')" checked/><span class="catChoiceCheckbox"><span></span></span> Peace
-								</label></br>
-								<label class="color-physics">
-									<input type="checkbox" ng-model="catChoicePhysics" ng-checked="catChoicePhysics" ng-change="catChoice('physics')" checked/><span class="catChoiceCheckbox"><span></span></span> Physics
-								</label>
+							<div class="col-sm-5 data-selections-col">
+								<div class="row">
+									<div class="col-sm-12 ">
+										<h5>Select data</h5>
+										<select class="max-select-width" required ng-model="wbDataChoice" ng-options="wbd.title for wbd in worldBankData" ng-change="onWbDataChange(wbDataChoice)">
+											<option value=""> -- Select -- </option>
+										</select>
+									</div>
+								</div>
+
+								<div class="row selectCountryDiv">
+									<div class="col-sm-12" id="selectCountryDiv">
+										<h5>Choose country </h5>
+									</div>
+								</div>
 							</div>
-						</form>	
+						</div>
 					</div>
 
 					<div id ="timeslide" class="row">
-					</div>
-					<div class="additionalDataForGlobe row">
-						<div class="col-md-12">
-							<p>Select additional data to show </p>
-							<select required ng-model="wbDataChoice" ng-options="wbd.title for wbd in worldBankData" ng-change="onWbDataChange(wbDataChoice)">
-								<option value=""> -- Select -- </option>
-							</select>
-						</div>
-					</div>
-
-					<div class="row selectCountryDiv">
-						<div class="col-sm-12" id="selectCountryDiv">
-							<p>Choose country </p>
-						</div>
 					</div>
 
 		        	<div class="row" >
