@@ -27,6 +27,10 @@
 //
 var chordOld;
 var chordDiagram;
+var leftDepth,
+    leftIndex,
+    rightIndex,
+    rightDepth;
 
 var d3 = (function (d3) {
   'use strict';
@@ -129,12 +133,12 @@ var d3 = (function (d3) {
     var width = screen.width * 0.73, //3000,
       height = screen.height *0.73, //1750,
       margin = {top: width*0.1, right: width*0.1, bottom: width*0.1, left: width*0.1}, // leaves room for labels
-      arcPadding = 0,
-      leftDepth = 0,
-      leftIndex = 0,
-      rightIndex = 0,
-      rightDepth = 0,
-      flip = null,  // append .flip() to transpose the matrix
+      arcPadding = 0;
+      leftDepth = 0;
+      leftIndex = 0;
+      rightIndex = 0;
+      rightDepth = 0;
+    var flip = null,  // append .flip() to transpose the matrix
       hoverFadeOpacity = 0.2,
       colors = d3.scale.category10(),
       rimWidth = function(outerRadius) {return outerRadius*0.1}, // or use a constant

@@ -136,17 +136,17 @@
 			</div>
 		</div>
 		<div id="chord" ng-hide="hideChord" ng-controller="chord">
-			<h1 id ="text">Now showing: Prizes by Category and Gender</h1>
   			<table>
   				<tr>
+  					<td>
+      					<div id="flow" ng-click="flowClick()"></div>
+    				</td>
     				<td>
       					<form action="">
         					<input type="radio" name="gender" value="gender" checked="checked" ng-click="genderData()"> Gender<br></input>
         					<input type="radio" name="gender" value="age" ng-click="ageData()"> Age<br></input>
       					</form>
-    				</td>
-    				<td>
-      					<div id="flow"></div>
+    					<br><br>{{chordText}}
     				</td>
   				</tr>
 			</table>
@@ -181,12 +181,9 @@
 			.selectAll('div')
 			.on('click', function() {
 				d3.selectAll('div').classed('active', false);
-
 				var div = d3.select(this);
-
 				div.classed('active', true);
 			});
-
 	</script>
 </body>
 </html>
