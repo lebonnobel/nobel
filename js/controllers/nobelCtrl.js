@@ -49,9 +49,11 @@ nobelApp.controller('nobelCtrl',
 	$scope.catChoices.array = ["chemistry","economics","literature","medicine","peace","physics"];
 	$scope.catChoices.emptyArray = [ [], [], [], [], [], [] ];
 
-	$scope.catChoice = function() {
-		console.log("Your choices",$scope.catChoices);
-		if ($scope.catChoices.array.length === 1) {
+	$scope.catChoice = function(choice) {
+		console.log("Your choice",choice);
+		// If there's only one choice left and it's the one you clicked, refill all the category choices to true
+		if ($scope.catChoices.array.length === 1 && $scope.catChoices.array[0] === choice) {
+
 			$scope.catChoices.array = ["chemistry","economics","literature","medicine","peace","physics"];
 			$scope.catChoices.emptyArray = [ [], [], [], [], [], [] ];
 			$scope.catChoices.dict = {
@@ -63,6 +65,7 @@ nobelApp.controller('nobelCtrl',
 			$scope.catChoiceMedicine = true;
 			$scope.catChoicePeace = true;
 			$scope.catChoicePhysics = true;
+
 		} else {
 
 			$scope.catChoices = {
@@ -97,7 +100,6 @@ nobelApp.controller('nobelCtrl',
 				$scope.catChoices.array.push("physics");
 				$scope.catChoices.emptyArray.push([]);
 			}
-			console.log("blabla",$scope.catChoices);
 			// Create a category dictionary containing each category and their id
 			// Will be used by service
 			for (var i=0; i<$scope.catChoices.array.length; i++) {
