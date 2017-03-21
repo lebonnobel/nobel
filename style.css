@@ -160,18 +160,30 @@ h1 {
 }
 
 /* ****** CHORD ****** */
-
+#flow .column {
+	font-weight: bold;
+}
+#flow .row {
+	font-weight: bold;
+}
 #flow .flows {
-  opacity: .6;
-  border: 100% solid gray;
+  opacity: 0.8;
+  border: 5px;
+  border-color: white;
 }
 #flow .chord-hover {
   position: absolute;
   visibility: hidden;
   background: #EEE;
   padding: 15px 25px 25px 15px;
-  border: 1px solid gray;
+  border: 5px;
+  border-color: white;
   border-radius: 5px;
+}
+
+#flow .rim {
+	border: 5px;
+	border-color: white;
 }
 
 @media screen and (min-device-width : 3000px) {
