@@ -139,7 +139,7 @@ var d3 = (function (d3) {
       rightIndex = 0;
       rightDepth = 0;
     var flip = null,  // append .flip() to transpose the matrix
-      hoverFadeOpacity = 0.2,
+      hoverFadeOpacity = 0.5,
       colors = d3.scale.category10(),
       rimWidth = function(outerRadius) {return outerRadius*0.1}, // or use a constant
       hoverHtml = {}, // an object keyed off the row and column labels
@@ -280,7 +280,7 @@ var d3 = (function (d3) {
           .data(chord.groups);
         rim.enter().append("path");
         rim.style("fill", function(d) { return colors(d.index); })
-          .style("stroke", function(d) { return colors(d.index); })
+          .style("stroke", "#FFFFFF")
           .attr("d", d3.svg.arc().innerRadius(innerRadius).outerRadius(outerRadius))
           .on("mouseover", function(d,i) {showHover(hoverDiv, d, labelText[d.index],0); return fade(svg, hoverFadeOpacity)(d,i)})
           .on("click", function(d,i) {
@@ -361,9 +361,8 @@ var d3 = (function (d3) {
           .data(chord.chords);
         flows.enter().append("path");
         flows.attr("d", d3.svg.chord().radius(innerRadius))
-          .style("fill", function(d) { return colors(d.target.index); })
+          .style("fill", function(d) {if (leftDepth == 1 && rightDepth == 0){return colors(d.source.index);} return colors(d.target.index); })
           .style("opacity", 1)
-          .style("border","10px solid black")
           .on("mouseover",function(d,i){
             showHover(hoverDiv, d, labelText[d.index],labelText[d.source.index] + " have recieved: " + d.source.value +" of " + flowHover(d,chordOld) + " prices in " +labelText[d.target.index]);
             return fade2(svg, hoverFadeOpacity)(d,i);//i+data.length-1
