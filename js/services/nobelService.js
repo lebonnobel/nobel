@@ -165,9 +165,9 @@ nobelApp.factory('nobelService', ['$window', '$http', '$q', 'prizeService', func
             var dataArray = [['Disposition', 'Physics', 'Chemistry', 'Physiology or Medicine', 'Literature', 'Peace', 'Economics']];        
             // If we have requested the gender data we calculate it here
             if(type === "gender"){
-                var maleLaureatesArray = ['Men', 0, 0, 0, 0, 0 ,0];
-                var femaleLaureatesArray = ['Women', 0, 0, 0, 0, 0 ,0];
-                var orgLaureatesArray = ['Organizations', 0, 0, 0, 0, 0 ,0];
+                var maleLaureatesArray = ['Men', [], [], [], [], [], []];
+                var femaleLaureatesArray = ['Women', [], [], [], [], [], []];
+                var orgLaureatesArray = ['Organizations', [], [], [], [], [], []];
                 // We loop through our prizesData
                 for (var i = 0; i < prizesData.length; i++) {
                   // For every laureate in this prize
@@ -175,11 +175,11 @@ nobelApp.factory('nobelService', ['$window', '$http', '$q', 'prizeService', func
                     var tempLaureate = getLaureateByID(laureatesData, prizesData[i].laureates[j].id);
                     // Then check the laureates gender
                     if(tempLaureate.gender == "male"){
-                        maleLaureatesArray[nobelCategoryDictionary[prizesData[i].category]+1]++;
+                        maleLaureatesArray[nobelCategoryDictionary[prizesData[i].category]+1].push(tempLaureate);
                     } else if(tempLaureate.gender == "female"){
-                        femaleLaureatesArray[nobelCategoryDictionary[prizesData[i].category]+1]++;
+                        femaleLaureatesArray[nobelCategoryDictionary[prizesData[i].category]+1].push(tempLaureate);
                     } else {
-                        orgLaureatesArray[nobelCategoryDictionary[prizesData[i].category]+1]++;
+                        orgLaureatesArray[nobelCategoryDictionary[prizesData[i].category]+1].push(tempLaureate);
                     }
                   }
                 }
@@ -189,13 +189,13 @@ nobelApp.factory('nobelService', ['$window', '$http', '$q', 'prizeService', func
                 dataArray.push(orgLaureatesArray);
             // If we have requested the age data, we calculate it here
             } else if(type === "age"){
-                var ageGroup1 = ['<35', 0, 0, 0, 0, 0, 0];
-                var ageGroup2 = ['36-45', 0, 0, 0, 0, 0, 0];
-                var ageGroup3 = ['46-55', 0, 0, 0, 0, 0, 0];
-                var ageGroup4 = ['56-65', 0, 0, 0, 0, 0, 0];
-                var ageGroup5 = ['66-75', 0, 0, 0, 0, 0, 0];
-                var ageGroup6 = ['76-85', 0, 0, 0, 0, 0, 0];
-                var ageGroup7 = ['86+', 0, 0, 0, 0, 0, 0];
+                var ageGroup1 = ['<35', [], [], [], [], [], []];
+                var ageGroup2 = ['36-45', [], [], [], [], [], []];
+                var ageGroup3 = ['46-55', [], [], [], [], [], []];
+                var ageGroup4 = ['56-65', [], [], [], [], [], []];
+                var ageGroup5 = ['66-75', [], [], [], [], [], []];
+                var ageGroup6 = ['76-85', [], [], [], [], [], []];
+                var ageGroup7 = ['86+', [], [], [], [], [], []];
                 // We loop through our prizesData
                 for (var i = 0; i < prizesData.length; i++) {
                   // For every laureate in this prize
@@ -207,19 +207,19 @@ nobelApp.factory('nobelService', ['$window', '$http', '$q', 'prizeService', func
                     // I have no idea why we subtract 1970, but saw it on das internetz and it seems to be working
                     var laureateAgeWhenAwarded = new Date(awardedDate - bornDate).getFullYear() - 1970;
                     if(laureateAgeWhenAwarded<=35){
-                        ageGroup1[nobelCategoryDictionary[prizesData[i].category]+1]++;
+                        ageGroup1[nobelCategoryDictionary[prizesData[i].category]+1].push(tempLaureate);
                     } else if(laureateAgeWhenAwarded<=45){
-                        ageGroup2[nobelCategoryDictionary[prizesData[i].category]+1]++;
+                        ageGroup2[nobelCategoryDictionary[prizesData[i].category]+1].push(tempLaureate);
                     } else if(laureateAgeWhenAwarded<=55){
-                        ageGroup3[nobelCategoryDictionary[prizesData[i].category]+1]++;
+                        ageGroup3[nobelCategoryDictionary[prizesData[i].category]+1].push(tempLaureate);
                     } else if(laureateAgeWhenAwarded<=65){
-                        ageGroup4[nobelCategoryDictionary[prizesData[i].category]+1]++;
+                        ageGroup4[nobelCategoryDictionary[prizesData[i].category]+1].push(tempLaureate);
                     } else if(laureateAgeWhenAwarded<=75){
-                        ageGroup5[nobelCategoryDictionary[prizesData[i].category]+1]++;
+                        ageGroup5[nobelCategoryDictionary[prizesData[i].category]+1].push(tempLaureate);
                     } else if(laureateAgeWhenAwarded<=85){
-                        ageGroup6[nobelCategoryDictionary[prizesData[i].category]+1]++;
+                        ageGroup6[nobelCategoryDictionary[prizesData[i].category]+1].push(tempLaureate);
                     } else if(laureateAgeWhenAwarded>=86){
-                        ageGroup7[nobelCategoryDictionary[prizesData[i].category]+1]++;
+                        ageGroup7[nobelCategoryDictionary[prizesData[i].category]+1].push(tempLaureate);
                     }
                   }
                 }
