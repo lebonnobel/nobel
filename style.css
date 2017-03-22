@@ -103,15 +103,15 @@ h1 {
 	stroke-width: 0.5px;
 }
 
-.land:hover {
-	stroke: #616161; /*#FFB74D; /*#32BD8D;*/
+/*.land:hover {
+	stroke: #616161; #FFB74D; /*#32BD8D;
 	stroke-width: 2px;
 }
 
 .focused {
 	stroke: #424242; /*#f58234; /*#F57C00; /*#32BD8D;*/
-	stroke-width: 2px;
-}
+/*	stroke-width: 2px;
+}*/
 
 .countryTooltip {
 	position: absolute;

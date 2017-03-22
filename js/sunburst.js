@@ -267,6 +267,7 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 					privateUpdateMap(-1);  
 				});
 
+
 				//get data?
 				q = queue()
 				  .defer(d3.json, "https://codepen.io/JohannaG92/pen/KWmZZv.js")
@@ -281,8 +282,7 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 
 				// Returns the id of the country code 
 				// Input: inputCode, format: "SE"
-				// Output: c, number
-					
+				// Output: c, number				
 			}
 
 			//Main globe function
@@ -313,15 +313,15 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 
 				//Dragging water on the globe
 				globeSvg.selectAll("path.water")
-				.call(d3.behavior.drag()
-			        .origin(function() { var r = projection.rotate(); return {x: r[0] / sens, y: -r[1] / sens}; })
-			        .on("drag", function() {
-			          var rotate = projection.rotate();
-			          projection.rotate([d3.event.x * sens, -d3.event.y * sens, rotate[2]]);
-			          globeSvg.selectAll("path.land").attr("d", globepath);
-			          globeSvg.selectAll(".focused").classed("focused", focused = false);
-			        })
-			      );
+					.call(d3.behavior.drag()
+				        .origin(function() { var r = projection.rotate(); return {x: r[0] / sens, y: -r[1] / sens}; })
+				        .on("drag", function() {
+				          var rotate = projection.rotate();
+				          projection.rotate([d3.event.x * sens, -d3.event.y * sens, rotate[2]]);
+				          globeSvg.selectAll("path.land").attr("d", globepath);
+				          globeSvg.selectAll(".focused").classed("focused", focused = false);
+				        })
+			      	);
 
 				world = globeSvg.selectAll("path.land")
 					.data(countries)
@@ -337,23 +337,24 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 					      }
 					    })
 					    return out;
-					  })
+					})
 
-				//Drag event
-				.call(d3.behavior.drag()
-			    	.origin(function() { var r = projection.rotate(); return {x: r[0] / sens, y: -r[1] / sens}; })
-			    	.on("drag", function() {
-			        	var rotate = projection.rotate();
-			        	projection.rotate([d3.event.x * sens, -d3.event.y * sens, rotate[2]]);
-			        	globeSvg.selectAll("path.land").attr("d", globepath);
-			        	globeSvg.selectAll(".focused").classed("focused", focused = false);
-			        }))
+					//Drag event
+					.call(d3.behavior.drag()
+				    	.origin(function() { var r = projection.rotate(); return {x: r[0] / sens, y: -r[1] / sens}; })
+				    	.on("drag", function() {
+				        	var rotate = projection.rotate();
+				        	projection.rotate([d3.event.x * sens, -d3.event.y * sens, rotate[2]]);
+				        	globeSvg.selectAll("path.land").attr("d", globepath);
+				        	globeSvg.selectAll(".focused").classed("focused", focused = false);
+				        })
+				    )
 			  
-				//Mouse events
-				.on("click", globeClick)
-				.on("mouseover", globeMouseover)
-				.on("mouseleave", globeMouseleave)
-				.on("mousemove", globeMousemove);	
+					//Mouse events
+					.on("click", globeClick)
+					.on("mouseover", globeMouseover)
+					.on("mouseleave", globeMouseleave)
+					.on("mousemove", globeMousemove);	
 			} 
 			
 			function globeClick(d) {
@@ -396,15 +397,16 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 			}
 
 			function globeMouseover(d) {
-				//console.log("globeMouseover");
-				mouseover(id2Code(d.id));
+				//makes border even all around country
+				d3.select(this.parentNode.appendChild(this)).transition().duration(300)
+					.style({'stroke-opacity': 1, 'stroke': '#616161', 'stroke-width': 2});
+				//mouseover(id2Code(d.id));
 				
 				/*var country = ($scope.$parent.chosenWBD != undefined || $scope.$parent.chosenWBD != '') ? 
 				'<span class="country">' + countryById[d.id] + '<br>' + $scope.$parent.chosenWBD + ': 1' + '</span>' :
 				'<span class="country">' + countryById[d.id] + '</span>';*/
 				
 				var country = '<span class="country">' + countryById[d.id] + '</span>';
-				
 
 				countryTooltip.html(country);
 
@@ -414,6 +416,8 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 			}
 
 			function globeMouseleave(d) {
+				d3.select(this).transition().duration(300)
+					.style({'stroke-opacity': 1, 'stroke': 'white', 'stroke-width': 0.5})
 				//console.log("globeMouseleave");
 				countryTooltip.style("opacity", 0);
 			}
@@ -425,8 +429,7 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 					.style("left", (d3.event.pageX+15)+"px");
 			}
 
-			//Country focus on option select
-			// Här sätter man en listener som körs när man byter land
+			//removes hover/select on country
 			d3.selectAll("#selectCountry").on("change", function() {
 				privateUpdateMap(-1);  
 			});
@@ -977,7 +980,7 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 	function countryClick(d){
 		$("#laureateInfo").hide();
 		$("#countryInfo, #info").show();
-
+		document.getElementById('laureate_img').innerHTML = "";
 		$("#laureate_name").html(d.country);
 		prizeService.updatePrizes(d.children.length);
 		prizeService.updateCountry(d.country);
