@@ -389,7 +389,7 @@ nobelApp.controller('sunburst', function(worldBankService, nobelService, yearSer
 
 			function globeMouseover(d) {
 				//console.log("globeMouseover");
-				mouseover(id2Code(d.id));
+				//mouseover(id2Code(d.id));
 
 				var country = '<span class="country">' + countryById[d.id]
 			                    + '</span>'
