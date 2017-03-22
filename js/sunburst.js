@@ -397,7 +397,9 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 			}
 
 			function globeMouseover(d) {
-				//mouseover(id2Code(d.id));
+				//makes border even all around country
+				d3.select(this.parentNode.appendChild(this)).transition().duration(300)
+					.style({'stroke-opacity': 1, 'stroke': '#616161', 'stroke-width': 2});
 				//mouseover(id2Code(d.id));
 				
 				/*var country = ($scope.$parent.chosenWBD != undefined || $scope.$parent.chosenWBD != '') ? 
@@ -414,6 +416,8 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 			}
 
 			function globeMouseleave(d) {
+				d3.select(this).transition().duration(300)
+					.style({'stroke-opacity': 1, 'stroke': 'white', 'stroke-width': 0.5})
 				//console.log("globeMouseleave");
 				countryTooltip.style("opacity", 0);
 			}
@@ -425,8 +429,7 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 					.style("left", (d3.event.pageX+15)+"px");
 			}
 
-			//Country focus on option select
-			// Här sätter man en listener som körs när man byter land
+			//removes hover/select on country
 			d3.selectAll("#selectCountry").on("change", function() {
 				privateUpdateMap(-1);  
 			});
