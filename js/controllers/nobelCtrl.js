@@ -205,7 +205,8 @@ nobelApp.controller('nobelCtrl',
 		console.log("You chose this data",wbDataChoice);
 		// only get the data if the wbDataChoice is valid
 		if (wbDataChoice !== undefined) {
-			$scope.chosenWBD = wbDataChoice.filename;
+			$scope.chosenWBD = wbDataChoice.filename;			
+			$scope.chosenWBDDescription = wbDataChoice.description;
 			// This function gets the data from worldbankService
 			// It uses a callback, (the 'function(d)' part), instead of waiting for the returning result
 			// the callback waits until the getData function is calling for it
