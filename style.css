@@ -149,6 +149,33 @@ h1 {
 	font-size: 18px;
 }
 
+/* ****** GRADIENT *******/
+
+#dataLabel {
+	margin-top: 20px;
+}
+
+#spanFiller {
+	margin-left: 35%;
+	margin-right: 35%;
+}
+
+.gradient {
+	margin-top: 5px;
+	margin-left: -15px;
+	margin-right: -15px;
+	width: 100%;
+  	height: 20px;
+	background-color: #546043;
+	background-image:
+    linear-gradient(
+      to right, 
+      #546043,
+      #d5e286
+
+    );
+}
+
 /* ****** CHORD ****** */
 #flow .column {
 	font-weight: bold;
