@@ -198,7 +198,9 @@ nobelApp.controller('nobelCtrl',
 
 	// Shows which datasets you can choose from, specified in worldBankService
 	$scope.worldBankData = worldBankService.dataSets;
-	$scope.chosenWBD;
+	$scope.chosenWBD;	
+	$scope.chosenWBDDescription;
+
 
 	// This function is called when a wb (World bank) dataset is chosen from the dropdown list
 	$scope.onWbDataChange = function(wbDataChoice) {
