@@ -980,7 +980,7 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 	function countryClick(d){
 		$("#laureateInfo").hide();
 		$("#countryInfo, #info").show();
-
+		document.getElementById('laureate_img').innerHTML = "";
 		$("#laureate_name").html(d.country);
 		prizeService.updatePrizes(d.children.length);
 		prizeService.updateCountry(d.country);
