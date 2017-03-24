@@ -4,24 +4,44 @@ nobelApp.factory('worldBankService', ['$window', '$http', '$q', function ($windo
 	this.wbDataUrl = "data/worldbank/";
 	this.dataSets = [ 
 		{
-			'title' : 'Education spending',
-			'description' : '',
-			'filename' : 'edu-spending'
+			'title': 'Mean years in school (1970 - 2009)',
+			'description' : 'Mean years in school: Men and Women 25+ (1970 - 2009)',
+			'filename' : 'mean-years-in-school'
 		}, 
 		{
-			'title' : 'Literacy',
-			'description' : '',
+			'title' : 'Literacy rate (1975 - 2016)',
+			'description' : 'Literacy rate for population (1975 - 2016)',
 			'filename' : 'literacy'
-		}, 
+		},		
 		{
-			'title' : 'Youth in school',
-			'description' : '',
-			'filename' : 'youth-in-school'
+			'title' : 'Ratio of girls to boys in primary and secondary school (1970 - 2011)',
+			'description' : 'Ratio of girls to boys in primary and secondary school, in % (1970 - 2011)',
+			'filename' : 'ratio-of-girls-to-boys-in-primary-and-secondary'
 		},
 		{
-			'title': 'Mean years in school',
-			'description' : 'Mean years in school: Men and Women 25+',
-			'filename' : 'mean-years-in-school'
+			'title' : 'Income per person (1901 - 2017)',
+			'description' : 'Income per person, GDP/capita in $/year (1901 - 2017)',
+			'filename' : 'income-per-person'
+		},
+		{
+			'title' : 'HDI (1980 - 2011)',
+			'description' : 'Human Development Index (1980 - 2011)',
+			'filename' : 'human-development-index'
+		},
+		{
+			'title' : 'Life expectancy at birth (1901 - 2016)',
+			'description' : 'Life expectancy at birth (1901 - 2016)',
+			'filename' : 'life-expectancy'
+		},
+		{
+			'title' : 'Children per woman (1901 - 2016)',
+			'description' : 'Children per woman (1901 - 2016)',
+			'filename' : 'children-per-woman'
+		},
+		{
+			'title' : 'Child mortality (1901 - 2015)',
+			'description' : 'Child mortality per 1000 born under the age of 5 (1901 - 2015)',
+			'filename' : 'child-mortality'
 		}
 	];
 
@@ -40,6 +60,7 @@ nobelApp.factory('worldBankService', ['$window', '$http', '$q', function ($windo
 	// Here we load and format the data for the globe
 	// The function can take different data types to format, and will try to look for the latest valid value if some values are missing
 	this.getDataForGlobe = function(dataType, year, callback){
+		if(dataType == undefined) return;
 		if(dataType == "mean-years-in-school"){
 			// We request the data
 			this.getData('mean-years-in-school', function(data){
@@ -56,8 +77,8 @@ nobelApp.factory('worldBankService', ['$window', '$http', '$q', function ($windo
 				// Then we return the array
 				callback(retArray);
 			});
-		} else if(dataType == "literacy") {
-			this.getData('literacy', function(data){
+		} else {
+			this.getData(dataType, function(data){
 				var retArray = [];
 				// For every country with the data
 				for (var i = 0; i < Object.keys(data).length; i++) {
@@ -76,7 +97,7 @@ nobelApp.factory('worldBankService', ['$window', '$http', '$q', function ($windo
 
 	// Only used to generate static data. This function is slow and should NEVER be run at runtime
 	// It takes and combines different data sources into one usable dictionary
-	this.genData = function() {
+	this.genData3Comb = function() {
 		var self = this;
 		this.getData('literacyUNESCO', function(unescoData){
 			self.getData('literacyWORLDBANK', function(worldbankData){
@@ -139,10 +160,39 @@ nobelApp.factory('worldBankService', ['$window', '$http', '$q', function ($windo
 				});
 			});
 		});
-
 	}
 
-
+		// Only used to generate static data. This function is slow and should NEVER be run at runtime
+	// It takes and combines different data sources into one usable dictionary
+	this.genData = function() {
+		this.getData('child-mortality', function(data){
+			// Then we calculate missing values by 1) linearly interpolate between missing data, 2) if the country does not have any future data, then take the most previous value
+			for (var c = 0; c < Object.keys(data).length; c++){
+				var countryName = Object.keys(data)[c];
+				// For each year
+				var firstValueFound = false;
+				var lastValue = 0;
+				for (var y = 0; y < Object.keys(data[countryName]).length; y++) {
+					var yearStr = Object.keys(data[countryName])[y];
+					// We remove all missing values before the first
+					if ((data[countryName][yearStr] == null || data[countryName][yearStr] == 0) && !firstValueFound){
+						delete data[countryName][yearStr];
+						y--;
+					} else if((data[countryName][yearStr] == null || data[countryName][yearStr] == 0) && lastValue != 0) {
+						data[countryName][yearStr] = lastValue;
+					} else {
+						firstValueFound = true;
+						lastValue = data[countryName][yearStr];
+					}
+				}
+				if(Object.keys(data[countryName]).length == 0){
+					delete data[countryName];
+					c--;
+				}
+			}
+			console.log(JSON.stringify(data));
+		});
+	}
 
 	////// API CALLS DO NOT WORK :'( ///////////////////////
 	/*this.dataUrl = "http://api.worldbank.org/v2/"
