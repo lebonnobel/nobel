@@ -190,6 +190,9 @@ h1 {
 }
 
 /* ****** CHORD ****** */
+#flow {
+	vertical-align: top;
+}
 #flow .column {
 	font-weight: bold;
 }
@@ -217,11 +220,16 @@ h1 {
 }
 
 #chord .table {
-	table-layout: fixed;
 	padding: 0px;
+	vertical-align: top;
 }
 #chord .td {
-	width: 50%;
+	width: 60%;
+	padding: 0px;
+	vertical-align: top;
+}
+#chord .td2 {
+	width: 40%;
 	padding: 0px;
 }
 @media screen and (min-device-width : 3000px) {
