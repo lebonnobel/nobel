@@ -236,23 +236,6 @@ nobelApp.factory('nobelService', ['$window', '$http', '$q', 'prizeService', func
         });
     }
 
-
-    // This function returns nobel data for the given country, by the given year
-    /*this.getNobelDataForCountry = function (countryName, year, callback) {
-        if (isUndefinedOrEmpty(prizesData) || isUndefinedOrEmpty(laureatesData) || isUndefinedOrEmpty(countriesData)){ 
-            jQueryLoadJSON(function(){
-                callback(deferedGetNobelDataForCountry(countryName, year));
-            });
-        } else {
-            callback(deferedGetNobelDataForCountry(countryName, year));
-        }
-    }*/
-    
-    /*function deferedGetNobelDataForCountry(countryName, year){
-        // Return the data
-        return formatNobelDataForSunburst(prizesData, laureatesData, countriesData, countryName, year);
-    }*/
-
     //////////////////// FORMATTING //////////////////////
 
     // This is a dictionary to know what category is at what index in the sunburstFormattedData
