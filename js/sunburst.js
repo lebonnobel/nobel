@@ -978,6 +978,7 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 	}
 
 	function countryClick(d){
+		console.log("countryClick() d", d);
 		$("#laureateInfo").hide();
 		$("#countryInfo, #info").show();
 		document.getElementById('laureate_img').innerHTML = "";
