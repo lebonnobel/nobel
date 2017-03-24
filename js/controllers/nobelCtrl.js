@@ -198,15 +198,17 @@ nobelApp.controller('nobelCtrl',
 
 	// Shows which datasets you can choose from, specified in worldBankService
 	$scope.worldBankData = worldBankService.dataSets;
-	$scope.chosenWBD;	
-	$scope.chosenWBDDescription;
+	$scope.chosenWBD = '';	
+	$scope.chosenWBDDescription = '';
+	$scope.hasChosenData = false;
 
 
 	// This function is called when a wb (World bank) dataset is chosen from the dropdown list
 	$scope.onWbDataChange = function(wbDataChoice) {
-		console.log("You chose this data",wbDataChoice);
+		//console.log("You chose this data",wbDataChoice);
 		// only get the data if the wbDataChoice is valid
 		if (wbDataChoice !== undefined) {
+			$scope.hasChosenData = true;
 			$scope.chosenWBD = wbDataChoice.filename;			
 			$scope.chosenWBDDescription = wbDataChoice.description;
 			// This function gets the data from worldbankService
@@ -219,6 +221,7 @@ nobelApp.controller('nobelCtrl',
 			});
 
 		} else {
+			$scope.hasChosenData = false;
 			$scope.wbData = '';
 			$scope.chosenWBD = '';
 			$scope.$broadcast('reverseGlobeColours');

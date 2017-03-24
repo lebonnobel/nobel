@@ -64,10 +64,13 @@
 					</div>
 				</div>
 				<div id="sidebar" class="col-sm-5 col-sm-offset-6" style="float:left;">
+					<div id ="timeslide" class="row">
+					</div>
+
 					<div class="categoryChoice row">
 						<div class="col-sm-12">
 							<div class="col-sm-7 remove-left-space remove-right-space">
-								<h5>Choose category</h5>
+								<h5>Choose categories to show</h5>
 								<div class="col-sm-6 remove-left-space catChoice">
 									<label class="color-chemistry">
 										<input type="checkbox" ng-model="catChoiceChemistry" ng-checked="catChoiceChemistry" ng-change="catChoice('chemistry')" checked/><span class="catChoiceCheckbox"><span></span></span> Chemistry
@@ -92,36 +95,38 @@
 								</div>
 							</div>
 							<div class="col-sm-5 data-selections-col">
-								<div class="row">
-									<div class="col-sm-12 ">
-										<h5>Select data</h5>
-										<select class="max-select-width" required ng-model="wbDataChoice" ng-options="wbd.title for wbd in worldBankData" ng-change="onWbDataChange(wbDataChoice)">
-											<option value=""> -- Select -- </option>
-										</select>
-									</div>
-								</div>
-
 								<div class="row selectCountryDiv">
 									<div class="col-sm-12" id="selectCountryDiv">
 										<h5>Choose country </h5>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-sm-12 ">
+										<h5>Choose data</h5>
+										<select class="max-select-width" required ng-model="wbDataChoice" ng-options="wbd.title for wbd in worldBankData" ng-change="onWbDataChange(wbDataChoice)">
+											<option value=""> -- None -- </option>
+										</select>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 
-					<div id ="timeslide" class="row">
-					</div>
-
-					<div class="row">
-						<p id ="dataLabel">{{chosenWBDDescription}}</p>
-						<span align="left">Low</span>
-						<span id="spanFiller"></span>
-						<span align="right">High</span>
-						<div class="gradient">
-							<span></span>
+					<div class="row" class="dataInfo" ng-if="hasChosenData">
+						<div class="col-sm-12">
+							<p><b>Showing this data:</b> <span id="dataLabel">{{chosenWBDDescription}}</p>
+							<div class="gradient">
+								<span></span>
+							</div>
+							<span class="left-gradient-label">Low</span>
+							<span class="right-gradient-label">High</span>
 						</div>
 					</div>
+
+
+
+					
 
 		        	<div class="row" >
 		        		<div class="col-sm-10" id="info">
