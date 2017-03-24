@@ -164,17 +164,44 @@
 			</div>
 		</div>
 		<div id="chord" ng-hide="hideChord" ng-controller="chord">
-  			<table>
+  			<table class="table">
   				<tr>
-  					<td>
+  					<td class="td" id = "theFlow">
       					<div id="flow" ng-click="flowClick()"></div>
     				</td>
-    				<td>
+    				<td class="td">
       					<form action="">
         					<input type="radio" name="gender" value="gender" checked="checked" ng-click="genderData()"> Gender<br></input>
         					<input type="radio" name="gender" value="age" ng-click="ageData()"> Age<br></input>
       					</form>
-    					<br><br>{{chordText}}
+
+		        		<div class="row" ng-hide="chordSide">
+		        			<div class="col-sm-10" id="info">
+				      			<h3>{{chordInfo.firstname + " " + chordInfo.surname}}</h3>
+				      			<table>
+				      				<span id="chord_img" style="height:200px; width:200px"></span>
+				      				<tr>
+				      					<td class="inf" colspan="2">Nobel prize in {{chordInfo.prizes[0].category + " " + chordInfo.prizes[0].year}}</td>
+				      				</tr>
+				      				<tr>
+					      				<td class="inf">Gender:</td> <td>{{chordInfo.gender}}</td>
+					      			</tr>
+					      			<tr>
+					      				<td class="inf">Born:</td> <td>{{chordInfo.born}}</td>
+					      			</tr>
+				      				<tr>
+					      				<td class="inf">Country:</td> <td>{{chordInfo.bornCountry}}</td>
+					      			</tr>
+					      			<tr>
+					      				<td class="inf">Motivation:</td> <td>{{chordInfo.prizes[0].motivation}}</td>
+					      			</tr>
+									<tr>
+					      				<td class="inf">Wiki:</td> <td id="laureate_chord"></td>
+					      			</tr>
+				      			</table>
+				      		</div>
+		      			</div>
+
     				</td>
   				</tr>
 			</table>

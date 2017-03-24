@@ -216,6 +216,14 @@ h1 {
 	border-color: white;
 }
 
+#chord .table {
+	table-layout: fixed;
+	padding: 0px;
+}
+#chord .td {
+	width: 50%;
+	padding: 0px;
+}
 @media screen and (min-device-width : 3000px) {
   body
     {
@@ -255,7 +263,7 @@ select {
 #info .inf{
 	font-weight: bold;
 }
-table td { vertical-align: top; }
+table td {vertical-align: top;}
 
 #info h3 {
 	font-size:16pt;

@@ -1,9 +1,9 @@
 
-nobelApp.controller('chord', function(nobelService, prizeService, $scope) {
+nobelApp.controller('chord', function(nobelService, prizeService, wikipediaService, $scope) {
 
 
 // ********************** CODE FOR DATA AND CREATING CHORD *********************
-
+  $scope.chordSide = true;
 	var chordAge;
 	var chordGender;
 	var chordData;
@@ -11,8 +11,6 @@ nobelApp.controller('chord', function(nobelService, prizeService, $scope) {
   var laureateCurrentGroups;
   var laureateAgeGroups;
   var laureateGenderGroups;
-
-  $scope.chordText = "Instructions: Click on the rim of the circle to get more information.";
 
   // Get age data
 	nobelService.getNobelDataForChordDiagram("age",function(data) {
@@ -101,27 +99,42 @@ nobelApp.controller('chord', function(nobelService, prizeService, $scope) {
       tempLeauratea = laureateCurrentGroups[index + 1][leftIndex - chordData.length + 2][index2];
     }
     
-    else {$scope.chordText = "Instructions: Click on the rim of the circle to get more information."; return false;}
-    
+    else {
+      $scope.chordSide = true;
+      return false;
+    }
     //TODO FIXA FIN DESIGN
     if(tempLeauratea.surname == null) {tempLeauratea.surname = "";}
     
-    //Fixing age so its shown.
-    var ageText = "";
-
     if (tempLeauratea.born != null) {
       var bornYear = new Date(tempLeauratea.born);
       var awardYear = new Date(tempLeauratea.prizes[0].year + '-12-10');
       var chordYear = new Date(awardYear-bornYear).getFullYear() - 1970;
     }
 
-    if (tempLeauratea.gender != "org") {
-      ageText = " at age: " + chordYear;
+    if (tempLeauratea.gender == "org") {
+      tempLeauratea.born = "";
     }
 
     //Text output.
-    $scope.chordText = "Random winner: " + tempLeauratea.firstname + " " + tempLeauratea.surname + " won the Nobel Prize in " + tempLeauratea.prizes[0].category + " year: " + tempLeauratea.prizes[0].year + ageText + ".";
 
+    $scope.chordInfo = tempLeauratea;
+    $("#chord_img").html("");
+
+    wikipediaService.apiWikiSearch(tempLeauratea.firstname + " " + tempLeauratea.surname, "image", function(data){
+      if (data!= null)  {
+          $("#chord_img").html('<img src="'+data+'">');
+        }
+      else{
+        $("#chord_img").html("");
+      }
+    });
+
+    wikipediaService.apiWikiSearch(tempLeauratea.firstname + " " + tempLeauratea.surname, "info", function(data){
+      $("#laureate_chord").html(data);
+    });
+
+    $scope.chordSide = false;
   }
 
   // Colours for Gender and Age
