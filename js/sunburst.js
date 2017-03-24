@@ -365,20 +365,16 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 					if (id2Code(d.id) != -1){
 						found = false;
 						var ID = id2Code(d.id)
-						var data = path[0];
+						
+						thisData = getCountryData(ID);
+						if (thisData) {
+							thisParent = thisData.parent;
+							currentRoot = thisParent.parent;
+							node = thisParent.parent;
+			    			found = true;
 
-		    			for (i=0; i < data.length; i++){
-		    				var search = data[i];
-		    				if(search.__data__.countryId) {
-		    					var country = search.__data__.countryId;
-		    					if(country == ID){
-		    						thisParent = search.__data__.parent;
-		    						currentRoot = thisParent.parent;
-		    						node = thisParent.parent;
-		    						found = true;
-		    					} 
-		    				}
-		    			}
+			    			countryClick(thisData);
+						}
 
 		    			if (!found) {
 		    				//console.log("id -1", id2Code(d.id));
@@ -400,7 +396,7 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 				//makes border even all around country
 				d3.select(this.parentNode.appendChild(this)).transition().duration(300)
 					.style({'stroke-opacity': 1, 'stroke': '#616161', 'stroke-width': 2});
-				//mouseover(id2Code(d.id));
+				mouseover(id2Code(d.id));
 				
 				/*var country = ($scope.$parent.chosenWBD != undefined || $scope.$parent.chosenWBD != '') ? 
 				'<span class="country">' + countryById[d.id] + '<br>' + $scope.$parent.chosenWBD + ': 1' + '</span>' :
@@ -488,7 +484,6 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 			      focusedCountry = n;
 			      d3.selectAll("select").property("value", n.id);   // Making the country selected in the selection after clicking
 			    }
-				console.log("Hey", focusedCountry);
 			    p = d3.geo.centroid(focusedCountry);
 
 			    //console.log(id2Code(focusedCountry.id));
@@ -565,22 +560,31 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 			    .append("div")
 			    .attr("class", "tooltip")
 			    .style("opacity", 0);
-			
+
+			function getCountryData(countryId) {
+				var data = path[0];
+	    		for (i=0; i < data.length; i++){
+	    			var search = data[i];
+	    			if(search.__data__.countryId) {
+	    				var country = search.__data__.countryId;
+	    				if (country === countryId){
+	    					return search.__data__;
+	    				}
+	    			}
+	    		}
+
+			}
+
 			function mouseover(d) {
 				//console.log("mouseover");
 				//console.log("d", d);
 				if (typeof(d) == "string"){
-		    		var data = path[0];
-		    		for (i=0; i < data.length; i++){
-		    			var search = data[i];
-		    			if(search.__data__.countryId) {
-		    				var country = search.__data__.countryId;
-		    				if(country === d){
-		    					d = search.__data__;
-		    					highlight(d);
-		    				}
-		    			}
-		    		}
+					var countryData = getCountryData(d);
+					if (countryData) {
+						d = countryData;
+						highlight(d);
+					}
+
 		    	} else {
 		    		if (d == -1) {
 		    			d3.select("#sunburst")
@@ -698,6 +702,7 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 		    function clicked(d) {
 		    	//console.log("clicked");
 		    	if (typeof(d) == "string"){
+		    		console.log("string");
 		    		var data = path[0];
 		    		for (i=0; i < data.length; i++){
 		    			var search = data[i];
@@ -724,6 +729,7 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 		    		node = currentRoot;
 		    		
 		    	} else if (!d.children){
+		    		console.log("leafClick");
 		    		leafClick(d);
 		    		//here the winner info div will be called to show itself!
 		    		//it is not possible to rearrange the sunburst if the clicked path is a winner
@@ -731,6 +737,7 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 		    		return;
 		    	} else {
 		    		if (d.depth === 2) {
+		    			console.log("country has been clicked");
 		    			countryClick(d);
 		    		}
 		    		currentRoot = d;
@@ -760,8 +767,8 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 		//console.log("slider");
 		formatDate = d3.time.format("%Y");
 		var margin = {top: 30, right: 30, bottom: 30, left: 30}
-		var width = 400 - margin.left - margin.right,
-			height = 80 - margin.bottom - margin.top;
+		var width = 400,
+			height = 80;
 
 		//scale function
 		var timeScale = d3.time.scale()

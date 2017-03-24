@@ -66,6 +66,10 @@ h1 {
 	height: 750px;
 }
 
+#globeSunburst path{
+	cursor: pointer;
+}
+
 #sunburst {
 	position: absolute;
 	z-index: 2;
