@@ -3,7 +3,7 @@ nobelApp.controller('chord', function(nobelService, prizeService, wikipediaServi
 
 
 // ********************** CODE FOR DATA AND CREATING CHORD *********************
-  $scope.chordSide = true;
+  $("#chordInfo").hide();
 	var chordAge;
 	var chordGender;
 	var chordData;
@@ -11,7 +11,18 @@ nobelApp.controller('chord', function(nobelService, prizeService, wikipediaServi
   var laureateCurrentGroups;
   var laureateAgeGroups;
   var laureateGenderGroups;
-
+  
+  document.getElementById("selectChordData").onchange=function() {
+    // Fulkod, har ingen aning om varför det blir "object:13" och 14...
+    if(this.value == "object:13") {
+      ageData();
+    }
+    else {
+      genderData();
+    }
+  }
+  $scope.ageGender = [{"data":"Age","name":"Age"},{"data":"Gender","name":"Gender"}];
+  $scope.selectedChord = $scope.ageGender[1];
   // Get age data
 	nobelService.getNobelDataForChordDiagram("age",function(data) {
 		laureateAgeGroups = data;
@@ -49,33 +60,42 @@ nobelApp.controller('chord', function(nobelService, prizeService, wikipediaServi
   // ********************* CODE FOR SETTING IT UP ***************************
 
   // Functions for changing from Gender to Age and Age to Gender.
+  $scope.chordDataFunction = function(data) {
+    console.log("MAYDAY",data);
+  }
 
-  $scope.genderData = function() {
+  function genderData() {
+    $("#chordInfo").hide();
     chordData = chordGender; 
     chordOld = chordGender;
     chordColors = genderColors;
     chordDiagram.colors(chordColors);
     laureateCurrentGroups = laureateGenderGroups;
     d3.select("#flow")[0][0].innerHTML = "";
+    //d3.select("#flow").datum(chordData).call(chordDiagram);
+    chordDiagram = d3.elts.flowChord().colors(chordColors).rimWidth(screen.height*0.035);
+    chordDiagram.oldD(chordOld);
     d3.select("#flow").datum(chordData).call(chordDiagram);
   }
 
 
-  $scope.ageData = function() {
+  function ageData() {
+    $("#chordInfo").hide();
     chordData = chordAge; 
     chordOld = chordAge;
     chordColors = ageColors;
     chordDiagram.colors(chordColors);
     laureateCurrentGroups = laureateAgeGroups;
     d3.select("#flow")[0][0].innerHTML = "";
+    //d3.select("#flow").datum(chordData).call(chordDiagram);
+    chordDiagram = d3.elts.flowChord().colors(chordColors).rimWidth(screen.height*0.035);
+    chordDiagram.oldD(chordOld);
     d3.select("#flow").datum(chordData).call(chordDiagram);
   }
 
   $scope.flowClick = function() {
     // Finding tempLeauratea
-    $scope.chordText = "";
     var tempLeauratea;
-
     if (rightDepth > 0 && leftDepth > 0) {
       var index = laureateCurrentGroups[rightIndex+1][leftIndex - chordData.length + 2].length;
       var index2 = Math.floor((Math.random() * index - 1))+1;
@@ -100,9 +120,10 @@ nobelApp.controller('chord', function(nobelService, prizeService, wikipediaServi
     }
     
     else {
-      $scope.chordSide = true;
+      $("#chordInfo").hide();
       return false;
     }
+    $("#chordInfo").show();
     //TODO FIXA FIN DESIGN
     if(tempLeauratea.surname == null) {tempLeauratea.surname = "";}
     
@@ -134,7 +155,6 @@ nobelApp.controller('chord', function(nobelService, prizeService, wikipediaServi
       $("#laureate_chord").html(data);
     });
 
-    $scope.chordSide = false;
   }
 
   // Colours for Gender and Age

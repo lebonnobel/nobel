@@ -170,13 +170,13 @@
       					<div id="flow" ng-click="flowClick()"></div>
     				</td>
     				<td class="td2">
-      					<form action="">
-        					<input type="radio" name="gender" value="gender" checked="checked" ng-click="genderData()"> Gender<br></input>
-        					<input type="radio" name="gender" value="age" ng-click="ageData()"> Age<br></input>
-      					</form>
-
-		        		<div class="row" ng-hide="chordSide">
-		        			<div class="col-sm-10" id="info">
+    					<h5>Choose data</h5>
+      					<div>
+      						<select ng-model="selectedChord" id="selectChordData" ng-options="option.name for option in ageGender">
+      						</select>
+      					</div>
+		        		<div class="row">
+		        			<div class="col-sm-10" id="chordInfo">
 				      			<h3>{{chordInfo.firstname + " " + chordInfo.surname}}</h3>
 				      			<table>
 				      				<span id="chord_img" style="height:200px; width:200px"></span>

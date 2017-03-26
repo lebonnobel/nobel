@@ -238,6 +238,25 @@ h1 {
       font-size: 45px;
     }
 }
+#chordInfo {
+	width: 95%;
+	margin-top: 0px;
+	margin-bottom: 10px;
+	margin-left: 15px;
+	background: #eee;
+	padding-bottom: 15px;
+}
+#chordInfo .inf{
+	font-weight: bold;
+}
+#chordInfo h3 {
+	font-size:16pt;
+	font-weight: bold;
+	height: auto !important;
+}
+.td2 h5 {
+	font-weight: bold;
+}
 
 /* ****** INFO DETAILS / SIDEBAR ****** */
 #sidebar {

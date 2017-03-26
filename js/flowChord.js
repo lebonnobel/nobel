@@ -47,7 +47,14 @@ var d3 = (function (d3) {
           } else {
               t++; 
               element[0][0].innerHTML = "";
-              element.datum(mergeData(oldThing,newData,Math.sqrt(Math.sqrt(t/20)))).call(chordDiagram); 
+              try {
+                element.datum(mergeData(oldThing,newData,Math.sqrt(Math.sqrt(t/20)))).call(chordDiagram); 
+
+              }
+              catch(err) {
+                console.log("NOOOOOO!");
+              }
+              //element.datum(mergeData(oldThing,newData,Math.sqrt(Math.sqrt(t/20)))).call(chordDiagram); 
 
           }
       }
@@ -61,7 +68,7 @@ var d3 = (function (d3) {
     for (var row in oldThing) {
       if (row > 0) {
       	merge[row] = [];
-    	merge[row][0] = oldThing[row][0];
+    	  merge[row][0] = oldThing[row][0];
         for (var value in oldThing[row]) {
           if (value > 0) {merge[row][value] = ((1-t)*oldThing[row][value]) + (t*newThing[row][value]);}
       }}
@@ -273,7 +280,7 @@ var d3 = (function (d3) {
 
         // Update the location
         svg.select("g")
-          .attr("transform", "translate("+(width+margin.left-margin.right)/2+","+(height+margin.top-margin.bottom)/2+")");
+          .attr("transform", "translate("+(width+margin.left-margin.right)/2+","+(height*0.9+margin.top-margin.bottom)/2+")");
 
         var rim = svg.select("g.rim")
           .selectAll("path")
