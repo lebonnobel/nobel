@@ -194,6 +194,9 @@ h1 {
 }
 
 /* ****** CHORD ****** */
+#flow {
+	vertical-align: top;
+}
 #flow .column {
 	font-weight: bold;
 }
@@ -220,11 +223,43 @@ h1 {
 	border-color: white;
 }
 
+#chord .table {
+	padding: 0px;
+	vertical-align: top;
+}
+#chord .td {
+	width: 60%;
+	padding: 0px;
+	vertical-align: top;
+}
+#chord .td2 {
+	width: 40%;
+	padding: 0px;
+}
 @media screen and (min-device-width : 3000px) {
   body
     {
       font-size: 45px;
     }
+}
+#chordInfo {
+	width: 95%;
+	margin-top: 0px;
+	margin-bottom: 10px;
+	margin-left: 15px;
+	background: #eee;
+	padding-bottom: 15px;
+}
+#chordInfo .inf{
+	font-weight: bold;
+}
+#chordInfo h3 {
+	font-size:16pt;
+	font-weight: bold;
+	height: auto !important;
+}
+.td2 h5 {
+	font-weight: bold;
 }
 
 /* ****** INFO DETAILS / SIDEBAR ****** */
@@ -259,7 +294,7 @@ select {
 #info .inf{
 	font-weight: bold;
 }
-table td { vertical-align: top; }
+table td {vertical-align: top;}
 
 #info h3 {
 	font-size:16pt;

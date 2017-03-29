@@ -1,9 +1,9 @@
 
-nobelApp.controller('chord', function(nobelService, prizeService, $scope) {
+nobelApp.controller('chord', function(nobelService, prizeService, wikipediaService, $scope) {
 
 
 // ********************** CODE FOR DATA AND CREATING CHORD *********************
-
+  $("#chordInfo").hide();
 	var chordAge;
 	var chordGender;
 	var chordData;
@@ -11,9 +11,18 @@ nobelApp.controller('chord', function(nobelService, prizeService, $scope) {
   var laureateCurrentGroups;
   var laureateAgeGroups;
   var laureateGenderGroups;
-
-  $scope.chordText = "Instructions: Click on the rim of the circle to get more information.";
-
+  
+  document.getElementById("selectChordData").onchange=function() {
+    // Fulkod, har ingen aning om varför det blir "object:13" och 14...
+    if(this.value == "object:13") {
+      ageData();
+    }
+    else {
+      genderData();
+    }
+  }
+  $scope.ageGender = [{"data":"Age","name":"Age"},{"data":"Gender","name":"Gender"}];
+  $scope.selectedChord = $scope.ageGender[1];
   // Get age data
 	nobelService.getNobelDataForChordDiagram("age",function(data) {
 		laureateAgeGroups = data;
@@ -51,33 +60,42 @@ nobelApp.controller('chord', function(nobelService, prizeService, $scope) {
   // ********************* CODE FOR SETTING IT UP ***************************
 
   // Functions for changing from Gender to Age and Age to Gender.
+  $scope.chordDataFunction = function(data) {
+    console.log("MAYDAY",data);
+  }
 
-  $scope.genderData = function() {
+  function genderData() {
+    $("#chordInfo").hide();
     chordData = chordGender; 
     chordOld = chordGender;
     chordColors = genderColors;
     chordDiagram.colors(chordColors);
     laureateCurrentGroups = laureateGenderGroups;
     d3.select("#flow")[0][0].innerHTML = "";
+    //d3.select("#flow").datum(chordData).call(chordDiagram);
+    chordDiagram = d3.elts.flowChord().colors(chordColors).rimWidth(screen.height*0.035);
+    chordDiagram.oldD(chordOld);
     d3.select("#flow").datum(chordData).call(chordDiagram);
   }
 
 
-  $scope.ageData = function() {
+  function ageData() {
+    $("#chordInfo").hide();
     chordData = chordAge; 
     chordOld = chordAge;
     chordColors = ageColors;
     chordDiagram.colors(chordColors);
     laureateCurrentGroups = laureateAgeGroups;
     d3.select("#flow")[0][0].innerHTML = "";
+    //d3.select("#flow").datum(chordData).call(chordDiagram);
+    chordDiagram = d3.elts.flowChord().colors(chordColors).rimWidth(screen.height*0.035);
+    chordDiagram.oldD(chordOld);
     d3.select("#flow").datum(chordData).call(chordDiagram);
   }
 
   $scope.flowClick = function() {
     // Finding tempLeauratea
-    $scope.chordText = "";
     var tempLeauratea;
-
     if (rightDepth > 0 && leftDepth > 0) {
       var index = laureateCurrentGroups[rightIndex+1][leftIndex - chordData.length + 2].length;
       var index2 = Math.floor((Math.random() * index - 1))+1;
@@ -101,26 +119,41 @@ nobelApp.controller('chord', function(nobelService, prizeService, $scope) {
       tempLeauratea = laureateCurrentGroups[index + 1][leftIndex - chordData.length + 2][index2];
     }
     
-    else {$scope.chordText = "Instructions: Click on the rim of the circle to get more information."; return false;}
-    
+    else {
+      $("#chordInfo").hide();
+      return false;
+    }
+    $("#chordInfo").show();
     //TODO FIXA FIN DESIGN
     if(tempLeauratea.surname == null) {tempLeauratea.surname = "";}
     
-    //Fixing age so its shown.
-    var ageText = "";
-
     if (tempLeauratea.born != null) {
       var bornYear = new Date(tempLeauratea.born);
       var awardYear = new Date(tempLeauratea.prizes[0].year + '-12-10');
       var chordYear = new Date(awardYear-bornYear).getFullYear() - 1970;
     }
 
-    if (tempLeauratea.gender != "org") {
-      ageText = " at age: " + chordYear;
+    if (tempLeauratea.gender == "org") {
+      tempLeauratea.born = "";
     }
 
     //Text output.
-    $scope.chordText = "Random winner: " + tempLeauratea.firstname + " " + tempLeauratea.surname + " won the Nobel Prize in " + tempLeauratea.prizes[0].category + " year: " + tempLeauratea.prizes[0].year + ageText + ".";
+
+    $scope.chordInfo = tempLeauratea;
+    $("#chord_img").html("");
+
+    wikipediaService.apiWikiSearch(tempLeauratea.firstname + " " + tempLeauratea.surname, "image", function(data){
+      if (data!= null)  {
+          $("#chord_img").html('<img src="'+data+'">');
+        }
+      else{
+        $("#chord_img").html("");
+      }
+    });
+
+    wikipediaService.apiWikiSearch(tempLeauratea.firstname + " " + tempLeauratea.surname, "info", function(data){
+      $("#laureate_chord").html(data);
+    });
 
   }
 

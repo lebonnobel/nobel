@@ -301,7 +301,7 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 				var youthData = schoolData[1];
 
 				// Adding the countries to the select list
-
+				
 				countryData.forEach(function(d) {
 				    countryById[d.id] = d.name;
 				    option = countryList.append("option");

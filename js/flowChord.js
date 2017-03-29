@@ -47,7 +47,14 @@ var d3 = (function (d3) {
           } else {
               t++; 
               element[0][0].innerHTML = "";
-              element.datum(mergeData(oldThing,newData,Math.sqrt(Math.sqrt(t/20)))).call(chordDiagram); 
+              try {
+                element.datum(mergeData(oldThing,newData,Math.sqrt(Math.sqrt(t/20)))).call(chordDiagram); 
+
+              }
+              catch(err) {
+                console.log("NOOOOOO!");
+              }
+              //element.datum(mergeData(oldThing,newData,Math.sqrt(Math.sqrt(t/20)))).call(chordDiagram); 
 
           }
       }
@@ -61,7 +68,7 @@ var d3 = (function (d3) {
     for (var row in oldThing) {
       if (row > 0) {
       	merge[row] = [];
-    	merge[row][0] = oldThing[row][0];
+    	  merge[row][0] = oldThing[row][0];
         for (var value in oldThing[row]) {
           if (value > 0) {merge[row][value] = ((1-t)*oldThing[row][value]) + (t*newThing[row][value]);}
       }}
@@ -130,9 +137,9 @@ var d3 = (function (d3) {
 
   function flowChord() {
     // call this using selection.call(flowChord); (or just flowChord())
-    var width = screen.width * 0.73, //3000,
-      height = screen.height *0.73, //1750,
-      margin = {top: width*0.1, right: width*0.1, bottom: width*0.1, left: width*0.1}, // leaves room for labels
+    var width = window.innerWidth * 0.5,//screen.width * 0.73, //3000,
+      height = window.innerWidth * 0.5,//screen.height *0.73, //1750,
+      margin = {top: width*0.27, right: width*0.27, bottom: width*0.27, left: width*0.27}, // leaves room for labels
       arcPadding = 0;
       leftDepth = 0;
       leftIndex = 0;
@@ -273,7 +280,7 @@ var d3 = (function (d3) {
 
         // Update the location
         svg.select("g")
-          .attr("transform", "translate("+(width+margin.left-margin.right)/2+","+(height+margin.top-margin.bottom)/2+")");
+          .attr("transform", "translate("+(width+margin.left-margin.right)/2+","+(height*0.9+margin.top-margin.bottom)/2+")");
 
         var rim = svg.select("g.rim")
           .selectAll("path")
