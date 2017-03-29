@@ -360,7 +360,6 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 			function globeClick(d) {
 				//console.log("globeClick");
 					//checks if clicked country on map has ID, if so, below runs
-					//console.log("globeClick id2code(d.id)", id2Code(d.id));
 					var found;
 					if (id2Code(d.id) != -1){
 						found = false;
@@ -377,8 +376,6 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 						}
 
 		    			if (!found) {
-		    				//console.log("id -1", id2Code(d.id));
-		    				//console.log("data", json);
 		    				currentRoot = json;
 		    				node = json;
 		    			}
@@ -394,9 +391,9 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 
 			function globeMouseover(d) {
 				//makes border even all around country
-				d3.select(this.parentNode.appendChild(this)).transition().duration(300)
+				d3.select(this.parentNode.appendChild(this)).transition().duration(100)
 					.style({'stroke-opacity': 1, 'stroke': '#616161', 'stroke-width': 2});
-				mouseover(id2Code(d.id));
+				//mouseover(id2Code(d.id));
 				
 				/*var country = ($scope.$parent.chosenWBD != undefined || $scope.$parent.chosenWBD != '') ? 
 				'<span class="country">' + countryById[d.id] + '<br>' + $scope.$parent.chosenWBD + ': 1' + '</span>' :
@@ -407,19 +404,18 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 				countryTooltip.html(country);
 
 				countryTooltip.transition()
-			    	.duration(25)
+			    	.duration(1)
 			    	.style("opacity", 1.0);
 			}
 
 			function globeMouseleave(d) {
-				d3.select(this).transition().duration(300)
+				d3.select(this).transition().duration(100)
 					.style({'stroke-opacity': 1, 'stroke': 'white', 'stroke-width': 0.5})
-				//console.log("globeMouseleave");
+
 				countryTooltip.style("opacity", 0);
 			}
 
 			function globeMousemove(d) {
-				//console.log("globeMousemove");
 				countryTooltip
 					.style("top", (d3.event.pageY-15)+"px")
 					.style("left", (d3.event.pageX+15)+"px");
@@ -486,15 +482,12 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 			    }
 			    p = d3.geo.centroid(focusedCountry);
 
-			    //console.log(id2Code(focusedCountry.id));
 			    //Updating the sunburst after globe selection
 			    mouseover(id2Code(focusedCountry.id));
-			    //updateSunburst(id2Code(focusedCountry.id));
 			      
 			    globeSvg.selectAll(".focused").classed("focused", focused = false);
 			    //Globe rotating
 			    (function transition() {
-			    	//console.log("transition 1");
 			      d3.transition()
 			        .duration(2500)
 			        .tween("rotate", function() {
@@ -510,7 +503,6 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 		  	}
 							 
 			function country(cnt, sel) { 
-				//console.log("country");
 				for(var i = 0, l = cnt.length; i < l; i++) {
 					if(cnt[i].id == sel.value) {return cnt[i];}
 				}
@@ -518,7 +510,6 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 
 			// CALL FROM SUNBURST TO THE GLOBE
 			function upDateFromSunburst(COUNTRYCODE) {
-				//console.log("upDateFromSunburst");
 				n = code2Id(COUNTRYCODE);
 					  
 				d3.selectAll("select.countryChoice").property("value", n);   // Making the country selected in the selection after clicking
@@ -533,7 +524,6 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 
 					// Globe rotating
 					(function transition() {
-						//console.log("transition 2");
 						d3.transition()
 							.duration(2500)
 							.tween("rotate", function() {
@@ -575,9 +565,8 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 
 			}
 
+			//mouseover on sunburst
 			function mouseover(d) {
-				//console.log("mouseover");
-				//console.log("d", d);
 				if (typeof(d) == "string"){
 					var countryData = getCountryData(d);
 					if (countryData) {
@@ -596,6 +585,7 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 		    		tooltipShow(d);
 		    	}
 
+		    	//highlights "trail" on sunburst
 		    	function highlight(d) {
 		    		//console.log("d in highlight");
 					var relatives = getRelatives(d);
@@ -614,6 +604,7 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 
 		    	}
 
+		    	//tooltip content
 				function tooltipShow(d) {
 					var content;
 			    	if (d["depth"] === 1) {
@@ -632,7 +623,7 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 			    	tooltip.html(content);
 			    	
 			    	tooltip.transition()
-			    		.duration(25)
+			    		.duration(10)
 		    			.style("opacity", 1.0);
 				}	    	
 			}
