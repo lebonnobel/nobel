@@ -54,10 +54,10 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 	//predefined colors for continents
 	var colors = {
 		"Oceania": "#84acad" , 
-		"North America": "#7da7ae", 
-		"South America": "#7da99e",
-		"Asia": "#7f959a", 
-		"Africa": "#9fc1b1", 
+		"North America": "#79acb2", 
+		"South America": "#7e9ea8",
+		"Asia": "#80969b", 
+		"Africa": "#8fa8a6", 
 		"Europe": "#99bcbc" 
 	};
 
@@ -85,38 +85,38 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 		if (continent === "Oceania") {
 			var colors = d3.scale.linear()
 				.domain([1, 9])
-				.range(["#546b6a", "#b5e1e0"])
+				.range(["#557f6b", "#95d0c0"])
 				.interpolate(d3.interpolateHcl);
 			color = colors(Math.floor(Math.random()*10)); 
 		} else if (continent === "North America") {
 			var colors = d3.scale.linear()
 				.domain([1, 9])
-				.range(["#567275", "#a9dbe0"])
+				.range(["#578675", "#90c6bb"])
 				.interpolate(d3.interpolateHcl);
 				color = colors(Math.floor(Math.random()*10));
 		} else if (continent === "South America"){
 			var colors = d3.scale.linear()
 				.domain([1, 9])
-				.range(["#547068", "#aedccf"])
+				.range(["#568468", "#a1d0bb"])
 				.interpolate(d3.interpolateHcl);
 				//console.log("south america");
 				color = colors(Math.floor(Math.random()*10));
 		} else if (continent === "Asia") {
 			var colors = d3.scale.linear()
 				.domain([1, 9])
-				.range(["#505e60", "#afcbd0"])
+				.range(["#517361", "#90d1bc"])
 				.interpolate(d3.interpolateHcl);
 				color = colors(Math.floor(Math.random()*10));
 		} else if (continent === "Africa") {
 			var colors = d3.scale.linear()
 				.domain([1, 9])
-				.range(["#6d8478", "#d0e9db"])
+				.range(["#6d9879", "#a9d3bb"])
 				.interpolate(d3.interpolateHcl);
 				color = colors(Math.floor(Math.random()*10));
 		} else if (continent === "Europe") {
 			var colors = d3.scale.linear()
 				.domain([1, 9])
-				.range(["#637777", "#c9e8ea"])
+				.range(["#648b77", "#a3d8c5"])
 				.interpolate(d3.interpolateHcl);
 				color = colors(Math.floor(Math.random()*10));
 		}
