@@ -1,4 +1,4 @@
-nobelApp.controller('sunburst', function(nobelService, worldBankService, $scope) {
+nobelApp.controller('sunburst', function(worldBankService, nobelService, $scope) {
 
 	//sets up the intial variables
 	var width = 960,
@@ -11,38 +11,38 @@ nobelApp.controller('sunburst', function(nobelService, worldBankService, $scope)
 
 	//predefined colors for continents
 	var colors = {
-		"Oceania": "#29374a" , //Purple
-		"North America": "#4e3f4f", //Blue
-		"South America": "#644141", //Cyan
-		"Asia": "#815f43", //Teal
-		"Africa": "#957b3d", //Amber
-		"Europe": "#556c51" //Deep Orange
+		"Oceania": "#84acad" , //Purple
+		"North America": "#7da7ae", //Blue
+		"South America": "#7da99e", //Cyan
+		"Asia": "#7f959a", //Teal
+		"Africa": "#9fc1b1", //Amber
+		"Europe": "#99bcbc" //Deep Orange
 	};
 
 	//below color variables returns a color in a predefined domain for countries belonging to the different continents
 	var OceaniaColor = d3.scale.linear()
 			.domain([1, 9])
-			.range(["#6a7c96", "#29374a"])
+			.range(["#546b6a", "#b5e1e0"])
 			.interpolate(d3.interpolateHcl);
 	var NAmericaColor = d3.scale.linear()
 			.domain([1, 9])
-			.range(["#9b879c", "#4e3f4f"])
+			.range(["#567275", "#a9dbe0"])
 			.interpolate(d3.interpolateHcl);
 	var SAmericaColor = d3.scale.linear()
 			.domain([1, 9])
-			.range(["#b98a8a", "#644141"])
+			.range(["547068", "#aedccf"])
 			.interpolate(d3.interpolateHcl);
 	var AsiaColor = d3.scale.linear()
 			.domain([1, 9])
-			.range(["#dfb28d", "#815f43"])
+			.range(["#505e60", "#afcbd0"])
 			.interpolate(d3.interpolateHcl);
 	var AfricaColor = d3.scale.linear()
 			.domain([1, 9])
-			.range(["#fad784", "#957b3d"])
+			.range(["#6d8478", "#d0e9db"])
 			.interpolate(d3.interpolateHcl);
 	var EuropeColor = d3.scale.linear()
 			.domain([1, 9])
-			.range(["#a5c39f", "#556c51"])
+			.range(["#637777", "#c9e8ea"])
 			.interpolate(d3.interpolateHcl);
 
 	//perhaps unnecessary atm, but returns predefined colors for the different continents
@@ -52,12 +52,12 @@ nobelApp.controller('sunburst', function(nobelService, worldBankService, $scope)
 
 	//the predefined colors of the different prize categories
 	var categoryColors = {
-	  "physics":  "#efa833", //#455C7C",
-	  "literature": "#826a84", //#826A84",
-	  "medicine": "#ef7a65", //#A86D6D",
-	  "economics": "#faf775", //#D89F71",
-	  "chemistry": "#a86d6d", //#F9CE66",
-	  "peace": "#d89f71", //#8FB588"
+	  "physics":  "#455C7C", //#455C7C",
+	  "literature": "#826A84", //#826A84",
+	  "medicine": "#A86D6D", //#A86D6D",
+	  "economics": "#D89F71", //#D89F71",
+	  "chemistry": "#F9CE66", //#F9CE66",
+	  "peace": "#8FB588", //#8FB588"
 	};
 
 	//global variables needed further down
@@ -114,8 +114,6 @@ nobelApp.controller('sunburst', function(nobelService, worldBankService, $scope)
 				.innerRadius(function(d) { return Math.max(0, y(d.y)); })
 				.outerRadius(function(d) { return Math.max(0, y(d.y + d.dy)); });
 
-			//json = nobelService.getNobelDataForSunburst(year, false);
-			//console.log("json", json);
 			path = vis.datum(json).selectAll("path")
 		    	.data(partition.nodes)
 		     .enter().append("path")
@@ -214,16 +212,16 @@ nobelApp.controller('sunburst', function(nobelService, worldBankService, $scope)
 				      .style("z-index", "4")
 				      .style("opacity", 0);
 
-				countryList = d3.select("#globe").append("select").attr("name", "countries");
+				countryList = d3.select("#globe").append("select").attr("name", "countries").style("visibility", "hidden");
 
 				//get data?
 				q = queue()
-				  .defer(d3.json, "http://codepen.io/JohannaG92/pen/KWmZZv.js")
-				  .defer(d3.tsv, "http://codepen.io/JohannaG92/pen/xqdppQ.js")
+				  .defer(d3.json, "https://codepen.io/JohannaG92/pen/KWmZZv.js")
+				  .defer(d3.tsv, "https://codepen.io/JohannaG92/pen/xqdppQ.js")
 				  //.defer(d3.json, "http://codepen.io/JohannaG92/pen/VpbZBW.js")       // World bank data
 				  //.defer(d3.json, "http://codepen.io/JohannaG92/pen/RpVxQw.js")   // World bank data
-				  .defer(d3.json, "http://codepen.io/JohannaG92/pen/ZeKvrx.js")     // World bank data
-				  .defer(d3.json, "http://codepen.io/JohannaG92/pen/LWyeQv.js")     // Code to id jsonfile 
+				  .defer(d3.json, "https://codepen.io/JohannaG92/pen/ZeKvrx.js")     // World bank data
+				  .defer(d3.json, "https://codepen.io/JohannaG92/pen/LWyeQv.js")     // Code to id jsonfile 
 				  .await(ready);
 
 				// Här slutar ready
@@ -297,7 +295,7 @@ nobelApp.controller('sunburst', function(nobelService, worldBankService, $scope)
 			    	.on("drag", function() {
 			        	var rotate = projection.rotate();
 			        	projection.rotate([d3.event.x * sens, -d3.event.y * sens, rotate[2]]);
-			        	svg.selectAll("path.land").attr("d", path);
+			        	svg.selectAll("path.land").attr("d", globepath);
 			        	svg.selectAll(".focused").classed("focused", focused = false);
 			        }))
 			  
@@ -317,14 +315,10 @@ nobelApp.controller('sunburst', function(nobelService, worldBankService, $scope)
 
 		    			for (i=0; i < data.length; i++){
 		    				var search = data[i];
-		    				//console.log("search-__data_iid", search.__data__.countryId);
 		    				if(search.__data__.countryId) {
 		    					
 		    					var country = search.__data__.countryId;
-		    					//console.log("IF", country);
-		    					//console.log("d", d);
 		    					if(country == ID){
-		    						//console.log("country = d", search.__data__.parent);
 		    						thisParent = search.__data__.parent;
 		    						currentRoot = thisParent.parent;
 		    						node = thisParent.parent;
@@ -366,7 +360,7 @@ nobelApp.controller('sunburst', function(nobelService, worldBankService, $scope)
 			d3.select("select").on("change", function() {
 				privateUpdateMap(-1);  
 			});
-
+				
 			function code2Id(inputCode) {
 				  var number = null;
 				  globalCodeToId.forEach(function(d){
@@ -385,7 +379,6 @@ nobelApp.controller('sunburst', function(nobelService, worldBankService, $scope)
 			  globalCodeToId.forEach(function(d){
 			    if (d.id === inputId) {
 			      i = d.code;
-			      console.log("i", i);
 			    }
 			  });
 			  return i;
@@ -457,22 +450,25 @@ nobelApp.controller('sunburst', function(nobelService, worldBankService, $scope)
 					fs = country2(globalCountries, n),
 					p = d3.geo.centroid(fs);
 
-				svg.selectAll(".focused").classed("focused", focused = false);
+				//projection.rotate(r(t));
+				if(fs != undefined){
+					svg.selectAll(".focused").classed("focused", focused = false);
 
-				// Globe rotating
-				(function transition() {
-					d3.transition()
-						.duration(2500)
-						.tween("rotate", function() {
-							var r = d3.interpolate(projection.rotate(), [-p[0], -p[1]]);
-							return function(t) {
-					  			projection.rotate(r(t));
-					  			svg.selectAll("path").attr("d", globepath)
-					    			.classed("focused", function(d, i) { return d.id == fs.id ? focused = d : false; });
-					        };
-					    })
-				})
-				();
+					// Globe rotating
+					(function transition() {
+						d3.transition()
+							.duration(2500)
+							.tween("rotate", function() {
+								var r = d3.interpolate(projection.rotate(), [-p[0], -p[1]]);
+								return function(t) {
+									projection.rotate(r(t));
+									svg.selectAll("path").attr("d", globepath)
+										.classed("focused", function(d, i) { return d.id == fs.id ? focused = d : false; });
+								};
+							})
+					})
+					();
+				}
 			}
 
 		    d3.select("#container").on("mouseleave", mouseleave);
@@ -519,12 +515,9 @@ nobelApp.controller('sunburst', function(nobelService, worldBankService, $scope)
 						.selectAll("path")
 							.style("opacity", 0.5);
 					
-					//if (relatives.indexOf(d)>=0){console.log("d", relatives.indexOf(d))};
-
 					//Highlight chosen piece and relatives (parent paths)
 					vis.selectAll("path")
 						.filter(function(d) {
-							//console.log("d in filter", d);
 							return (relatives.indexOf(d) >= 0);
 						})
 		    			.style("opacity", 1.0);
@@ -580,7 +573,6 @@ nobelApp.controller('sunburst', function(nobelService, worldBankService, $scope)
 					current = current.parent;
 				}
 
-				//console.log("path", relativesPath);
 				return relativesPath;
 			}
 
@@ -638,11 +630,15 @@ nobelApp.controller('sunburst', function(nobelService, worldBankService, $scope)
 		    		node = currentRoot;
 		    		
 		    	} else if (!d.children){
+		    		leafClick(d);
 		    		//here the winner info div will be called to show itself!
 		    		//it is not possible to rearrange the sunburst if the clicked path is a winner
 		    		//(ie. does not have any children)
 		    		return;
 		    	} else {
+		    		if (d.depth === 2) {
+		    			countryClick(d);
+		    		}
 		    		currentRoot = d;
 		    		node = d;
 		    		upDateFromSunburst(node.countryId);
@@ -771,28 +767,6 @@ nobelApp.controller('sunburst', function(nobelService, worldBankService, $scope)
 		}	
 	}
 
-	function updateCountryColors(year){
-		worldBankService.getDataForGlobe('mean-years-in-school', year, function(data){
-	 	var world = svg.selectAll("path.land")
-	 	.style("fill", function(d) {
-	 		var max = d3.max(data, function(d){ return d.value; });    // Max antal years in school
-	 		var color = null;
-	 		var sc = d3.scale.linear().range(['red','green']).domain([0, max]);
-	 		for (var i = 0; i < data.length; i++) {
-	 			if (globalById[d.id] == data[i].name){   // Om landet matchar/finns med i datat
-	 		  		color = sc(data[i].value);    // Räkna ut färg här
-	 		  		//color = "red";
-	 			}
-	 		}
- 			if (color === null){
-	 			color = "gray"; // Om det inte finns någon data
-	 		}
-	 		return color;
-	     })
-		})
-	}
-  
-
 	// Stash the old values for transition.
 	function stash(d) {
 	   d.x0 = d.x;
@@ -809,6 +783,35 @@ nobelApp.controller('sunburst', function(nobelService, worldBankService, $scope)
 	}
 
 	timesliderInit();
+
+
+	function updateCountryColors(year){
+		var theSvg = svg;
+		worldBankService.getDataForGlobe('mean-years-in-school', year, function(data){
+			if(svg != undefined){
+			var world = theSvg.selectAll("path.land")
+			.style("fill", function(d) {
+				var max = d3.max(data, function(d){ return d.value; });    // Max antal years in school
+				var color = null;
+				var sc = d3.scale.linear().range(['red','green']).domain([0, max]);
+				for (var i = 0; i < data.length; i++) {
+					if (globalById[d.id] == data[i].name){   // Om landet matchar/finns med i datat
+						color = sc(data[i].value);    // Räkna ut färg här
+						//color = "red";
+					}
+				}
+				if (color === null){
+					if(data.length == 0){
+						color  = '#a9c099';
+					} else {
+						color = "gray"; // Om det inte finns någon data
+					}
+				}
+				return color;
+			 })	
+			}
+		})
+	}
 
 });
 

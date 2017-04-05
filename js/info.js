@@ -2,7 +2,7 @@ $("#info table, #info h1").hide();
 
 //Sätter bredd och position på sidoruta och top-legend beroende på SVGn
 $("svg").css("position", "relative");
-$("#sidebar").css("position","absolute");
+$("#sidebar");
 $("#sidebar").css("left",width);
 $("#sidebar").css("width",width/4);
 $("#sidebar").css("height",height);
@@ -13,10 +13,11 @@ function leafClick(d){
 	$("#laureateInfo, #info h1").show();
 	$("#countryInfo").hide();
 
+	$("#gender").html(d.gender);	
 	$("#name").html(d.laureate);
 	$("#country").html(d.parent.country);
 	$("#category").html(d.category);
-	$("#year").html(d.year);
+	$("#year").html(d.year);	
 	$("#motivation").html(d.motivation);
 }
 
