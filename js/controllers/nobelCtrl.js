@@ -260,4 +260,57 @@ nobelApp.controller('nobelCtrl',
 
 
 	$scope.onStart();
+
+
+	//////////////////////// SUNBURST LEGEND ////////////////////////////////////////
+	//Create the SVG
+	var leg = d3.select("#sunburst-legend").append("svg")
+			.attr("width", 80)
+			.attr("height", 60);
+				
+	//Create an SVG path			
+	leg.append("path")
+		.attr("id", "legend-text1") //very important to give the path element a unique ID to reference later
+		.attr("d", "M 16,51 A 10,10 0 0,1 45, 51") //Notation for an SVG path, from bl.ocks.org/mbostock/2565344
+		.style("fill", "none")
+		.style("stroke", "none");
+
+	//Create an SVG text element and append a textPath element
+	leg.append("text")
+	   .append("textPath") //append a textPath to the text element
+		.attr("xlink:href", "#legend-text1") //place the ID of the path here
+		.style("text-anchor","middle") //place the text halfway on the arc
+		.attr("startOffset", "50%")		
+		.text("Continent");
+
+	//Create an SVG path			
+	leg.append("path")
+		.attr("id", "legend-text2") //very important to give the path element a unique ID to reference later
+		.attr("d", "M 4,44 A 28,28 0 0,1 57, 44") //Notation for an SVG path, from bl.ocks.org/mbostock/2565344
+		.style("fill", "none")
+		.style("stroke", "none");
+
+	//Create an SVG text element and append a textPath element
+	leg.append("text")
+	   .append("textPath") //append a textPath to the text element
+		.attr("xlink:href", "#legend-text2") //place the ID of the path here
+		.style("text-anchor","middle") //place the text halfway on the arc
+		.attr("startOffset", "50%")		
+		.text("Country");
+
+	//Create an SVG path			
+	leg.append("path")
+		.attr("id", "legend-text3") //very important to give the path element a unique ID to reference later
+		.attr("d", "M 0,27 A 40,40 0 0,1 60, 27") //Notation for an SVG path, from bl.ocks.org/mbostock/2565344
+		.style("fill", "none")
+		.style("stroke", "none");
+
+	//Create an SVG text element and append a textPath element
+	leg.append("text")
+	   .append("textPath") //append a textPath to the text element
+		.attr("xlink:href", "#legend-text3") //place the ID of the path here
+		.style("text-anchor","middle") //place the text halfway on the arc
+		.attr("startOffset", "50%")		
+		.text("Laureate");
+
 });
