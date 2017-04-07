@@ -13,6 +13,7 @@ section.loader-wrapper {
   top: 0;
   z-index: 9;
   padding: 40px 0;
+  text-align: center;
 }
 section.wrapper.dark {
   background: #313134;
@@ -25,6 +26,8 @@ div.spinner {
   position: relative;
   display: block;
   margin: auto;
+  margin-top: 50px;
+  margin-bottom: 30px;
   width: 114px;
   height: 114px;
 }
