@@ -11,7 +11,7 @@ nobelApp.controller('nobelCtrl',
 
 	$timeout(function() {
 		$scope.isLoading = false;
-	}, 1000);
+	}, 2000);
 
 
 	//hide/show of different views (sunburst/chord/project)
