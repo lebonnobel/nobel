@@ -41,16 +41,16 @@ h1 {
 	font-size: 18px;
 	color: white;
 }
-
-#choice1, #choice2, #choice3 {
+#menubar .choices {
 	background: #607D8B; 
 	float: left;
 	padding: 10px;
 	margin: 0px;
 	margin-bottom: 10px;
+	cursor: pointer;
 }
-
-#choice1:hover, #choice2:hover, #choice3:hover {
+#menubar a, #menubar a:visited { color: white;}
+#menubar .choices:hover {
 	background: #455A64; 
 }
 
