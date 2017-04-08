@@ -878,7 +878,7 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 				.style("fill", function(d) {
 					var max = d3.max(data, function(d){ return d.value; }); // Max antal years in school
 					var color = "#cccccc";
-					var sc = d3.scale.linear().range(['#546043','#d5e286']).domain([0, max]);
+					var sc = d3.scale.linear().range(['#e5d87f','#d65d3c']).domain([0, max]);
 					for (var i = 0; i < data.length; i++) {
 						if (globalById[d.id] == data[i].name){   // Om landet matchar/finns med i datat
 							color = sc(data[i].value);    // Räkna ut färg här
