@@ -43,7 +43,7 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 	//sets up the intial variables
 	// width is relative to window size instead of screen size
 	var screenSize = window.innerWidth;
-	var width = screenSize * 0.5, //960
+	var width = screenSize * 0.43, //960
 	    height =  width,//750,
 	    radius = Math.min(width, height) / 2,
 	    x = d3.scale.linear()

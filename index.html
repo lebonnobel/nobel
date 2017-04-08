@@ -42,20 +42,34 @@
 	    <i></i>
 	    <i></i>
 	  </div>
+	  <div class="loading-title">
+	  	<h1>Le Bon Nobel</h1>
+	  </div>
 	</section>
 
 	<div id="container-fluid wrapper">
 		<!-- top menu bar for choice of visualization -->
 		<div id="menubar" class="col-md-12">
-			<div class="col-xs-6 active" id="choice1" ng-click="pageButton('globeSunburstPage')">
+			<div class="col-xs-4 active choices" id="choice1" ng-click="pageButton('globeSunburstPage')">
 				Sunburst
 			</div>
-			<div class="col-xs-6" id="choice2" ng-click="pageButton('chord')">
+			<div class="col-xs-4 choices" id="choice2" ng-click="pageButton('chord')">
 				Chord Chart
 			</div>
+			<a href="https://lebonnobel.github.io/#/" target="_blank"><div class="col-xs-4 choices">
+				About this project
+			</div></a>
 		</div>
 		<!-- Here are the divs containing the separate visualization pages-->
 		<div id="globeSunburstPage" class="col-xs-12" ng-hide="hideSunburst">
+			<div id="sunburst-legend" class="sunburst-legend">
+				<div class="legend-circle-wrap">
+					<div class="legend-circle legend-circle1"></div>
+					<div class="legend-circle legend-circle2"></div>
+					<div class="legend-circle legend-circle3"></div>
+					<div class="legend-circle legend-circle4"></div>
+				</div>
+			</div>
 			<div id="main" class="row">
       		
 	      		<div class="col-sm-6">
