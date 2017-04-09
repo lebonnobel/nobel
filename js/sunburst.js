@@ -143,9 +143,6 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 	function sunburstLoad (year) {
 		nobelService.getNobelDataForSunburst(year, false, $scope.catChoices, function(json) {
 			chartOn = true;
-			
-			//$scope.nobelData = nobelService.getNobelDataForSunburst(2017,);
-			//$scope.$apply();
 
 			//sets up the svg canvas where sunburst is placed
 			vis = d3.select("#sunburst").append("svg")
@@ -173,7 +170,7 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 		       	.attr("display", function(d) { return d.depth ? null : "none"; }) // hide inner ring
 		       	.attr("d", arc)
 		       	.style("stroke", "#fff")
-		       	.style("fill", function(d) {
+		       	.style("fill", function(d) { //sets up colors for sunburst
 			    	if (d["category"]) {
 			       		var category = d["category"];
 			       		if (category === "physics") {
@@ -282,8 +279,6 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 				  .defer(d3.json, "https://codepen.io/JohannaG92/pen/LWyeQv.js")     // Code to id jsonfile 
 				  .await(ready);
 
-				// End ready()
-
 				// Returns the id of the country code 
 				// Input: inputCode, format: "SE"
 				// Output: c, number				
@@ -358,8 +353,9 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 					.on("mouseover", globeMouseover)
 					.on("mouseleave", globeMouseleave)
 					.on("mousemove", globeMousemove);	
-			} 
-			
+			} //End ready()
+
+			//handles click on globe (and from sunburst)
 			function globeClick(d) {
 					if (!worldClick) {
 						worldClick = true; 
@@ -406,14 +402,15 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 					//calls function to rotate to and highlight clicked country
 					privateUpdateMap(d);
 			}
-
+			//defines what should be shown in countryTooltip dependent on user's choices
 			function globeTooltipExtraData(d, chosenCountry) {
 				var chosenData = document.getElementById('dataDropDownMenu');
 				if (chosenData.options) {
 					//var chosenDataIndex = chosenData.options[chosenData.selectedIndex];
 					var dataText = '';
 					var unit = '';
-					var dataValue = dataValues[d.id];
+					var dataValue = parseFloat(dataValues[d.id]).toFixed(2);
+					
 
 					//selected data is based on the drop down for extra data from WorldBank
 					switch(selectedData) {
@@ -468,18 +465,13 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 				//makes border even all around country
 				d3.select(this.parentNode.appendChild(this)).transition().duration(100)
 					.style({'stroke-opacity': 1, 'stroke': '#616161', 'stroke-width': 2});
-				
-				/*var country = ($scope.$parent.chosenWBD != undefined || $scope.$parent.chosenWBD != '') ? 
-				'<span class="country">' + countryById[d.id] + '<br>' + $scope.$parent.chosenWBD + ': 1' + '</span>' :
-				'<span class="country">' + countryById[d.id] + '</span>';*/
-				
-				
-				//countryTooltip.html(countryTooltipContent);
 
+				//calls for data, dependent on if there is any extra data for country or not
 				countryTooltipContent = globeTooltipExtraData(d, this);
 
 				countryTooltip.html(countryTooltipContent);
 
+				//shows tooltip
 				countryTooltip.transition()
 			    	.duration(1)
 			    	.style("opacity", 1.0);
@@ -705,7 +697,7 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 		    			.style("opacity", 1.0);
 				}	    	
 			}
-
+			//sunburst mouseleave
 			function mouseleave(d) {
 				//deactivate pieces
 				d3.select("#sunburst")
@@ -723,7 +715,7 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 
 		    	tooltip.style("opacity", 0);
 			}
-
+			//creates the highlighting path in sunburst when country is hovered in sunburst or clicked on globe
 			function getRelatives(data) {
 				var relativesPath = [];
 				var current = data;
@@ -734,7 +726,7 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 
 				return relativesPath;
 			}
-
+			//sunburst mousemove
 		    function mousemove() {
 		    	tooltip
 		    		.style("top", (d3.event.pageY)+"px")
@@ -761,8 +753,9 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 		    		return tween;
 		    	} 
 			}   
-			//handles clicked data in sunburst
+			//handles click events in sunburst (and globe)
 		    function clicked(d) {
+		    	//matches globe data to sunburst data
 		    	if (typeof(d) == "string"){
 		    		var data = path[0];
 		    		for (i=0; i < data.length; i++){
@@ -820,7 +813,7 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 
    	var chartOn = false;
 	
-	//creates the time slider and updates sunburst accoringly.
+	//creates the time slider and updates sunburst as user drags it
 	function slider() {
 		formatDate = d3.time.format("%Y");
 		var margin = {top: 30, right: 30, bottom: 30, left: 30}
@@ -883,7 +876,7 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 
 		slider.select(".background")
 			.attr("height", height)
-			.style("cursor", "pointer");
+			.style("cursor", "pointer"); //sets cursor to pointer to indicate user can click/drag
 
 		var handle = slider.append("g")
 			.attr("class", "handle");
@@ -934,28 +927,28 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 			.style("fill", getGlobeColor);
 	}
 
-	//if user choses to see education data, then this runs
+	//if user choses to see any extra data, this runs
 	function updateCountryColors(year, dataset){
 		selectedData = dataset;
-		console.log("selectedData", selectedData);
 		dataValues = [];
 		worldBankService.getDataForGlobe(dataset, year, function(data){
 			if(globeSvg != undefined){
 			var world = globeSvg.selectAll("path.land")
 				.classed('tooltipDataBoolean',false)
 				.style("fill", function(d) {
-					var max = d3.max(data, function(d){ return d.value; }); // Max antal years in school
+					var max = d3.max(data, function(d){ return d.value; }); // Max number of years in school
 					var color = "#cccccc";
 					var sc = d3.scale.linear().range(['#e5d87f','#d65d3c']).domain([0, max]);
 					for (var i = 0; i < data.length; i++) {
-						if (globalById[d.id] == data[i].name){   // Om landet matchar/finns med i datat
-							color = sc(data[i].value);    // Räkna ut färg här
+						if (globalById[d.id] == data[i].name){   // if country is in data
+							color = sc(data[i].value);    // calculates color
 			    			dataValues[d.id] = data[i].value;
 			    			d3.select(this).classed('tooltipDataBoolean', true);
 						}
 
 					}
 
+					//if no data has been chosenn, standard color of globe will be set by this
 					if (!color) {
 						color = getGlobeColor();
 					}
@@ -970,8 +963,6 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 		if (chartOn === false) {
 			sunburstInit(year);
 		} else {
-			tooltip.style("opacity", 0);
-			countryTooltip.style("opacity", 0);
 			document.getElementById("sunburst").innerHTML = "";
 			d3.select('#sunburst').selectAll("*").remove();
 			vis = "";
