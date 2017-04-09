@@ -22,7 +22,10 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 	var json;
 	var path;
 	var tooltip;
-	var tooltioContent;
+	var tooltipContent;
+	var dataValues = [];
+	var selectedData;
+
 
 	// Global variables for functions that are outside of the ready-function
 	// NOTE: These variables will not be set before the ready-function has run 
@@ -279,7 +282,7 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 				  .defer(d3.json, "https://codepen.io/JohannaG92/pen/LWyeQv.js")     // Code to id jsonfile 
 				  .await(ready);
 
-				// Här slutar ready
+				// End ready()
 
 				// Returns the id of the country code 
 				// Input: inputCode, format: "SE"
@@ -404,6 +407,63 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 					privateUpdateMap(d);
 			}
 
+			function globeTooltipExtraData(d, chosenCountry) {
+				var chosenData = document.getElementById('dataDropDownMenu');
+				if (chosenData.options) {
+					//var chosenDataIndex = chosenData.options[chosenData.selectedIndex];
+					var dataText = '';
+					var unit = '';
+					var dataValue = dataValues[d.id];
+
+					//selected data is based on the drop down for extra data from WorldBank
+					switch(selectedData) {
+	    				case 'mean-years-in-school':
+	        				dataText = 'Mean years in school: '
+	        				unit = ' years'
+	        			break;
+	        			case 'literacy':
+	        				dataText = 'Literacy rate: '
+	        				unit = ' %'
+	        			break;
+	        			case 'ratio-of-girls-to-boys-in-primary-and-secondary':
+	        				dataText = 'Ratio of girls to boys in primary and secondary school: '
+	        				unit = ' %'
+	        			break;
+	        			case 'income-per-person':
+	        				dataText = 'Income per person: '
+	        				unit = ' $/year'
+	        			break;
+	        			case 'human-development-index':
+	        				dataText = 'HDI: '
+	        			break;
+	        			case 'life-expectancy':
+	        				dataText = 'Life expectancy at birth: '
+	        				unit = ' years'
+	        			break;
+	        			case 'children-per-woman':
+	        				dataText = 'Children per woman: '
+	        			break;
+	        			case 'child-mortality':
+	        				dataText = 'Child mortality: '
+	        				unit = ' per 1000'
+	        			break;
+					    default:
+					        dataText = ''
+					        unit = ''
+					        dataValue = ''
+					}
+					
+					//if the "hovered" country has data, this will show, otherwise it will just show country
+					if (d3.select(chosenCountry).classed('tooltipDataBoolean')) {
+						return '<span class="country">' + countryById[d.id] + '<br/>' + dataText + dataValue + unit + '</span>';
+						
+					} else {
+						return '<span class="country">' + countryById[d.id] + '</span>';
+
+					}
+				} 
+			}
+
 			function globeMouseover(d) {
 				//makes border even all around country
 				d3.select(this.parentNode.appendChild(this)).transition().duration(100)
@@ -413,13 +473,17 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 				'<span class="country">' + countryById[d.id] + '<br>' + $scope.$parent.chosenWBD + ': 1' + '</span>' :
 				'<span class="country">' + countryById[d.id] + '</span>';*/
 				
-				countryTooltipContent = '<span class="country">' + countryById[d.id] + '</span>';
+				
+				//countryTooltip.html(countryTooltipContent);
+
+				countryTooltipContent = globeTooltipExtraData(d, this);
 
 				countryTooltip.html(countryTooltipContent);
 
 				countryTooltip.transition()
 			    	.duration(1)
 			    	.style("opacity", 1.0);
+
 			}
 
 			function globeMouseleave(d) {
@@ -429,7 +493,6 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 						.style({'stroke-opacity': 1, 'stroke': 'white', 'stroke-width': 0.5})
 				}
 				
-				//d3.select('#globeSunburst').selectAll("countryTooltip").remove();
 				countryTooltip.style("opacity", 0);
 			}
 
@@ -873,9 +936,13 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 
 	//if user choses to see education data, then this runs
 	function updateCountryColors(year, dataset){
+		selectedData = dataset;
+		console.log("selectedData", selectedData);
+		dataValues = [];
 		worldBankService.getDataForGlobe(dataset, year, function(data){
 			if(globeSvg != undefined){
 			var world = globeSvg.selectAll("path.land")
+				.classed('tooltipDataBoolean',false)
 				.style("fill", function(d) {
 					var max = d3.max(data, function(d){ return d.value; }); // Max antal years in school
 					var color = "#cccccc";
@@ -883,6 +950,8 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 					for (var i = 0; i < data.length; i++) {
 						if (globalById[d.id] == data[i].name){   // Om landet matchar/finns med i datat
 							color = sc(data[i].value);    // Räkna ut färg här
+			    			dataValues[d.id] = data[i].value;
+			    			d3.select(this).classed('tooltipDataBoolean', true);
 						}
 
 					}
