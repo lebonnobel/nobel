@@ -122,7 +122,7 @@
 								<div class="row">
 									<div class="col-sm-12 ">
 										<h5>Choose data</h5>
-										<select class="max-select-width" required ng-model="wbDataChoice" ng-options="wbd.title for wbd in worldBankData" ng-change="onWbDataChange(wbDataChoice)">
+										<select class="max-select-width" id="dataDropDownMenu" required ng-model="wbDataChoice" ng-options="wbd.title for wbd in worldBankData" ng-change="onWbDataChange(wbDataChoice)">
 											<option value=""> -- None -- </option>
 										</select>
 									</div>

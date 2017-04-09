@@ -22,6 +22,7 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 	var json;
 	var path;
 	var tooltip;
+	var dataValues = [];
 
 	// Global variables for functions that are outside of the ready-function
 	// NOTE: These variables will not be set before the ready-function has run 
@@ -405,14 +406,63 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 				/*var country = ($scope.$parent.chosenWBD != undefined || $scope.$parent.chosenWBD != '') ? 
 				'<span class="country">' + countryById[d.id] + '<br>' + $scope.$parent.chosenWBD + ': 1' + '</span>' :
 				'<span class="country">' + countryById[d.id] + '</span>';*/
+
+				var chosenData = document.getElementById('dataDropDownMenu');
+				var chosenDataIndex = chosenData.options[chosenData.selectedIndex].value;
+				var dataText = '';
+				var unit = '';
+				var dataValue = dataValues[d.id];
+
+				switch(chosenDataIndex) {
+    				case 'object:4':
+        				dataText = 'Mean years in school: '
+        				unit = ' years'
+        			break;
+        			case 'object:5':
+        				dataText = 'Literacy rate: '
+        				unit = ' %'
+        			break;
+        			case 'object:6':
+        				dataText = 'Ratio of girls to boys in primary and secondary school: '
+        				unit = ' %'
+        			break;
+        			case 'object:7':
+        				dataText = 'Income per person: '
+        				unit = ' $/year'
+        			break;
+        			case 'object:8':
+        				dataText = 'HDI: '
+        			break;
+        			case 'object:9':
+        				dataText = 'Life expectancy at birth: '
+        				unit = ' years'
+        			break;
+        			case 'object:10':
+        				dataText = 'Children per woman: '
+        			break;
+        			case 'object:11':
+        				dataText = 'Child mortality: '
+        				unit = ' per 1000'
+        			break;
+				    default:
+				        dataText = ''
+				        unit = ''
+				        dataValue = ''
+				}
 				
 				var country = '<span class="country">' + countryById[d.id] + '</span>';
+
+				if (d3.select(this).classed('tooltipDataBoolean')) {
+					var country = '<span class="country">' + countryById[d.id] + '<br/>' + dataText + dataValue + unit + '</span>';
+				};
+
 
 				countryTooltip.html(country);
 
 				countryTooltip.transition()
 			    	.duration(25)
 			    	.style("opacity", 1.0);
+
 			}
 
 			function globeMouseleave(d) {
@@ -872,9 +922,11 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 
 	//if user choses to see education data, then this runs
 	function updateCountryColors(year, dataset){
+		dataValues = [];
 		worldBankService.getDataForGlobe(dataset, year, function(data){
 			if(globeSvg != undefined){
 			var world = globeSvg.selectAll("path.land")
+				.classed('tooltipDataBoolean',false)
 				.style("fill", function(d) {
 					var max = d3.max(data, function(d){ return d.value; }); // Max antal years in school
 					var color = "#cccccc";
@@ -882,6 +934,8 @@ nobelApp.controller('sunburst', function(wikipediaService, worldBankService, nob
 					for (var i = 0; i < data.length; i++) {
 						if (globalById[d.id] == data[i].name){   // Om landet matchar/finns med i datat
 							color = sc(data[i].value);    // Räkna ut färg här
+			    			dataValues[d.id] = data[i].value;
+			    			d3.select(this).classed('tooltipDataBoolean', true);
 						}
 
 					}
