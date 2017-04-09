@@ -1,5 +1,5 @@
 nobelApp.controller('nobelCtrl', 
-	function($scope,worldBankService, nobelService, wikipediaService, yearService, prizeService,  $http, $rootScope, $timeout) {
+	function($scope,worldBankService, nobelService, wikipediaService, yearService, prizeService, informationService, $http, $rootScope, $timeout) {
  	// Controller that controls the view
  	// Put $scope. in front of a variable name in order for the view to be able to use this variable
 	
@@ -8,6 +8,8 @@ nobelApp.controller('nobelCtrl',
 	$scope.hideChord = true;
 	$scope.hideProject = true;
 	$scope.isLoading = true;
+	$scope.hidePageInfo = true;
+	$scope.pageInformation;
 
 	$timeout(function() {
 		$scope.isLoading = false;
@@ -28,6 +30,19 @@ nobelApp.controller('nobelCtrl',
 			$scope.hideSunburst = true;
 			$scope.hideChord = true;
 			$scope.hideProject = false;
+		}
+	}
+
+	$scope.pageInformationText = function(page){
+		console.log("pageInformation", page);
+		if ($scope.hidePageInfo) {
+			$scope.hidePageInfo = false;
+			$scope.pageInformation = informationService.getPageInformation(page);
+			console.log("pageInformation", $scope.pageInformation);
+		} else if (!$scope.hidePageInfo) {
+			console.log("hide");
+			$scope.hidePageInfo = true;
+			$scope.pageInformation = "";
 		}
 	}
 	////////////////////////////// PRIZE CATEGORIES ///////////////////////

@@ -142,10 +142,6 @@
 						</div>
 					</div>
 
-
-
-					
-
 		        	<div class="row" >
 		        		<div class="col-sm-10" id="info">
 				      		<h3 id="laureate_name"></h3>
@@ -177,9 +173,14 @@
 				      		</table>
 				      	</div>
 		      		</div>
-		   		</div>
-				
+		   		</div>	
 			</div>
+			<div class="col-sm-5">
+		   			<img src="img/questionMark.png" class="helpButton" ng-click="pageInformationText('sunburst')" />
+		   			<div class="informationText" ng-hide="hidePageInfo">
+		   				<span ng-repeat="text in pageInformation" >{{text.paragraph}}</br></br></span>
+		   			</div>
+		   	</div>
 		</div>
 		<div id="chord" ng-hide="hideChord" ng-controller="chord">
   			<table class="table">
@@ -224,6 +225,12 @@
     				</td>
   				</tr>
 			</table>
+			<div class="col-sm-5">
+		   			<img src="img/questionMark.png" class="helpButton" ng-click="pageInformationText('chord')" />
+		   			<div class="informationText" ng-hide="hidePageInfo">
+		   				<span ng-repeat="text in pageInformation" >{{text.paragraph}}</br></br></span>
+		   			</div>
+		   	</div>
   			<p><a href="https://bitbucket.org/artstr/d3elements.git">Code for original Chord Diagram</a></p>
 		</div>
 		<div id="project" ng-hide="hideProject" >
@@ -244,6 +251,7 @@
 	<script src="js/services/nobelService.js"></script>
 	<script src="js/services/yearService.js"></script>	
 	<script src="js/services/wikipediaService.js"></script>
+	<script src="js/services/informationService.js"></script>
 	<script src="js/lib/d3.v3.js"></script>
 	<script src="js/sunburst.js"></script>
 	<script src="js/flowChord.js"></script>
