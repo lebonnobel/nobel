@@ -178,12 +178,12 @@ h1 {
 /*.land:hover {
 	stroke: #616161; #FFB74D; /*#32BD8D;
 	stroke-width: 2px;
-}
+}*/
 
 .focused {
 	stroke: #424242; /*#f58234; /*#F57C00; /*#32BD8D;*/
-/*	stroke-width: 2px;
-}*/
+	stroke-width: 2px;
+}
 
 .countryTooltip {
 	position: absolute;
@@ -192,7 +192,7 @@ h1 {
 	padding: 8px;
 	text-align: center;
 	border: 1px solid #E0E0E0;
-	font-size: 14px;
+	font-size: 16px;
 	border-radius: 4px;
 }
 
@@ -206,12 +206,17 @@ h1 {
 
 }
 
+.axis:hover{
+	cursor: pointer;
+}
+
 .axis .halo {
 	stroke: gray;
 	stroke-width: 10px;
 	stroke-linecap: round;
 	padding: 5px;
 	font-size: 18px;
+
 }
 .tick text{
 	
@@ -222,7 +227,7 @@ h1 {
 	stroke: black; /* color of the handle on timeslider (w year moving with it)*/
 	stroke-width: 5px;
 	stroke-linecap: round;
-	pointer-events: none;
+	cursor: pointer;
 }
 
 .slider .handle text {
